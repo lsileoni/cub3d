@@ -1,18 +1,26 @@
 NAME := cub3d
 
-SRC := main.c
+SRC := mmu.c
 OBJ := $(SRC:%.c=%.o)
 
 FT_DIR := ./libft
 FT_SRC_DIR := $(FT_DIR)/src
 LIBFT_NAME := $(FT_DIR)/build/libft.a
-LFT_FLAG := -L $(FT_DIR)/build -lft
+LFT_FLAG := -L$(FT_DIR)/build/ -lft
 CC := cc
-INCLUDE := -I $(FT_SRC_DIR)
-CFLAGS := -Wall -Werror -Wextra $(INCLUDE)
+INCLUDE := -I$(FT_SRC_DIR)
+CFLAGS := -Wall -Werror -Wextra -g3 $(INCLUDE)
 
+<<<<<<< Updated upstream
 all: $(LIBFT_NAME) $(OBJ)
+	$(CC) $(OBJ) $(CFLAGS) $(INCLUDE) $(LFT_FLAG) -o $(NAME)
+#comment
+=======
+all: $(NAME)
+
+$(NAME): $(LIBFT_NAME) $(OBJ)
 	$(CC) $(CFLAGS) $(LFT_FLAG) -o $(NAME) $(OBJ)
+>>>>>>> Stashed changes
 
 $(LIBFT_NAME):
 	make -C ./libft
