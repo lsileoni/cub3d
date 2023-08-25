@@ -1,5 +1,5 @@
 NAME := cub3d
-
+## test
 SRC := mmu.c
 OBJ := $(SRC:%.c=%.o)
 
