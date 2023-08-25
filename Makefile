@@ -11,9 +11,16 @@ CC := cc
 INCLUDE := -I$(FT_SRC_DIR)
 CFLAGS := -Wall -Werror -Wextra -g3 $(INCLUDE)
 
+<<<<<<< Updated upstream
 all: $(LIBFT_NAME) $(OBJ)
 	$(CC) $(OBJ) $(CFLAGS) $(INCLUDE) $(LFT_FLAG) -o $(NAME)
 #comment
+=======
+all: $(NAME)
+
+$(NAME): $(LIBFT_NAME) $(OBJ)
+	$(CC) $(CFLAGS) $(LFT_FLAG) -o $(NAME) $(OBJ)
+>>>>>>> Stashed changes
 
 $(LIBFT_NAME):
 	make -C ./libft
