@@ -13,6 +13,7 @@ CFLAGS := -Wall -Werror -Wextra -g3 $(INCLUDE)
 
 all: $(LIBFT_NAME) $(OBJ)
 	$(CC) $(OBJ) $(CFLAGS) $(INCLUDE) $(LFT_FLAG) -o $(NAME)
+#comment
 
 $(LIBFT_NAME):
 	make -C ./libft
