@@ -6,7 +6,7 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:10:23 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/02/27 17:05:14 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/25 19:37:35 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_vec
 	size_t			len;
 }					t_vec;
 
-typedef struct s_line 
+typedef struct s_line
 {
 	char	*content;
 	char	*beg;
@@ -54,7 +54,8 @@ typedef struct s_line
 }			t_line;
 
 char				*get_next_line(int fd);
-char				*ft_strjoin_free(t_line *s1, char const *s2, const size_t s2_len);
+char				*ft_strjoin_free(t_line *s1, char const *s2,
+						const size_t s2_len);
 char				*ft_strnrchr(const char *s, int c, int len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t count, size_t size);
