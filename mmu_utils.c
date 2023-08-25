@@ -6,13 +6,13 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 19:25:34 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/25 19:42:17 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/25 19:57:56 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mmu.h"
 
-void	mmu_exit(t_list *pointers)
+void	mmu_destroy(t_list *pointers, size_t flag)
 {
 	t_list	*tmp;
 
@@ -23,7 +23,8 @@ void	mmu_exit(t_list *pointers)
 		free(pointers);
 		pointers = tmp;
 	}
-	exit (0);
+	if (flag)
+		exit (0);
 }
 
 void	*mmu_alloc(t_mmu *mmu, size_t size)
@@ -33,7 +34,7 @@ void	*mmu_alloc(t_mmu *mmu, size_t size)
 
 	ptr = malloc(size);
 	if (!ptr)
-		mmu_exit(mmu->pointers);
+		mmu_destroy(mmu->pointers, 1);
 	if (mmu->count == 0)
 		mmu->pointers->content = ptr;
 	else
@@ -45,7 +46,7 @@ void	*mmu_alloc(t_mmu *mmu, size_t size)
 	return (ptr);
 }
 
-void	mmu_creat(t_mmu *mmu)
+void	mmu_create(t_mmu *mmu)
 {
 	mmu->pointers = ft_lstnew(NULL);
 	mmu->count = 0;
