@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 19:25:34 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/25 19:28:05 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/25 19:42:17 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	mmu_exit(t_list *pointers)
 	while (pointers)
 	{
 		tmp = pointers->next;
-		ft_printf("freeing on exit %p\n", pointers->content);
 		free(pointers->content);
 		free(pointers);
 		pointers = tmp;
@@ -33,7 +32,6 @@ void	*mmu_alloc(t_mmu *mmu, size_t size)
 	void	*ptr;
 
 	ptr = malloc(size);
-	ft_printf("Allocated: %p\n", ptr);
 	if (!ptr)
 		mmu_exit(mmu->pointers);
 	if (mmu->count == 0)
@@ -62,7 +60,6 @@ static void	mmu_free_probe(t_mmu *mmu, void *adr, t_list *cur)
 		if (cur->content == adr)
 		{
 			prev->next = cur->next;
-			ft_printf("freeing 3 %p\n", cur->content);
 			free(cur->content);
 			free(cur);
 			mmu->count -= 1;
@@ -81,7 +78,6 @@ void	mmu_free(t_mmu *mmu, void *adr)
 		return ;
 	if (mmu->count == 1)
 	{
-		ft_printf("freeing 1 %p\n", mmu->pointers->content);
 		free(mmu->pointers->content);
 		mmu->pointers->content = NULL;
 		mmu->count -= 1;
@@ -91,7 +87,6 @@ void	mmu_free(t_mmu *mmu, void *adr)
 	if (cur->content == adr)
 	{
 		mmu->pointers = cur->next;
-		ft_printf("freeing 2 %p\n", cur->content);
 		free(cur->content);
 		free(cur);
 		mmu->count -= 1;
