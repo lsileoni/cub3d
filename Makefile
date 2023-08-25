@@ -14,7 +14,7 @@ CFLAGS := -Wall -Werror -Wextra -g3 $(INCLUDE)
 all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
-	$(CC) $(CFLAGS) $(LFT_FLAG) -o $(NAME) $(OBJ)
+	$(CC) $(OBJ) $(CFLAGS) $(LFT_FLAG) -o $(NAME)
 
 $(LIBFT_NAME):
 	make -C ./libft
