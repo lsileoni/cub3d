@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: make cub3d
+        run: |
+          make
+          if [ $? -ne 0 ]
+          then
+            echo "::error::Command failed - ❌"
+          fi
+      - name: success
+        run: echo "Success"
