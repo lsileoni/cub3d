@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:01:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 09:02:23 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:33:05 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	get_row_size(char	*map_name)
 
 int	get_col_size(char *map_name)
 {
-	int 	fd;
+	int		fd;
 	char	*line;
 	int		i;
-	
+
 	fd = open(map_name, O_RDONLY);
 	line = get_next_line(fd);
 	i = 0;

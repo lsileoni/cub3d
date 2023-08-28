@@ -6,44 +6,49 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:00:12 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 09:33:44 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:38:39 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "libft/src/libft.h"
+
+static void	assign_grid_element(int **grid, char *line,
+								t_i_point p, t_gameinfo *info)
+{
+	if (line[p.y] == ' ')
+		grid[p.x][p.y] = 0;
+	else if (line[p.y] == 'N' || line[p.y] == 'S' || \
+			line[p.y] == 'W' || line[p.y] == 'E')
+	{
+		info->start_x = p.x;
+		info->start_y = p.y;
+		grid[p.x][p.y] = 0;
+	}
+	else
+		grid[p.x][p.y] = line[p.y] - 48;
+}
 
 void	extract_grid(int **grid, char *map_name, t_gameinfo *info)
 {
-	int		fd;
-	int		i;
-	int		j;
-	char	*line;
+	int			fd;
+	t_i_point	p;
+	char		*line;
 
 	fd = open(map_name, O_RDONLY);
 	line = get_next_line(fd);
-	i = 0;
+	p.x = 0;
 	while (line)
 	{
-		grid[i] = mmu_op(MMU_ALLOC, (sizeof(int) * info->row_size));
-		j = 0;
-		while (j < info->row_size)
+		grid[p.x] = mmu_op(MMU_ALLOC, (sizeof(int) * info->row_size));
+		p.y = 0;
+		while (p.y < info->row_size)
 		{
-			if (line[j] == ' ')
-				grid[i][j] = 0;
-			else if (line[j] == 'N' || line[j] == 'S' || line[j] == 'W' || line[j] == 'E')
-			{
-				info->start_x = i;
-				info->start_y = j;
-				grid[i][j] = 0;
-			}
-			else
-				grid[i][j] = line[j] - 48;
-			j++;
+			assign_grid_element(grid, line, p, info);
+			p.y++;
 		}
 		free(line);
 		line = get_next_line(fd);
-		i++;
+		p.x++;
 	}
 }
 
@@ -68,22 +73,22 @@ void	restore_grid(int **grid, t_gameinfo info)
 
 void	print_grid(int **grid, t_gameinfo info)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
-    ft_printf("Flood Fill Result:\n");
+	ft_printf("Flood Fill Result:\n");
 	i = 0;
 	while (i < info.col_size)
 	{
 		j = 0;
 		while (j < info.row_size)
 		{
-            ft_printf("%d", grid[i][j]);
+			ft_printf("%d", grid[i][j]);
 			j++;
-        }
-        ft_printf("\n");
+		}
+		ft_printf("\n");
 		i++;
-    }
+	}
 }
 
 int	check_validity(int **grid, t_gameinfo info)

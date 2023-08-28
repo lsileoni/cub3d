@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:54:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 09:04:33 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:26:25 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void	extract_grid(int **grid, char *map_name, t_gameinfo *info);
 void	restore_grid(int **grid, t_gameinfo info);
 void	print_grid(int **grid, t_gameinfo info);
 int		check_validity(int **grid, t_gameinfo info);
-void 	floodFill(int **grid, t_gameinfo info);
+void 	flood_fill(int **grid, t_gameinfo info);
 
 #endif
