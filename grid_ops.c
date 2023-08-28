@@ -6,11 +6,12 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:00:12 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 09:03:42 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:33:44 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "libft/src/libft.h"
 
 void	extract_grid(int **grid, char *map_name, t_gameinfo *info)
 {
@@ -24,7 +25,7 @@ void	extract_grid(int **grid, char *map_name, t_gameinfo *info)
 	i = 0;
 	while (line)
 	{
-		grid[i] = malloc(sizeof(int) * info->row_size);
+		grid[i] = mmu_op(MMU_ALLOC, (sizeof(int) * info->row_size));
 		j = 0;
 		while (j < info->row_size)
 		{

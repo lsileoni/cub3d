@@ -6,7 +6,7 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 12:35:37 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 04:37:51 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:48:21 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,9 @@ static char	*get_line(const char *line)
 	while (line[i] && line[i] != '\n')
 		i++;
 	if (!line[i])
-		str = malloc(i + 1);
+		str = mmu_op(MMU_ALLOC, (i + 1));
 	else
-		str = malloc(i + 2);
-	if (!str)
-		return (NULL);
+		str = mmu_op(MMU_ALLOC, (i + 2));
 	i = 0;
 	while (line[i] && line[i] != '\n')
 	{
@@ -49,9 +47,7 @@ static char	*read_to_line(int fd, t_line *line, int *s_fd)
 	rval = 1;
 	while (!ft_strnrchr(line->content, '\n', line->len) && rval)
 	{
-		buf = malloc(BUFFER_SIZE + 1);
-		if (!buf)
-			return (NULL);
+		buf = mmu_op(MMU_ALLOC, (BUFFER_SIZE + 1));
 		rval = read(fd, buf, BUFFER_SIZE);
 		if (!rval)
 			*s_fd = -1;

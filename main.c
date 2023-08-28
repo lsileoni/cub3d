@@ -6,12 +6,11 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 19:34:11 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 09:25:57 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:57:54 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "libft/src/libft.h"
 
 int main(int argc, char **argv)
 {
@@ -26,7 +25,7 @@ int main(int argc, char **argv)
 	mmu_op(MMU_CREATE, 0);
 	info.row_size = get_row_size(argv[1]);
 	info.col_size = get_col_size(argv[1]);
-	grid = malloc(sizeof(void *) * info.col_size);
+	grid = mmu_op(MMU_ALLOC, (sizeof(void *) * info.col_size));
 	extract_grid(grid, argv[1], &info); 
     floodFill(grid, info);
 	if (!check_validity(grid, info))

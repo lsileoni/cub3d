@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 17:40:08 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/02/27 17:40:09 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:37:30 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ char	*ft_to_lowercase(char *str)
 
 	if (!str)
 		return (NULL);
-	storage = malloc(ft_strlen(str) + 1);
-	if (!storage)
-		return (NULL);
+	storage = mmu_op(MMU_ALLOC, (ft_strlen(str) + 1));
 	i = 0;
 	while (str[i])
 	{

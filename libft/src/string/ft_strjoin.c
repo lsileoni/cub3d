@@ -6,7 +6,7 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 06:53:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2022/11/07 11:33:08 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:42:14 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ static char	*alloc_string(int len)
 {
 	char	*p;
 
-	p = malloc(len + 1);
-	if (!p)
-		return (NULL);
+	p = mmu_op(MMU_ALLOC, (len + 1));
 	return (p);
 }
 
