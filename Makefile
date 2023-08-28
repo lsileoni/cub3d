@@ -1,6 +1,6 @@
 NAME := cub3d
 
-SRC := mmu.c mmu_utils.c main.c
+SRC := main.c flood_fill.c grid_ops.c getters.c
 OBJ := $(SRC:%.c=%.o)
 
 FT_DIR := ./libft

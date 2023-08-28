@@ -6,11 +6,11 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 19:25:34 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/25 19:57:56 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:14:40 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mmu.h"
+#include "../libft.h"
 
 void	mmu_destroy(t_list *pointers, size_t flag)
 {

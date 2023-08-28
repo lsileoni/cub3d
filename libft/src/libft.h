@@ -6,17 +6,23 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:10:23 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/25 19:37:35 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 08:52:05 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
 # include <stdlib.h>
 # include <unistd.h>
-# ifndef BUF_SIZE
-#  define BUF_SIZE 1024
-# endif
+
+typedef struct s_line{
+	char	*content;
+	char	*beg;
+	size_t	len;
+}			t_line;
 
 typedef struct s_list
 {
@@ -46,13 +52,25 @@ typedef struct s_vec
 	size_t			len;
 }					t_vec;
 
-typedef struct s_line
+typedef struct s_mmu
 {
-	char	*content;
-	char	*beg;
-	size_t	len;
-}			t_line;
+	t_list	*pointers;
+	size_t	count;
+}			t_mmu;
 
+enum e_mmu_ops
+{
+	MMU_CREATE,
+	MMU_ALLOC,
+	MMU_FREE,
+	MMU_DESTROY
+};
+
+void				*mmu_op(int op, size_t data);
+void				mmu_destroy(t_list *pointers, size_t flag);
+void				*mmu_alloc(t_mmu *mmu, size_t size);
+void				mmu_create(t_mmu *mmu);
+void				mmu_free(t_mmu *mmu, void *adr);
 char				*get_next_line(int fd);
 char				*ft_strjoin_free(t_line *s1, char const *s2,
 						const size_t s2_len);
