@@ -6,11 +6,11 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 19:36:29 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/25 19:57:30 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:08:53 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mmu.h"
+#include "../libft.h"
 
 void	*mmu_op(int op, size_t data)
 {

@@ -1,39 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_to_lowercase.c                                  :+:      :+:    :+:   */
+/*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 17:40:08 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 09:37:30 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/08/28 09:01:59 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/08/28 11:33:05 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft.h"
+#include "cub3d.h"
 
-char	*ft_to_lowercase(char *str)
+int	get_row_size(char	*map_name)
 {
-	char	*storage;
+	int		fd;
+	int		i;
+	char	*line;
+
+	fd = open(map_name, O_RDONLY);
+	if (fd == -1)
+		return (1);
+	line = get_next_line(fd);
+	i = 0;
+	while (line[i])
+		i++;
+	return (i - 1);
+}
+
+int	get_col_size(char *map_name)
+{
+	int		fd;
+	char	*line;
 	int		i;
 
-	if (!str)
-		return (NULL);
-	storage = mmu_op(MMU_ALLOC, (ft_strlen(str) + 1));
+	fd = open(map_name, O_RDONLY);
+	line = get_next_line(fd);
 	i = 0;
-	while (str[i])
+	while (line)
 	{
-		if (ft_isalpha(str[i]))
-		{
-			if (str[i] >= 'A' && str[i] <= 'Z')
-				storage[i] = ft_tolower(str[i]);
-			else
-				storage[i] = str[i];
-		}
-		else
-			storage[i] = str[i];
+		ft_printf("line: %s", line);
+		free(line);
+		line = get_next_line(fd);
 		i++;
 	}
-	storage[i] = '\0';
-	return (storage);
+	return (i);
 }

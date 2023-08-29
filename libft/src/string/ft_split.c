@@ -6,7 +6,7 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 06:53:46 by lsileoni          #+#    #+#             */
-/*   Updated: 2022/11/13 13:56:44 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:41:21 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ static char	*construct_string(char const *s, char c, int *cont)
 	i = *cont;
 	while (s[i] != c && s[i])
 		i++;
-	str = malloc(i + 1 - *cont);
-	if (!str)
-		return (NULL);
+	str = mmu_op(MMU_ALLOC, (i + 1 - *cont));
 	str_i = 0;
 	while (s[*cont] != c && s[*cont])
 	{
@@ -76,9 +74,7 @@ char	**ft_split(char const *s, char c)
 	str_count = strs_counter(s, c);
 	strs_i = 0;
 	str_i = 0;
-	strs = malloc(sizeof(char *) * (str_count + 1));
-	if (!strs)
-		return (NULL);
+	strs = mmu_op(MMU_ALLOC, (sizeof(char *) * (str_count + 1)));
 	if (str_count < 1)
 	{
 		strs[strs_i] = NULL;

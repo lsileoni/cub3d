@@ -6,7 +6,7 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 06:54:12 by lsileoni          #+#    #+#             */
-/*   Updated: 2022/11/03 17:57:58 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:43:13 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 
 	if (!s || !f)
 		return (NULL);
-	p = malloc(ft_strlen(s) + 1);
-	if (!p)
-		return (NULL);
+	p = mmu_op(MMU_ALLOC, (ft_strlen(s) + 1));
 	i = 0;
 	while (i < ft_strlen(s))
 	{

@@ -6,7 +6,7 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 06:54:25 by lsileoni          #+#    #+#             */
-/*   Updated: 2022/11/03 17:28:18 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:45:19 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,11 @@ char	*ft_strtrim(char const *s1, char const *set)
 	end = seek_ending(s1, set);
 	if (beg > end)
 	{
-		ret = malloc(1);
+		ret = mmu_op(MMU_ALLOC, 1);
 		*ret = '\0';
-		if (!ret)
-			return (NULL);
 		return ((char *)ret);
 	}
-	ret = malloc((end - beg) + 1);
+	ret = mmu_op(MMU_ALLOC, ((end - beg) + 1));
 	if (!ret)
 		return (NULL);
 	i = 0;

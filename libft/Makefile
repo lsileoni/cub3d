@@ -38,6 +38,8 @@ CFILES=\
 	   $(MEMDIR)/ft_memcpy.c \
 	   $(MEMDIR)/ft_memmove.c \
 	   $(MEMDIR)/ft_memset.c \
+	   $(MEMDIR)/mmu.c \
+	   $(MEMDIR)/mmu_utils.c \
 	   $(PRINTDIR)/ft_i_putchar_fd.c \
 	   $(PRINTDIR)/ft_putchar_fd.c \
 	   $(PRINTDIR)/ft_putendl_fd.c \
@@ -92,6 +94,8 @@ OBJS=\
 	   $(OBJDIR)/ft_memcpy.o \
 	   $(OBJDIR)/ft_memmove.o \
 	   $(OBJDIR)/ft_memset.o \
+	   $(OBJDIR)/mmu.o \
+	   $(OBJDIR)/mmu_utils.o \
 	   $(OBJDIR)/ft_i_putchar_fd.o \
 	   $(OBJDIR)/ft_putchar_fd.o \
 	   $(OBJDIR)/ft_putendl_fd.o \

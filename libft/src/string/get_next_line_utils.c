@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_helpers.c                            :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 12:35:14 by lsileoni          #+#    #+#             */
-/*   Updated: 2022/11/19 16:31:35 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:49:28 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ static char	*alloc_string(int len)
 {
 	char	*p;
 
-	p = malloc(len + 1);
-	if (!p)
-		return (NULL);
+	p = mmu_op(MMU_ALLOC, (len + 1));
 	return (p);
 }
 
@@ -46,9 +44,7 @@ static void	*alloc_s1(t_line *s1)
 {
 	if (!s1->content)
 	{
-		s1->content = malloc(1);
-		if (!s1->content)
-			return (NULL);
+		s1->content = mmu_op(MMU_ALLOC, 1);
 		*s1->content = '\0';
 		s1->beg = s1->content;
 	}

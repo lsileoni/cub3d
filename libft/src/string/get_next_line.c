@@ -6,7 +6,7 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 12:35:37 by lsileoni          #+#    #+#             */
-/*   Updated: 2022/11/19 16:33:06 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:48:21 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@ static char	*get_line(const char *line)
 	int		i;
 
 	i = 0;
-	if (!line[i])
-		return (NULL);
 	while (line[i] && line[i] != '\n')
 		i++;
-	str = malloc(i + 2);
-	if (!str)
-		return (NULL);
+	if (!line[i])
+		str = mmu_op(MMU_ALLOC, (i + 1));
+	else
+		str = mmu_op(MMU_ALLOC, (i + 2));
 	i = 0;
 	while (line[i] && line[i] != '\n')
 	{
@@ -48,10 +47,8 @@ static char	*read_to_line(int fd, t_line *line, int *s_fd)
 	rval = 1;
 	while (!ft_strnrchr(line->content, '\n', line->len) && rval)
 	{
-		buf = malloc(BUF_SIZE + 1);
-		if (!buf)
-			return (NULL);
-		rval = read(fd, buf, BUF_SIZE);
+		buf = mmu_op(MMU_ALLOC, (BUFFER_SIZE + 1));
+		rval = read(fd, buf, BUFFER_SIZE);
 		if (!rval)
 			*s_fd = -1;
 		if (rval == -1)
@@ -60,19 +57,13 @@ static char	*read_to_line(int fd, t_line *line, int *s_fd)
 			return (NULL);
 		}
 		buf[rval] = '\0';
-		if (!rval && !line->len)
-		{
-			free(line->beg);
-			free(buf);
-			return (NULL);
-		}
 		line->beg = ft_strjoin_free(line, buf, rval);
 		line->content = line->beg;
 	}
 	return (line->content);
 }
 
-void	skip_next_line(t_line *line)
+static void	skip_next_line(t_line *line)
 {
 	int	i;
 
@@ -93,25 +84,25 @@ void	skip_next_line(t_line *line)
 
 char	*get_next_line(int fd)
 {
-	static t_line	line[12289];
+	static t_line	line;
 	static int		s_fd = -1;
 	char			*ret_line;
 
-	if (fd < 0 || fd > 12288)
+	if (fd != s_fd)
+		line = (t_line){NULL, NULL, 0};
+	line.content = read_to_line(fd, &line, &s_fd);
+	if (!line.content)
 		return (NULL);
-	line[fd].content = read_to_line(fd, &line[fd], &s_fd);
-	if (!line[fd].content)
-		return (NULL);
-	if (!*line[fd].content)
+	if (!*line.content)
 	{
-		free(line[fd].beg);
+		free(line.beg);
 		ret_line = NULL;
 		return (ret_line);
 	}
-	ret_line = get_line(line[fd].content);
-	skip_next_line(&line[fd]);
+	ret_line = get_line(line.content);
+	skip_next_line(&line);
 	if (!ret_line)
-		free(line[fd].beg);
+		free(line.beg);
 	s_fd = fd;
 	return (ret_line);
 }

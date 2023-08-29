@@ -6,7 +6,7 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 06:52:45 by lsileoni          #+#    #+#             */
-/*   Updated: 2022/11/07 05:01:08 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/28 09:37:03 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ static char	*ft_strrev(char *str)
 	char	*p;
 
 	str_size = ft_strlen(str);
-	p = malloc(str_size + 1);
-	if (!p)
-		return (NULL);
+	p = mmu_op(MMU_ALLOC, (str_size + 1));
 	i = 0;
 	str_size--;
 	while (str_size >= 0)
