@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/13 18:10:23 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/29 06:45:02 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/08/29 06:54:48 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/08/29 06:56:26 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,21 @@ typedef struct s_hmap
 
 t_htable			*ft_htable_create(unsigned int init_size);
 long long			get_message_hash(const char *message);
-int					ft_htable_insert(t_htable *table, const char *key, void *value);
-int					ft_restructure_table(t_htable *table, const char *key, void *value);
-int					ft_probe_table(t_htable *table, const char *key, void *value);
-int					ft_htable_insert(t_htable *table, const char *key, void *value);
+int					ft_htable_insert(t_htable *table,
+						const char *key, void *value);
+int					ft_restructure_table(t_htable *table,
+						const char *key, void *value);
+int					ft_probe_table(t_htable *table,
+						const char *key, void *value);
+int					ft_htable_insert(t_htable *table,
+						const char *key, void *value);
 void				*ft_htable_get(t_htable *table, const char *key);
 void				ft_htable_print(t_htable *table);
 int					ft_htable_remove(t_htable *table, const char *key);
-void				ft_htable_destroy(t_htable *table, unsigned char destroy_value);
-int					remove_htable_elem(t_htable *table, unsigned long long key_hash);
+void				ft_htable_destroy(t_htable *table,
+						unsigned char destroy_value);
+int					remove_htable_elem(t_htable *table,
+						unsigned long long key_hash);
 void				*mmu_op(int op, size_t data);
 void				mmu_destroy(t_list *pointers, size_t flag);
 void				*mmu_alloc(t_mmu *mmu, size_t size);
