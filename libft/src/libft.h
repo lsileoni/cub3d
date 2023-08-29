@@ -6,7 +6,7 @@
 /*   By: lsileoni <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 18:10:23 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 08:52:05 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/29 06:45:02 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
+# define FNV_PRIME 0x100000001b3
+# define FNV_OFFSET 0xcbf29ce484222325
 # include <stdlib.h>
 # include <unistd.h>
 
@@ -66,6 +68,30 @@ enum e_mmu_ops
 	MMU_DESTROY
 };
 
+typedef struct s_htelem
+{
+	const char	*key;
+	void		*value;
+}	t_htelem;
+
+typedef struct s_hmap
+{
+	t_htelem	**memory;
+	size_t		size;
+	size_t		cap;
+}	t_htable;
+
+t_htable			*ft_htable_create(unsigned int init_size);
+long long			get_message_hash(const char *message);
+int					ft_htable_insert(t_htable *table, const char *key, void *value);
+int					ft_restructure_table(t_htable *table, const char *key, void *value);
+int					ft_probe_table(t_htable *table, const char *key, void *value);
+int					ft_htable_insert(t_htable *table, const char *key, void *value);
+void				*ft_htable_get(t_htable *table, const char *key);
+void				ft_htable_print(t_htable *table);
+int					ft_htable_remove(t_htable *table, const char *key);
+void				ft_htable_destroy(t_htable *table, unsigned char destroy_value);
+int					remove_htable_elem(t_htable *table, unsigned long long key_hash);
 void				*mmu_op(int op, size_t data);
 void				mmu_destroy(t_list *pointers, size_t flag);
 void				*mmu_alloc(t_mmu *mmu, size_t size);
