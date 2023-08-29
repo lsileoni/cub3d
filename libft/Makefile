@@ -1,6 +1,6 @@
-CC=gcc
+CC=cc
 AR=ar rus
-CFLAGS=-Wall -Wextra -Werror -Ofast -march=native
+CFLAGS=-Wall -Wextra -Werror -g3
 RM=rm -f
 
 SRCDIR=src

@@ -16,11 +16,14 @@ CFLAGS		:= -Wall -Werror -Wextra -g3 $(INCLUDE) #-fsanitize=address
 
 all: $(NAME)
 
-$(NAME): $(LIBFT_NAME) $(OBJ)
+$(NAME): $(LIBFT_NAME) $(MLX_NAME) $(OBJ)
 	$(CC) $(OBJ) $(CFLAGS) $(LFT_FLAG) -o $(NAME)
 
 $(LIBFT_NAME):
 	make -C ./libft
+
+$(MLX_NAME):
+	cd ./MLX42 && cmake -B build && cmake --build build -j4
 
 %.o: %.c
 	$(CC) -c $< -o $@

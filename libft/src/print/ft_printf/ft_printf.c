@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 06:51:25 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/29 06:51:26 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/29 12:00:53 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ int	ft_printf(const char *args, ...)
 	va_start(arg_list, args);
 	rval = read_first_arg(first_arg, arg_list);
 	va_end(arg_list);
-	free(first_arg);
+	mmu_op(MMU_FREE, (size_t)first_arg);
 	return (rval);
 }

@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 07:37:09 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/05/17 08:07:24 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/29 12:15:57 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int	ft_restructure_table(t_htable *table, const char *key, void *value)
 	while (i < table->cap)
 	{
 		ft_htable_insert(tmp, table->memory[i]->key, table->memory[i]->value);
-		free(table->memory[i]);
+		mmu_op(MMU_FREE, (size_t)table->memory[i]);
 		i++;
 	}
 	ft_htable_insert(tmp, key, value);
-	free(table->memory);
+	mmu_op(MMU_FREE, (size_t)table->memory);
 	table->memory = tmp->memory;
-	free(tmp);
+	mmu_op(MMU_FREE, (size_t)tmp);
 	table->cap *= 2;
 	table->size++;
 	return (1);
@@ -54,9 +54,9 @@ int	ft_restructure_table(t_htable *table, const char *key, void *value)
 
 int	remove_htable_elem(t_htable *table, unsigned long long key_hash)
 {
-	free((void *)table->memory[key_hash % table->cap]->key);
-	free(table->memory[key_hash % table->cap]->value);
-	free(table->memory[key_hash % table->cap]);
+	mmu_op(MMU_FREE, (size_t)((void *)table->memory[key_hash % table->cap]->key));
+	mmu_op(MMU_FREE, (size_t)table->memory[key_hash % table->cap]->value);
+	mmu_op(MMU_FREE, (size_t)table->memory[key_hash % table->cap]);
 	table->memory[key_hash % table->cap] = NULL;
 	return (0);
 }
@@ -69,7 +69,7 @@ static int	assign_value(t_htable *table, const char *key,
 	dup_key = ft_strdup(key);
 	if (!(dup_key))
 		return (-1);
-	table->memory[index] = malloc(sizeof(t_htelem));
+	table->memory[index] = mmu_op(MMU_ALLOC, sizeof(t_htelem));
 	table->memory[index]->key = dup_key;
 	table->memory[index]->value = value;
 	table->size++;
@@ -91,7 +91,7 @@ int	ft_probe_table(t_htable *table, const char *key, void *value)
 					ft_strlen(key)))
 		{
 			if (table->memory[index]->value)
-				free(table->memory[index]->value);
+				mmu_op(MMU_FREE, (size_t)table->memory[index]->value);
 			table->memory[index]->value = value;
 			break ;
 		}

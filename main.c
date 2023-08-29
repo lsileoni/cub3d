@@ -10,12 +10,12 @@ int	main(int argc, char **argv)
 	t_graphics	*graphics;
 
 
+	mmu_op(MMU_CREATE, 0);
 	if (argc < 2)
 	{
 		ft_printf("Too few arguments!\n");
 		return (1);
 	}
-	mmu_op(MMU_CREATE, 0);
 	info.row_size = get_row_size(argv[1]);
 	info.col_size = get_col_size(argv[1]);
 	grid = mmu_op(MMU_ALLOC, (sizeof(void *) * info.col_size));
