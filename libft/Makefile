@@ -11,6 +11,7 @@ VALDIR=$(SRCDIR)/validation
 MEMDIR=$(SRCDIR)/memory
 PRINTDIR=$(SRCDIR)/print
 LLDIR=$(SRCDIR)/linkedlist
+HTDIR=$(SRCDIR)/hashtable
 BDIR=build
 
 CFILES=\
@@ -68,6 +69,8 @@ CFILES=\
 	   $(VALDIR)/ft_isascii.c \
 	   $(VALDIR)/ft_isdigit.c \
 	   $(VALDIR)/ft_isprint.c \
+	   $(HTDIR)/ft_htable_ops.c \
+	   $(HTDIR)/ft_htable_utils.c \
 
 OBJS=\
 	   $(OBJDIR)/ft_atoi.o \
@@ -124,6 +127,8 @@ OBJS=\
 	   $(OBJDIR)/ft_isascii.o \
 	   $(OBJDIR)/ft_isdigit.o \
 	   $(OBJDIR)/ft_isprint.o \
+	   $(OBJDIR)/ft_htable_ops.o \
+	   $(OBJDIR)/ft_htable_utils.o \
 
 NAME=$(BDIR)/libft.a
 
@@ -140,6 +145,7 @@ $(OBJS): $(CFILES)
 	make all -C ./src/conversion
 	make all -C ./src/linkedlist
 	make all -C ./src/validation
+	make all -C ./src/hashtable
 
 clean:
 	$(RM) $(OBJS)
