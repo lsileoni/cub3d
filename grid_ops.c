@@ -6,11 +6,12 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:00:12 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 11:38:39 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 12:44:06 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "libft/src/libft.h"
 
 static void	assign_grid_element(int **grid, char *line,
 								t_i_point p, t_gameinfo *info)
@@ -46,7 +47,7 @@ void	extract_grid(int **grid, char *map_name, t_gameinfo *info)
 			assign_grid_element(grid, line, p, info);
 			p.y++;
 		}
-		free(line);
+		mmu_op(MMU_FREE, (size_t)line);
 		line = get_next_line(fd);
 		p.x++;
 	}

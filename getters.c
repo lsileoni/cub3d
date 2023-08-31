@@ -6,11 +6,12 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:01:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 11:33:05 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 12:43:27 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include "libft/src/libft.h"
 
 int	get_row_size(char	*map_name)
 {
@@ -40,7 +41,7 @@ int	get_col_size(char *map_name)
 	while (line)
 	{
 		ft_printf("line: %s", line);
-		free(line);
+		mmu_op(MMU_FREE, (size_t)line);
 		line = get_next_line(fd);
 		i++;
 	}

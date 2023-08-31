@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 06:53:06 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/29 06:53:06 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/29 12:14:41 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ft_strjoin_free(t_line *s1, char const *s2, const size_t s2_len)
 	}
 	str[i] = '\0';
 	s1->len = i;
-	free((void *)s1->beg);
-	free((void *)s2);
+	mmu_op(MMU_FREE, (size_t)((void *)s1->beg));
+	mmu_op(MMU_FREE, (size_t)((void *)s2));
 	return (str);
 }

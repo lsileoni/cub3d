@@ -6,11 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/29 13:34:26 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/08/31 15:09:42 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics.h"
+#include "libft/src/libft.h"
 
 static mlx_image_t	*init_map(mlx_t *mlx)
 {
@@ -20,6 +21,7 @@ static mlx_image_t	*init_map(mlx_t *mlx)
 	if (!map || mlx_image_to_window(mlx, map, 0, 0) < 0)
 	{
 		printf("Error opening the image\n");
+		mmu_op(MMU_DESTROY, 0);
 		exit (1); // handle error
 	}
 	ft_memset(map->pixels, 0, map->width * map->height * sizeof(int));
@@ -43,7 +45,7 @@ static t_player	*init_player(mlx_t *mlx)
 {
 	t_player	*player;
 
-	player = malloc(sizeof(t_player)); //use mmu_op
+	player = mmu_op(MMU_ALLOC, sizeof(t_player));
 	player->img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	player->position.x = WINDOW_WIDTH / 2;
 	player->position.y = WINDOW_HEIGHT / 2;

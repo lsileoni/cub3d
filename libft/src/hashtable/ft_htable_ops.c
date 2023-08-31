@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/26 13:54:37 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/05/17 07:17:06 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/29 12:08:31 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_htable	*ft_htable_create(unsigned int init_size)
 	rtable->memory = ft_calloc(sizeof(t_htelem **), init_size);
 	if (!rtable->memory)
 	{
-		free(rtable);
+		mmu_op(MMU_FREE, (size_t)rtable);
 		return (NULL);
 	}
 	rtable->cap = init_size;
@@ -80,17 +80,17 @@ void	ft_htable_destroy(t_htable *table, unsigned char destroy_value)
 	{
 		if (table->memory[i])
 		{
-			free((void *)table->memory[i]->key);
+			mmu_op(MMU_FREE, (size_t)((void *)table->memory[i]->key));
 			if (destroy_value)
-				free(table->memory[i]->value);
-			free(table->memory[i]);
+				mmu_op(MMU_FREE, (size_t)table->memory[i]->value);
+			mmu_op(MMU_FREE, (size_t)table->memory[i]);
 			table->memory[i] = NULL;
 		}
 		i++;
 	}
-	free(table->memory);
+	mmu_op(MMU_FREE, (size_t)table->memory);
 	table->memory = NULL;
-	free(table);
+	mmu_op(MMU_FREE, (size_t)table);
 }
 
 int	ft_htable_remove(t_htable *table, const char *key)

@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 06:53:03 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/29 06:53:03 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/29 12:13:44 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*read_to_line(int fd, t_line *line, int *s_fd)
 			*s_fd = -1;
 		if (rval == -1)
 		{
-			free(buf);
+			mmu_op(MMU_FREE, (size_t)buf);
 			return (NULL);
 		}
 		buf[rval] = '\0';
@@ -95,14 +95,14 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!*line.content)
 	{
-		free(line.beg);
+		mmu_op(MMU_FREE, (size_t)line.beg);
 		ret_line = NULL;
 		return (ret_line);
 	}
 	ret_line = get_line(line.content);
 	skip_next_line(&line);
 	if (!ret_line)
-		free(line.beg);
+		mmu_op(MMU_FREE, (size_t)line.beg);
 	s_fd = fd;
 	return (ret_line);
 }
