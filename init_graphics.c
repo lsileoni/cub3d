@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 15:19:11 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:23:51 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_player	*init_player(mlx_t *mlx)
 	return (player);
 }
 
-t_graphics	*init_graphics(t_graphics *graphics, int **grid, t_gameinfo *info)
+void	init_graphics(t_graphics *graphics, int **grid, t_gameinfo *info)
 {
 	graphics->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, \
 							"cub3 me daddy", false);
