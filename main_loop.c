@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:29:26 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/29 10:00:35 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/08/31 15:03:24 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	key_press(void *dt)
 		graphics->player->img->instances[0].y += round(sin(graphics->player->angle + M_PI_2) * 5);
 		graphics->player->img->instances[0].x += round(cos(graphics->player->angle + M_PI_2) * 5);
 	}
+	ft_printf("x: %d\ty: %d", graphics->player->img->instances[0].x, graphics->player->img->instances[0].y);
 }
 
 static void	cursor_func(double xpos, double ypos, void *dt)

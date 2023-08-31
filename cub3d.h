@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:54:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 11:26:25 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 13:28:30 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_gameinfo
 	int		start_direction;
 	int		row_size;
 	int		col_size;
-}	t_gameinfo;
+}			t_gameinfo;
 
 int		get_row_size(char	*map_name);
 int		get_col_size(char *map_name);

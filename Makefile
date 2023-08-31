@@ -31,7 +31,7 @@ $(MLX_NAME):
 	cd ./MLX42 && cmake -B build && cmake --build build -j4
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	$(CC) -g3 -c $< -o $@
 
 clean:
 	make clean -C $(FT_DIR)

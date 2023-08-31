@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 	}
 	restore_grid(grid, info);
 	print_grid(grid, info);
-	graphics = init_graphics();
+	graphics = init_graphics(grid, &info);
 	start_loop(graphics);
 	mlx_terminate(graphics->mlx); // put in in the exit functions (ESC, etc.)
 	return (0);

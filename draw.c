@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:32 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/29 09:46:17 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/08/31 13:45:50 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,39 +25,39 @@ int	minimap[10][10] = {
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
 
-void	draw_block(mlx_image_t *map, t_point point0)
+void	draw_block(t_map *map, t_point point0)
 {
 	int		i;
 	t_point	point1;
 
 	i = 0;
-	point1.x = point0.x + BLOCK_SIZE;
+	point1.x = point0.x + map->block_size;
 	point1.y = point0.y;
-	while (i < BLOCK_SIZE)
+	while (i < map->block_size)
 	{
-		connect_points(map, point0, point1, 0xFFFFFFFF);
+		connect_points(map->map, point0, point1, 0xFFFFFFFF);
 		point1.y++;
 		point0.y++;
 		i++;
 	}
 }
 
-void	draw_map(mlx_image_t *map)
+void	draw_map(t_map	*map)
 {
 	int		x;
 	int		y;
 	t_point	point0;
 
 	y = 0;
-	while (y < 10)
+	while (y < map->info->col_size)
 	{
 		x = 0;
-		while (x < 10)
+		while (x < map->info->row_size)
 		{
-			if (minimap[y][x] == 1)
+			if (map->grid[y][x] == 1)
 			{
-				point0.x = x * (BLOCK_SIZE + 1);
-				point0.y = y * (BLOCK_SIZE + 1);
+				point0.x = x * (map->block_size + 1);
+				point0.y = y * (map-> block_size + 1);
 				draw_block(map, point0);
 			}
 			x++;
@@ -72,8 +72,8 @@ void	draw_player(t_player *player)
 
 	ft_bzero(player->img->pixels, \
 			player->img->width * player->img->height * sizeof(int));
-	point1.x = cos(player->angle) * PLAYER_SIZE + WINDOW_WIDTH / 2;
-	point1.y = sin(player->angle) * PLAYER_SIZE + WINDOW_HEIGHT / 2;
+	point1.x = cos(player->angle) * PLAYER_SIZE + WINDOW_WIDTH / 2.0;
+	point1.y = sin(player->angle) * PLAYER_SIZE + WINDOW_HEIGHT / 2.0;
 	connect_points(player->img, player->position, point1, 0xFF0000FF);
 }
 
