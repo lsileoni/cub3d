@@ -1,5 +1,3 @@
-#include "./libft/src/libft.h"
-
 #include "cub3d.h"
 #include "graphics.h"
 
@@ -7,7 +5,7 @@ int	main(int argc, char **argv)
 {
 	int			**grid;
 	t_gameinfo	info;
-	t_graphics	*graphics;
+	t_graphics	graphics;
 
 
 	mmu_op(MMU_CREATE, 0);
@@ -28,8 +26,8 @@ int	main(int argc, char **argv)
 	}
 	restore_grid(grid, info);
 	print_grid(grid, info);
-	graphics = init_graphics(grid, &info);
-	start_loop(graphics);
-	mlx_terminate(graphics->mlx); // put in in the exit functions (ESC, etc.)
+	init_graphics(&graphics, grid, &info);
+	start_loop(&graphics);
+	mlx_terminate(graphics.mlx); // put in in the exit functions (ESC, etc.)
 	return (0);
 }

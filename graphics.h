@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:46:07 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 13:34:18 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:20:47 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void		draw_player(t_player *player);
 void		connect_points(mlx_image_t *img, t_point point0, t_point point1, uint32_t color);
 void		draw_map(t_map	*map);
 
-//init.c
-t_graphics	*init_graphics(int **grid, t_gameinfo *info);
+t_graphics	*init_graphics(t_graphics *graphics, int **grid, t_gameinfo *info);
 
 //main_loop.c
 void		start_loop(t_graphics	*graphics);

@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 14:39:44 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:19:11 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static t_player	*init_player(mlx_t *mlx)
 
 	player = mmu_op(MMU_ALLOC, sizeof(t_player));
 	player->img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	//player->img = mlx_new_image(mlx, PLAYER_SIZE * 2, PLAYER_SIZE * 2);
 	player->position.x = WINDOW_WIDTH / 2;
 	player->position.y = WINDOW_HEIGHT / 2;
 	player->angle = 0;
@@ -66,15 +65,11 @@ static t_player	*init_player(mlx_t *mlx)
 	return (player);
 }
 
-t_graphics	*init_graphics(int **grid, t_gameinfo *info)
+t_graphics	*init_graphics(t_graphics *graphics, int **grid, t_gameinfo *info)
 {
-	t_graphics	*graphics;
-
-	graphics = mmu_op(MMU_ALLOC, sizeof(t_graphics));
 	graphics->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, \
 							"cub3 me daddy", false);
 	graphics->map = init_map(graphics->mlx, grid, info);
 	graphics->player = init_player(graphics->mlx);
 	graphics->cursor = init_cursor(graphics->mlx);
-	return (graphics);
 }

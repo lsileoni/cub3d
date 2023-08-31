@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:29:26 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 15:03:24 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:15:30 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,26 @@ static void	key_press(void *dt)
 		mlx_close_window(graphics->mlx);
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_W))
 	{
-		graphics->player->img->instances[0].y += round(sin(graphics->player->angle) * 5);
-		graphics->player->img->instances[0].x += round(cos(graphics->player->angle) * 5);
+		graphics->player->position.y += round(sin(graphics->player->angle) * 5);
+		graphics->player->position.x += round(cos(graphics->player->angle) * 5);
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_S))
 	{
-		graphics->player->img->instances[0].y -= round(sin(graphics->player->angle) * 5);
-		graphics->player->img->instances[0].x -= round(cos(graphics->player->angle) * 5);
+		graphics->player->position.y -= round(sin(graphics->player->angle) * 5);
+		graphics->player->position.x -= round(cos(graphics->player->angle) * 5);
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_A))
 	{
-		graphics->player->img->instances[0].y -= round(sin(graphics->player->angle + M_PI_2) * 5);
-		graphics->player->img->instances[0].x -= round(cos(graphics->player->angle + M_PI_2) * 5);
+		graphics->player->position.y -= round(sin(graphics->player->angle + M_PI_2) * 5);
+		graphics->player->position.x -= round(cos(graphics->player->angle + M_PI_2) * 5);
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_D))
 	{
-		graphics->player->img->instances[0].y += round(sin(graphics->player->angle + M_PI_2) * 5);
-		graphics->player->img->instances[0].x += round(cos(graphics->player->angle + M_PI_2) * 5);
+		graphics->player->position.y += round(sin(graphics->player->angle + M_PI_2) * 5);
+		graphics->player->position.x += round(cos(graphics->player->angle + M_PI_2) * 5);
 	}
-	ft_printf("x: %d\ty: %d", graphics->player->img->instances[0].x, graphics->player->img->instances[0].y);
+	printf("(x, y, angle): (%i, %i, %f)\n",\
+	graphics->player->position.x, graphics->player->position.y, graphics->player->angle * 57.2958);
 }
 
 static void	cursor_func(double xpos, double ypos, void *dt)
