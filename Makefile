@@ -3,8 +3,8 @@ NAME := cub3D
 SRC := main.c flood_fill.c grid_ops.c getters.c draw.c init_graphics.c main_loop.c
 OBJ := $(SRC:%.c=%.o)
 
-MLX_FW			:= -framework Cocoa -framework OpenGL -framework IOKit
-MLX_LIB			:= -lglfw -L ~/.brew/opt/glfw/lib
+MLX_FW			:= -framework Cocoa -framework OpenGL -framework IOKit -lm
+MLX_LIB			:= -lglfw -L ~/.brew/opt/glfw/lib -lm
 MLX_NAME		:= ./MLX42/build/libmlx42.a
 FT_DIR			:= ./libft
 FT_SRC_DIR		:= $(FT_DIR)/src
