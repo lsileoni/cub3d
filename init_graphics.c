@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/29 09:53:20 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/08/29 13:34:26 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static t_player	*init_player(mlx_t *mlx)
 
 	player = malloc(sizeof(t_player)); //use mmu_op
 	player->img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	//player->img = mlx_new_image(mlx, PLAYER_SIZE * 2, PLAYER_SIZE * 2);
 	player->position.x = WINDOW_WIDTH / 2;
 	player->position.y = WINDOW_HEIGHT / 2;
 	player->angle = 0;
@@ -58,15 +57,11 @@ static t_player	*init_player(mlx_t *mlx)
 	return (player);
 }
 
-t_graphics	*init_graphics(void)
+void	init_graphics(t_graphics *graphics)
 {
-	t_graphics	*graphics;
-
-	graphics = malloc(sizeof(t_graphics)); // use mmu_op
 	graphics->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, \
 							"cub3 me daddy", false);
 	graphics->map = init_map(graphics->mlx);
 	graphics->player = init_player(graphics->mlx);
 	graphics->cursor = init_cursor(graphics->mlx);
-	return (graphics);
 }

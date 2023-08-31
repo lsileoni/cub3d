@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:46:07 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/28 20:33:51 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/08/29 14:05:59 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void		connect_points(mlx_image_t *img, t_point point0, t_point point1, uint32_t 
 void		draw_map(mlx_image_t *map);
 
 //init.c
-t_graphics	*init_graphics(void);
+void	init_graphics(t_graphics *graphics);
 
 //main_loop.c
 void		start_loop(t_graphics	*graphics);

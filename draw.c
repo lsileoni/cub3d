@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:32 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/29 09:46:17 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/08/30 15:32:33 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	minimap[10][10] = { 
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 1, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 1, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+		{1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
+		{1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
 
@@ -72,8 +72,8 @@ void	draw_player(t_player *player)
 
 	ft_bzero(player->img->pixels, \
 			player->img->width * player->img->height * sizeof(int));
-	point1.x = cos(player->angle) * PLAYER_SIZE + WINDOW_WIDTH / 2;
-	point1.y = sin(player->angle) * PLAYER_SIZE + WINDOW_HEIGHT / 2;
+	point1.x = cos(player->angle) * PLAYER_SIZE + player->position.x;
+	point1.y = sin(player->angle) * PLAYER_SIZE + player->position.y;
 	connect_points(player->img, player->position, point1, 0xFF0000FF);
 }
 
