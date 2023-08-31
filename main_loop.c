@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:29:26 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 15:15:30 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 18:04:21 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	key_press(void *dt)
 		graphics->player->position.y += round(sin(graphics->player->angle + M_PI_2) * 5);
 		graphics->player->position.x += round(cos(graphics->player->angle + M_PI_2) * 5);
 	}
-	printf("(x, y, angle): (%i, %i, %f)\n",\
+	//printf("(x, y, angle): (%i, %i, %f)\n",\
 	graphics->player->position.x, graphics->player->position.y, graphics->player->angle * 57.2958);
 }
 
@@ -62,6 +62,7 @@ static void	render_frame(void *dt)
 
 	graphics = dt;
 	draw_player(graphics->player);
+	ray(graphics);
 }
 
 void	start_loop(t_graphics	*graphics)

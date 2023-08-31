@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:32 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 15:21:53 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:00:55 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	draw_block(t_map *map, t_point point0)
 	point1.y = point0.y;
 	while (i < map->block_size)
 	{
-		connect_points(map->map, point0, point1, 0xFFFFFFFF);
+		connect_points(map->img, point0, point1, 0xFFFFFFFF);
 		point1.y++;
 		point0.y++;
 		i++;

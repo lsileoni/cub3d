@@ -6,14 +6,14 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 15:23:51 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:28:15 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics.h"
 #include "libft/src/libft.h"
 
-static mlx_image_t	*init_map(mlx_t *mlx, int **grid, t_gameinfo *info)
+static t_map	*init_map(mlx_t *mlx, int **grid, t_gameinfo *info)
 {
 	t_map		*map;
 	mlx_image_t	*image;
@@ -27,12 +27,12 @@ static mlx_image_t	*init_map(mlx_t *mlx, int **grid, t_gameinfo *info)
 		exit (1); // handle error
 	}
 	ft_memset(image->pixels, 0, image->width * image->height * sizeof(int));
-	map->map = image;
+	map->img = image;
 	map->grid = grid;
 	map->info = info;
-	map->block_size = 24;
+	map->block_size = 63;
 	draw_map(map);
-	return (image);
+	return (map);
 }
 
 static mlx_win_cursor_t	*init_cursor(mlx_t *mlx)
@@ -55,7 +55,7 @@ static t_player	*init_player(mlx_t *mlx)
 	player->img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	player->position.x = WINDOW_WIDTH / 2;
 	player->position.y = WINDOW_HEIGHT / 2;
-	player->angle = 0;
+	player->angle = 5.41052;
 	if (!player->img || mlx_image_to_window(mlx, player->img, 0, 0) < 0)
 	{
 		printf("Error opening the image\n");

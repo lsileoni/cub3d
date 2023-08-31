@@ -1,6 +1,6 @@
 NAME := cub3D
 
-SRC := main.c flood_fill.c grid_ops.c getters.c draw.c init_graphics.c main_loop.c
+SRC := main.c ray.c flood_fill.c grid_ops.c getters.c draw.c init_graphics.c main_loop.c
 OBJ := $(SRC:%.c=%.o)
 
 MLX_FW			:= -framework Cocoa -framework OpenGL -framework IOKit -lm

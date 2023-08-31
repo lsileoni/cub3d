@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 18:46:07 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 15:24:08 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:24:00 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 #define WINDOW_WIDTH 640
 #define PLAYER_SIZE 30
 #define MOUSE_SENSITIVITY 0.001
-#define BLOCK_SIZE 63 // maybe this should be an int so we can change it depending on map size
+#define BLOCK_SIZE 64 // maybe this should be an int so we can change it depending on map size
 
 typedef struct s_map
 {
 	int			block_size;
 	int			**grid;
-	mlx_image_t	*map;
+	mlx_image_t	*img;
 	t_gameinfo	*info;
 }				t_map;
 
@@ -46,7 +46,7 @@ typedef	struct	s_player
 typedef struct s_graphics
 {
 	mlx_t				*mlx;
-	mlx_image_t			*map;
+	t_map				*map;
 	t_player			*player;
 	mlx_win_cursor_t	*cursor;
 }					t_graphics;
@@ -69,3 +69,4 @@ void		init_graphics(t_graphics *graphics, int **grid, t_gameinfo *info);
 
 //main_loop.c
 void		start_loop(t_graphics	*graphics);
+void		ray(t_graphics *graphics);
