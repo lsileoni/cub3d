@@ -6,24 +6,11 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:32 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 17:00:55 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/02 18:40:38 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "graphics.h"
-
-int	minimap[10][10] = { 
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-		{1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 1, 0, 1, 1, 1, 1, 1, 0, 1},
-		{1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-	};
 
 void	draw_block(t_map *map, t_point point0)
 {
@@ -87,9 +74,9 @@ static void	get_vars(t_point point0, t_point point1, t_conn_pnts_vars *vars)
 		vars->left = -1;
 	vars->move_ratio = (float)(point0.y - point1.y) / \
 						(float)(point0.x - point1.x);
-	vars->move_ratio = fabsf(vars->move_ratio);
+	vars->move_ratio = fabs(vars->move_ratio);
 	vars->curr_step = vars->move_ratio;
-	vars->total_steps = abs(point0.x - point1.x) + abs(point0.y - point1.y);
+	vars->total_steps = fabs(point0.x - point1.x) + fabs(point0.y - point1.y);
 }
 
 void	connect_points(mlx_image_t *img, \
@@ -98,16 +85,16 @@ void	connect_points(mlx_image_t *img, \
 	t_conn_pnts_vars	vars;
 
 	get_vars(point0, point1, &vars);
-	if (point0.x == point1.x)
+	if ((int)point0.x == (int)point1.x)
 	{
-		while (point0.y != point1.y)
+		while ((int)point0.y != (int)point1.y)
 		{
 			mlx_put_pixel(img, point0.x, point0.y, color);
 			point0.y += vars.up;
 		}
 		return ;
 	}
-	while (point0.x != point1.x)
+	while ((int)point0.x != (int)point1.x)
 	{
 		while (vars.curr_step >= 1)
 		{

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/28 18:46:07 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 17:24:00 by jofoto           ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/09/02 18:34:16 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #define WINDOW_WIDTH 640
 #define PLAYER_SIZE 30
 #define MOUSE_SENSITIVITY 0.001
-#define BLOCK_SIZE 64 // maybe this should be an int so we can change it depending on map size
+#define BLOCK_SIZE 64.0 // maybe this should be an int so we can change it depending on map size
 
 typedef struct s_map
 {
@@ -32,8 +32,8 @@ typedef struct s_map
 
 typedef struct s_point
 {
-	int				x;
-	int				y;
+	double				x;
+	double				y;
 }					t_point;
 
 typedef	struct	s_player
@@ -53,8 +53,8 @@ typedef struct s_graphics
 
 typedef struct s_con_pnt_vars
 {
-	float			move_ratio;
-	float			curr_step;
+	double			move_ratio;
+	double			curr_step;
 	int				up;
 	int				left;
 	int				total_steps;
