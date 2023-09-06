@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/02 18:34:16 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/06 17:30:24 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef	struct	s_player
 	mlx_image_t		*img;
 	t_point			position;
 	double			angle;
+	double			cursorx;
+	double			cursory;
 }					t_player;
 
 typedef struct s_graphics

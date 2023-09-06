@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:29:26 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/02 18:29:43 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/06 22:01:33 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static void	cursor_func(double xpos, double ypos, void *dt)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)
 		graphics->player->angle = M_PI * 2;
+	graphics->player->cursorx = xpos;
+	graphics->player->cursory = ypos;
 	mlx_set_mouse_pos(graphics->mlx, 0, 0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/08/31 17:28:15 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/06 19:38:45 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static t_player	*init_player(mlx_t *mlx)
 
 	player = mmu_op(MMU_ALLOC, sizeof(t_player));
 	player->img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	player->position.x = WINDOW_WIDTH / 2;
-	player->position.y = WINDOW_HEIGHT / 2;
-	player->angle = 5.41052;
+	player->position.x = WINDOW_WIDTH / 2.0;
+	player->position.y = WINDOW_HEIGHT / 2.0;
+	player->angle = 1;
 	if (!player->img || mlx_image_to_window(mlx, player->img, 0, 0) < 0)
 	{
 		printf("Error opening the image\n");
