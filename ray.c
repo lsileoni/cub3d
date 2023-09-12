@@ -10,42 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42/include/MLX42/MLX42.h"
 #include "graphics.h"
 #include <math.h>
 
-/*int main(void)
-{
-  float x;
-  float y;
-  float x1, y1;
-  float x2, y2, dx, dy, step;
-  int i, gd = 0, gm;
-  
-  std::cout << "Enter the value of x1 and y1: ";
-  std::cin >> x1 >> y1;
-  std::cout << "Enter the value of x2 and y2: ";
-  std::cin >> x2 >> y2;
-  
-  dx = (x2 - x1);
-  dy = (y2 - y1);
-  if (abs(dx) >= abs(dy))
-    step = abs(dx);
-  else
-    step = abs(dy);
-  dx = dx / step;
-  dy = dy / step;
-  x = x1;
-  y = y1;
-  i = 0;
-  while (i <= step) {
-    x = x + dx;
-    y = y + dy;
-    i = i + 1;
-  }
-}*/
-
 typedef struct s_ray_vars
 {
+	double			dist;
 	float			move_ratio; // how much to move in y for one step in x
 	float			curr_step;
 	int				up;
@@ -55,7 +26,7 @@ typedef struct s_ray_vars
 	t_point			blockpos;
 }					t_ray_vars;
 
-static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map)
+static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map, double angle)
 {
 	t_ray_vars	vars;
 	double		x1;
@@ -80,56 +51,83 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 	int			x_steps = 0;
 	int			y_steps = 0;
 	int			itercount = 0;
+	double		fourty_five_deg = 0.785398163;
+	double		x_max = 9.0;
+	double		x_min = 1.0;
+	double		y_max = 9.0;
+	double		y_min = 1.0;
 
 	x1 = player->position.x / BLOCK_SIZE;
 	y1 = player->position.y / BLOCK_SIZE;
-	y2 = player->cursory / BLOCK_SIZE;
-	x2 = player->cursorx / BLOCK_SIZE;
-	printf("Player angle: %f\n", player->angle);
-	printf("Left is pi\nRight is 0\nDown is pi/2\nUp is 3PI/2\n");
-	if (player->angle > 0.0 && player->angle <= M_PI / 2.0)
+	if (angle < (((M_PI * 3) / 2.0) + 0.02) && angle > (((M_PI * 3) / 2.0) - 0.02))
 	{
-		printf("Looking bottom right\nAngle diff: %f\n", player->angle);
-		angle_diff = player->angle;
+		y2 = 1.0;
+		x2 = x1 + 0.125;
 	}
-	else if (player->angle > M_PI / 2.0 && player->angle <= M_PI)
+	else if (angle > 0.0 && angle <= M_PI / 2.0)
 	{
-		printf("Looking bottom left\nAngle diff: %f\n", fabs(player->angle - M_PI));
-		angle_diff = fabs(player->angle - M_PI);
+		angle_diff = angle;
+		if (angle_diff > fourty_five_deg)
+		{
+			y2 = 9.0;
+			angle_diff -= M_PI / 4.0;
+			angle_diff = (M_PI / 4.0) - angle_diff;
+			x2 = ((y2 - y1) * tan(angle_diff)) + x1;
+		}
+		else
+		{
+			x2 = 9.0;
+			y2 = ((x2 - x1) * tan(angle_diff)) + y1;
+		}
 	}
-	else if (player->angle > M_PI && player->angle <= (3.0 * M_PI) / 2.0)
+	else if (angle > M_PI / 2.0 && angle <= M_PI)
 	{
-		printf("Looking up left\nAngle diff: %f\n", fabs(player->angle - M_PI));
-		angle_diff = fabs(player->angle - M_PI);
+		angle_diff = fabs(fabs(angle - M_PI) - (M_PI / 2.0));
+		if (angle_diff > fourty_five_deg)
+		{
+			x2 = 1.0;
+			angle_diff -= M_PI / 4.0;
+			angle_diff = (M_PI / 4.0) - angle_diff;
+			y2 = ((x1 - x2) * tan(angle_diff)) + y1;
+		}
+		else
+		{
+			y2 = 9.0;
+			x2 = ((y1 - y2) * tan(angle_diff)) + x1;
+		}
+	}
+	else if (angle > M_PI && angle <= (3.0 * M_PI) / 2.0)
+	{
+		angle_diff = fabs(angle - M_PI);
+		if (angle_diff > fourty_five_deg)
+		{
+			y2 = 1.0;
+			angle_diff -= M_PI / 4.0;
+			angle_diff = (M_PI / 4.0) - angle_diff;
+			x2 = ((y2 - y1) * tan(angle_diff)) + x1;
+		}
+		else
+		{
+			x2 = 1.0;
+			y2 = ((x2 - x1) * tan(angle_diff)) + y1;
+		}
 	}
 	else
 	{
-		printf("Looking up right\nAngle diff: %f\n", fabs(player->angle - (M_PI * 2.0)));
-		angle_diff = fabs(player->angle - (M_PI * 2.0));
+		angle_diff = fabs(fabs(angle - (M_PI * 2.0)) - (M_PI / 2.0));
+		if (angle_diff > fourty_five_deg)
+		{
+			x2 = 9.0;
+			angle_diff -= M_PI / 4.0;
+			angle_diff = (M_PI / 4.0) - angle_diff;
+			y2 = ((x1 - x2) * tan(angle_diff)) + y1;
+		}
+		else
+		{
+			y2 = 1.0;
+			x2 = ((y1 - y2) * tan(angle_diff)) + x1;
+		}
 	}
-	// printf("x2: %f\ty2: %f\n", x2, y2);
-	// if (player->angle >= 0.0 && player->angle <= M_PI)
-	// 	y2 = 9.0 - y1;
-	// else
-	// 	y2 = y1;
-	// if (player->angle <= ((3.0 * M_PI) / 2.0) && player->angle >= (M_PI / 2.0))
-	// 	x2 = x1;
-	// else
-	// 	x2 = 9.0 - x1;
-	// printf("y1: %f\tx1: %f\ny2: %f\tx2: %f\n", y1, x1, y2, x2);
-	/*
-	 x1 = 360;
-	 y1 = 360;
-	 x2 = 460;
-	 y2 = 410;
-
-	 dx = (x2 - x1) = 100
-	 dy = (y2 - y1) = 50 
-	 step = 100
-
-	 dx = dx / step = 1
-	 dy = dy / step = 0.5
-	 */
 	dx = (x2 - x1);
 	dy = (y2 - y1);
 	if (dx == 0)
@@ -142,7 +140,6 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 		y_step = sqrt(1 + ((dx / dy) * (dx / dy)));
 	map_x = (int)x1;
 	map_y = (int)y1;
-	// printf("map_x: %d\tmap_y: %d\n", map_x, map_y);
 	if (dx < 0)
 	{
 		x = -1;
@@ -163,11 +160,10 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 		y = 1;
 		sidelen_y = (((double)(map_y + 1.0)) - y1) * y_step;
 	}
-	// x = x1;
-	// y = y1;
-	// printf("dx: %f\tdy: %f\n", dx, dy);
 	vars.curr_pos.x = x1;
 	vars.curr_pos.y = y1;
+	double ray_x = x1;
+	double ray_y = y1;
 	while (1)
 	{
 		if (sidelen_x < sidelen_y)
@@ -175,6 +171,7 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 			end_distance = sidelen_x;
 			sidelen_x += x_step;
 			map_x += x;
+			ray_x += x;
 			vars.last_move = 1;
 		}
 		else
@@ -182,76 +179,90 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 			end_distance = sidelen_y;
 			sidelen_y += y_step;
 			map_y += y;
+			ray_y += y;
 			vars.last_move = 2;
 		}
-		// printf("x: %d\ty: %d\n", map_x, map_y);
 		if (map[map_y][map_x] == 1)
+		{
+			vars.curr_pos.x = map_x * BLOCK_SIZE;
+			vars.curr_pos.y = map_y * BLOCK_SIZE;
 			break ;
+		}
 		itercount++;
 	}
-	double opp = 0;
-	double adj = 0;
+	vars.dist = end_distance;
 	if (vars.last_move == 1)
-	{
-		if (x < 0)
-			adj = fabs(x1 - (map_x + 1.0));
-		else
-			adj = fabs(map_x - x1);
-		opp = adj * tan(angle_diff);
-	}
+		vars.dist = (sidelen_x - x_step);
 	else
-	{
-		if (y < 0)
-			adj = fabs(y1 + (map_y + 1.0));
-		else
-			adj = fabs(map_y - y1);
-		opp = adj * tan(angle_diff);
-	}
-	printf("Adj: %f\tOpp: %f\n", adj, opp);
-	vars.curr_pos.y = adj;
-	vars.curr_pos.x = opp;
-	vars.curr_pos.y *= BLOCK_SIZE;
-	vars.curr_pos.x *= BLOCK_SIZE;
+		vars.dist = (sidelen_y - y_step);
 	return (vars);
-}
-
-void	find_wall_hit(t_ray_vars *vars, double angle, int	**map)
-{
-	float		x1;
-	float		x2;
-	float		y1;
-	float		y2;
-	float		dx;
-	float		dy;
-	float		step;
-
-	while(map[(int)vars->curr_pos.y][(int)vars->curr_pos.x] != 1)
-	{
-		while(vars->curr_step < 1)
-		{
-			vars->curr_pos.x += vars->left;
-			if(map[(int)vars->curr_pos.y][(int)vars->curr_pos.x] == 1)
-				return ;
-			vars->curr_step += vars->move_ratio;
-		}
-		vars->curr_pos.y += vars->up;
-		vars->curr_step--;
-	}
 }
 
 void	ray(t_graphics *graphics)
 {
-	t_ray_vars	vars;
+	t_ray_vars		vars;
+	double			left_angle;
+	double			current_angle;
+	double			step_size;
+	double			max_wall_size;
+	int				pixels_to_draw;
+	double			depth_step;
+	unsigned char 	color[4];
+	unsigned char 	ceiling_floor[4];
 
-	vars = get_ray_vars(graphics, graphics->player, graphics->map->grid);
-	// 
-	// find_wall_hit(&vars, graphics->player->angle, graphics->map->grid);
-	//printf("wall hit is in x: %i, y: %i, ratio =  %f, left = %i, up = %i\n", \
-	vars.curr_pos.x, vars.curr_pos.y, vars.move_ratio, vars.left, vars.up);
-	// printf("wall x = %f, wall y = %f\n", vars.curr_pos.x, vars.curr_pos.y);
-	// vars.curr_pos.x *= 64;
-	// vars.curr_pos.y *= 64;
-	// printf("player x: %f\tplayer y: %f", graphics->player->position.x, graphics->player->position.y);
-	// printf("player x = %f,player  y = %f\n", graphics->player->position.x, graphics->player->position.y);
-	connect_points(graphics->player->img, graphics->player->position, vars.curr_pos, 0xff0000ff);
+	depth_step = (WINDOW_HEIGHT / 6.0) / 255.0;
+	ceiling_floor[0] = 0xFF;
+	ceiling_floor[1] = 0xFF;
+	ceiling_floor[2] = 0xFF;
+	for (int i = 0; i < WINDOW_HEIGHT; i++)
+	{
+		for (int j = 0; j < WINDOW_WIDTH; j++)
+		{
+			if (j > WINDOW_HEIGHT / 2)
+			{
+				ceiling_floor[3] = (int)(j * depth_step) - 125;
+				unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
+				mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
+			}
+			else
+			{
+				ceiling_floor[3] = 0xFF - (int)(j * depth_step) - 125;
+				unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
+				mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
+			}
+		}
+	}
+	left_angle = graphics->player->angle;
+	if (left_angle < 0.0)
+		left_angle = (M_PI * 2.0) - left_angle;
+	step_size = 1.25 / WINDOW_WIDTH;
+	for (int i = 0; i < WINDOW_WIDTH; i++)
+	{
+		current_angle = left_angle + (i * step_size);
+		if (current_angle >= (M_PI * 2.0))
+			current_angle = current_angle + (M_PI * 2.0);
+		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle);
+		pixels_to_draw = ((WINDOW_HEIGHT / 1.75) - ((((WINDOW_HEIGHT / 1.75) / 12.0) * vars.dist)));
+		color[0] = 0xFF;
+		color[1] = 0x00;
+		color[2] = 0x00;
+		if (pixels_to_draw > 255)
+			color[3] = 255;
+		else
+			color[3] = pixels_to_draw;
+		for (int j = (WINDOW_HEIGHT / 2) - (pixels_to_draw / 2); j < ((WINDOW_HEIGHT / 2) - (pixels_to_draw / 2)) + pixels_to_draw; j++)
+		{
+			if (vars.last_move == 1)
+			{
+				unsigned int rgba_integer = (color[0] << 24) | (color[1] << 16) | (color[2] << 8) | color[3];
+				mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
+			}
+			else
+			{
+				color[0] = 0x4A;
+				unsigned int rgbaInteger = (color[0] << 24) | (color[1] << 16) | (color[2] << 8) | color[3];
+				mlx_put_pixel(graphics->map->img, i, j, rgbaInteger);
+			}
+		}
+	}
 }

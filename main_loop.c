@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42/include/MLX42/MLX42.h"
 #include "graphics.h"
 
 static void	key_press(void *dt)
@@ -21,24 +22,32 @@ static void	key_press(void *dt)
 		mlx_close_window(graphics->mlx);
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_W))
 	{
-		graphics->player->position.y += sin(graphics->player->angle) * 5;
-		graphics->player->position.x += cos(graphics->player->angle) * 5;
+		graphics->player->position.y += sin(graphics->player->angle) * 2.0;
+		graphics->player->position.x += cos(graphics->player->angle) * 2.0;
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_S))
 	{
-		graphics->player->position.y -= sin(graphics->player->angle) * 5;
-		graphics->player->position.x -= cos(graphics->player->angle) * 5;
+		graphics->player->position.y -= sin(graphics->player->angle) * 2.0;
+		graphics->player->position.x -= cos(graphics->player->angle) * 2.0;
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_A))
 	{
-		graphics->player->position.y -= sin(graphics->player->angle + M_PI_2) * 5;
-		graphics->player->position.x -= cos(graphics->player->angle + M_PI_2) * 5;
+		graphics->player->position.y -= sin(graphics->player->angle + M_PI_2) * 2.0;
+		graphics->player->position.x -= cos(graphics->player->angle + M_PI_2) * 2.0;
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_D))
 	{
-		graphics->player->position.y += sin(graphics->player->angle + M_PI_2) * 5;
-		graphics->player->position.x += cos(graphics->player->angle + M_PI_2) * 5;
+		graphics->player->position.y += sin(graphics->player->angle + M_PI_2) * 2.0;
+		graphics->player->position.x += cos(graphics->player->angle + M_PI_2) * 2.0;
 	}
+	if (mlx_is_key_down(graphics->mlx, MLX_KEY_RIGHT))
+		graphics->player->angle += 0.01;
+	if (mlx_is_key_down(graphics->mlx, MLX_KEY_LEFT))
+		graphics->player->angle -= 0.01;
+	if (graphics->player->angle > M_PI * 2)
+		graphics->player->angle = 0;
+	else if (graphics->player->angle < 0)
+		graphics->player->angle = M_PI * 2;
 	//printf("(x, y, angle): (%i, %i, %f)\n",\
 	graphics->player->position.x, graphics->player->position.y, graphics->player->angle * 57.2958);
 }
@@ -48,14 +57,14 @@ static void	cursor_func(double xpos, double ypos, void *dt)
 	t_graphics	*graphics;
 
 	graphics = dt;
-	graphics->player->angle += (xpos * MOUSE_SENSITIVITY);
+	// graphics->player->angle += (xpos * MOUSE_SENSITIVITY);
 	if (graphics->player->angle > M_PI * 2)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)
 		graphics->player->angle = M_PI * 2;
 	graphics->player->cursorx = xpos;
 	graphics->player->cursory = ypos;
-	mlx_set_mouse_pos(graphics->mlx, 0, 0);
+	// mlx_set_mouse_pos(graphics->mlx, 0, 0);
 }
 
 static void	render_frame(void *dt)
@@ -63,7 +72,7 @@ static void	render_frame(void *dt)
 	t_graphics	*graphics;
 
 	graphics = dt;
-	draw_player(graphics->player);
+	// draw_player(graphics->player);
 	ray(graphics);
 }
 

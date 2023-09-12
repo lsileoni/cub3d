@@ -31,7 +31,7 @@ static t_map	*init_map(mlx_t *mlx, int **grid, t_gameinfo *info)
 	map->grid = grid;
 	map->info = info;
 	map->block_size = 63;
-	draw_map(map);
+	// draw_map(map);
 	return (map);
 }
 
@@ -61,7 +61,7 @@ static t_player	*init_player(mlx_t *mlx)
 		printf("Error opening the image\n");
 		return (NULL);
 	}
-	draw_player(player);
+	// draw_player(player);
 	return (player);
 }
 
