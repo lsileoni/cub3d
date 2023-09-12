@@ -57,14 +57,17 @@ static void	cursor_func(double xpos, double ypos, void *dt)
 	t_graphics	*graphics;
 
 	graphics = dt;
-	// graphics->player->angle += (xpos * MOUSE_SENSITIVITY);
 	if (graphics->player->angle > M_PI * 2)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)
 		graphics->player->angle = M_PI * 2;
+	if (xpos > graphics->player->cursorx)
+		graphics->player->angle += (xpos * MOUSE_SENSITIVITY);
+	else
+		graphics->player->angle -= (xpos * MOUSE_SENSITIVITY);
 	graphics->player->cursorx = xpos;
 	graphics->player->cursory = ypos;
-	// mlx_set_mouse_pos(graphics->mlx, 0, 0);
+	mlx_set_mouse_pos(graphics->mlx, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
 }
 
 static void	render_frame(void *dt)
