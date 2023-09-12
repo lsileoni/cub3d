@@ -233,9 +233,7 @@ void	ray(t_graphics *graphics)
 		}
 	}
 	left_angle = graphics->player->angle;
-	if (left_angle < 0.0)
-		left_angle = (M_PI * 2.0) - left_angle;
-	step_size = 1.25 / WINDOW_WIDTH;
+	step_size = 0.75 / WINDOW_WIDTH;
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
 		current_angle = left_angle + (i * step_size);
