@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:29:09 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/06 22:44:59 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/15 12:18:50 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 	int			y_steps = 0;
 	int			itercount = 0;
 	double		fourty_five_deg = 0.785398163;
-	double		x_max = 9.0;
+	double		x_max = graphics->map->info->row_size;
 	double		x_min = 1.0;
-	double		y_max = 9.0;
+	double		y_max = graphics->map->info->col_size;
 	double		y_min = 1.0;
 
 	x1 = player->position.x / BLOCK_SIZE;
@@ -69,14 +69,14 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 		angle_diff = angle;
 		if (angle_diff > fourty_five_deg)
 		{
-			y2 = 9.0;
+			y2 = y_max;
 			angle_diff -= M_PI / 4.0;
 			angle_diff = (M_PI / 4.0) - angle_diff;
 			x2 = ((y2 - y1) * tan(angle_diff)) + x1;
 		}
 		else
 		{
-			x2 = 9.0;
+			x2 = x_max;
 			y2 = ((x2 - x1) * tan(angle_diff)) + y1;
 		}
 	}
@@ -92,7 +92,7 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 		}
 		else
 		{
-			y2 = 9.0;
+			y2 = y_max;
 			x2 = ((y1 - y2) * tan(angle_diff)) + x1;
 		}
 	}
@@ -117,7 +117,7 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 		angle_diff = fabs(fabs(angle - (M_PI * 2.0)) - (M_PI / 2.0));
 		if (angle_diff > fourty_five_deg)
 		{
-			x2 = 9.0;
+			x2 = x_max;
 			angle_diff -= M_PI / 4.0;
 			angle_diff = (M_PI / 4.0) - angle_diff;
 			y2 = ((x1 - x2) * tan(angle_diff)) + y1;
@@ -191,10 +191,13 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 		itercount++;
 	}
 	vars.dist = end_distance;
-	if (vars.last_move == 1)
-		vars.dist = (sidelen_x - x_step);
-	else
-		vars.dist = (sidelen_y - y_step);
+	double current_angle = player->angle - angle;
+
+	if (current_angle < 0)
+	  current_angle += 2 * M_PI;
+	if (current_angle > 2 * M_PI)
+	  current_angle -= 2 * M_PI;
+	vars.dist=vars.dist*cos(current_angle);
 	return (vars);
 }
 
@@ -214,9 +217,9 @@ void	ray(t_graphics *graphics)
 	ceiling_floor[0] = 0xFF;
 	ceiling_floor[1] = 0xFF;
 	ceiling_floor[2] = 0xFF;
-	for (int i = 0; i < WINDOW_HEIGHT; i++)
+	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
-		for (int j = 0; j < WINDOW_WIDTH; j++)
+		for (int j = 0; j < WINDOW_HEIGHT; j++)
 		{
 			if (j > WINDOW_HEIGHT / 2)
 			{
@@ -232,15 +235,19 @@ void	ray(t_graphics *graphics)
 			}
 		}
 	}
-	left_angle = graphics->player->angle;
-	step_size = 0.75 / WINDOW_WIDTH;
+	step_size = 0.001171875 * 1.1;
+	left_angle = graphics->player->angle - ((step_size * WINDOW_WIDTH) / 2);
+	current_angle = left_angle;
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
-		current_angle = left_angle + (i * step_size);
-		if (current_angle >= (M_PI * 2.0))
-			current_angle = current_angle + (M_PI * 2.0);
+		if (current_angle < 0)
+		  current_angle += 2 * M_PI;
+		if (current_angle > 2 * M_PI)
+		  current_angle -= 2 * M_PI;
 		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle);
-		pixels_to_draw = ((WINDOW_HEIGHT / 1.75) - ((((WINDOW_HEIGHT / 1.75) / 12.0) * vars.dist)));
+		pixels_to_draw = (64.0 * WINDOW_HEIGHT) / (vars.dist * 64.0);
+		if (pixels_to_draw > WINDOW_HEIGHT)
+			pixels_to_draw = WINDOW_HEIGHT;
 		color[0] = 0xFF;
 		color[1] = 0x00;
 		color[2] = 0x00;
@@ -262,5 +269,6 @@ void	ray(t_graphics *graphics)
 				mlx_put_pixel(graphics->map->img, i, j, rgbaInteger);
 			}
 		}
+		current_angle += step_size;
 	}
 }

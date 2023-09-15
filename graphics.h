@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/06 17:30:24 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/12 22:14:12 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #define WINDOW_HEIGHT 640
 #define WINDOW_WIDTH 640
 #define PLAYER_SIZE 30
-#define MOUSE_SENSITIVITY 0.001
+#define MOUSE_SENSITIVITY 0.01
 #define BLOCK_SIZE 64.0 // maybe this should be an int so we can change it depending on map size
 
 typedef struct s_map
