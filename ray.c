@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:29:09 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/15 12:18:50 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/15 13:44:51 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ void	ray(t_graphics *graphics)
 		if (current_angle > 2 * M_PI)
 		  current_angle -= 2 * M_PI;
 		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle);
-		pixels_to_draw = (64.0 * WINDOW_HEIGHT) / (vars.dist * 64.0);
+		pixels_to_draw = (70.0 * WINDOW_HEIGHT) / (vars.dist * 64.0);
 		if (pixels_to_draw > WINDOW_HEIGHT)
 			pixels_to_draw = WINDOW_HEIGHT;
 		color[0] = 0xFF;

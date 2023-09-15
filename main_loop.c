@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:29:26 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/06 22:01:33 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/15 13:59:25 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ static void	key_press(void *dt)
 		graphics->player->position.x += cos(graphics->player->angle + M_PI_2) * 2.0;
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_RIGHT))
-		graphics->player->angle += 0.01;
+		graphics->player->angle += 0.0125;
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_LEFT))
-		graphics->player->angle -= 0.01;
+		graphics->player->angle -= 0.0125;
 	if (graphics->player->angle > M_PI * 2)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)
@@ -61,13 +61,14 @@ static void	cursor_func(double xpos, double ypos, void *dt)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)
 		graphics->player->angle = M_PI * 2;
-	if (xpos > graphics->player->cursorx)
-		graphics->player->angle += (xpos * MOUSE_SENSITIVITY);
-	else
-		graphics->player->angle -= (xpos * MOUSE_SENSITIVITY);
+	graphics->player->angle += (xpos * MOUSE_SENSITIVITY);
+	// if (xpos > graphics->player->cursorx)
+	// 	graphics->player->angle += (xpos * MOUSE_SENSITIVITY);
+	// else
+	// 	graphics->player->angle -= (xpos * MOUSE_SENSITIVITY);
 	graphics->player->cursorx = xpos;
 	graphics->player->cursory = ypos;
-	mlx_set_mouse_pos(graphics->mlx, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+	mlx_set_mouse_pos(graphics->mlx, 0, 0);
 }
 
 static void	render_frame(void *dt)
