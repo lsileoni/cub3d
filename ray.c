@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:29:09 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/16 17:20:47 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/16 21:20:36 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,29 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 	vars.dist = vars.dist * cos(current_angle);
 	return (vars);
 }
+uint32_t rgbaToInteger(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+    return (r << 24) | (g << 16) | (b << 8) | a;
+}
+
+int	mlx_pixel_get(mlx_texture_t *texture, int texture_index_x, int texture_index_y)
+{
+	unsigned char rgba[4];
+	int	t;
+
+	if (texture_index_x >= 0 && texture_index_x < texture->width && texture_index_y >= 0 && texture_index_y < texture->height)
+    {
+        size_t pixelIndex = (texture_index_y * texture->width + texture_index_x) * texture->bytes_per_pixel;
+
+        rgba[0] = texture->pixels[pixelIndex];
+        rgba[1] = texture->pixels[pixelIndex + 1];
+        rgba[2] = texture->pixels[pixelIndex + 2];
+        rgba[3] = texture->pixels[pixelIndex + 3];
+    }
+	else
+		return (0);
+    return (rgbaToInteger(rgba[0], rgba[1], rgba[2], rgba[3]));
+}
 
 void	ray(t_graphics *graphics)
 {
@@ -249,36 +272,47 @@ void	ray(t_graphics *graphics)
 	step_size = (0.001171875 * 1.1);
 	left_angle = graphics->player->angle - ((step_size * WINDOW_WIDTH) / 2);
 	current_angle = left_angle;
+	// printf("bytes per pixel: %u\n", graphics->texture->bytes_per_pixel);
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
+		int over = 0;
 		if (current_angle < 0)
 		  current_angle += 2 * M_PI;
 		if (current_angle > 2 * M_PI)
 		  current_angle -= 2 * M_PI;
 		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle);
 		pixels_to_draw = (70.0 * WINDOW_HEIGHT) / (vars.dist * 64.0);
-		if (pixels_to_draw > WINDOW_HEIGHT)
-			pixels_to_draw = WINDOW_HEIGHT;
+		// if (pixels_to_draw > WINDOW_HEIGHT)
+		// {
+		// 	over = pixels_to_draw - WINDOW_HEIGHT;
+		// 	pixels_to_draw = WINDOW_HEIGHT;
+		// }
 		color[1] = (unsigned char)(0xFF * vars.depth);
 		color[2] = 0x00;
 		if (pixels_to_draw > 255)
 			color[3] = 255;
 		else
 			color[3] = pixels_to_draw;
+		int texture_index_x = vars.depth * graphics->texture->width;
+		int test = 0;
 		for (int j = (WINDOW_HEIGHT / 2) - (pixels_to_draw / 2); j < ((WINDOW_HEIGHT / 2) - (pixels_to_draw / 2)) + pixels_to_draw; j++)
 		{
-			if (vars.last_move == 1)
+			if(j < 0)
 			{
-				unsigned int rgba_integer = (color[0] << 24) | (color[1] << 16) | (color[2] << 8) | color[3];
-				mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
+				test = j * -1;
+				j = 0;
 			}
-			else
-			{
-				color[0] = 0x4A;
-				unsigned int rgbaInteger = (color[0] << 24) | (color[1] << 16) | (color[2] << 8) | color[3];
-				mlx_put_pixel(graphics->map->img, i, j, rgbaInteger);
-			}
+			if(j > WINDOW_HEIGHT - 1)
+				break ;
+			int texture_index_y = test * ((double)graphics->texture->height/ (double)(pixels_to_draw + (over / 8.0)));
+
+			//if (!(j < 0 || j > WINDOW_HEIGHT - 1))
+				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture, texture_index_x, texture_index_y));
+			test++;
 		}
+		// printf("over: %d\n", over);
+		// printf("pixels_to_draw: %d\n", pixels_to_draw);
+		// printf("Test: %d\n", test);
 		current_angle += step_size;
 	}
 }

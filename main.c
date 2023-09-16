@@ -27,7 +27,7 @@ int	main(int argc, char **argv)
 	restore_grid(grid, info);
 	print_grid(grid, info);
 	init_graphics(&graphics, grid, &info);
-	mlx_texture_t* texture = mlx_load_png("./checkerboard.png");
+	mlx_texture_t* texture = mlx_load_png("./Camel.png");
 	graphics.texture = texture;
 	start_loop(&graphics);
 	mlx_terminate(graphics.mlx); // put in in the exit functions (ESC, etc.)

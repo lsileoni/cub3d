@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:29:26 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/16 08:39:25 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/16 18:56:51 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 static void	key_press(void *dt)
 {
 	t_graphics	*graphics;
-	t_point		previous_position;
+	// t_point		previous_position;
 
-	previous_position = graphics->player->position;
+	// previous_position = graphics->player->position;
 	graphics = dt;
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(graphics->mlx);
@@ -50,14 +50,14 @@ static void	key_press(void *dt)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)
 		graphics->player->angle = M_PI * 2;
-	if ((int)(graphics->player->position.x / BLOCK_SIZE) - 0.001 >= graphics->map->info->row_size - 2)
-		graphics->player->position.x = (((double)graphics->map->info->row_size) - 1.001) * BLOCK_SIZE;
-	if ((graphics->player->position.x / BLOCK_SIZE) + 0.001 <= 1.0)
-		graphics->player->position.x = (1.001) * BLOCK_SIZE;
-	if ((int)(graphics->player->position.y / BLOCK_SIZE) - 0.001 >= graphics->map->info->col_size - 2)
-		graphics->player->position.y = (((double)graphics->map->info->col_size) - 1.001) * BLOCK_SIZE;
-	if ((graphics->player->position.y / BLOCK_SIZE) + 0.001 <= 1.0)
-		graphics->player->position.y = (1.001) * BLOCK_SIZE;
+	// if ((int)(graphics->player->position.x / BLOCK_SIZE) - 0.001 >= graphics->map->info->row_size - 2)
+	// 	graphics->player->position.x = (((double)graphics->map->info->row_size) - 1.001) * BLOCK_SIZE;
+	// if ((graphics->player->position.x / BLOCK_SIZE) + 0.001 <= 1.0)
+	// 	graphics->player->position.x = (1.001) * BLOCK_SIZE;
+	// if ((int)(graphics->player->position.y / BLOCK_SIZE) - 0.001 >= graphics->map->info->col_size - 2)
+	// 	graphics->player->position.y = (((double)graphics->map->info->col_size) - 1.001) * BLOCK_SIZE;
+	// if ((graphics->player->position.y / BLOCK_SIZE) + 0.001 <= 1.0)
+	// 	graphics->player->position.y = (1.001) * BLOCK_SIZE;
 }
 
 static void	cursor_func(double xpos, double ypos, void *dt)
