@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:29:09 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/16 16:42:52 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/16 17:20:47 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_ray_vars
 	double			depth;
 }					t_ray_vars;
 
-static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map, double angle, int p_var)
+static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map, double angle)
 {
 	t_ray_vars	vars;
 	double		x1;
@@ -251,21 +251,14 @@ void	ray(t_graphics *graphics)
 	current_angle = left_angle;
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
-		int pointting = 0;
 		if (current_angle < 0)
 		  current_angle += 2 * M_PI;
 		if (current_angle > 2 * M_PI)
 		  current_angle -= 2 * M_PI;
-		// if (i == WINDOW_WIDTH / 2)
-		// 	pointting = 1;
-		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle, pointting);
+		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle);
 		pixels_to_draw = (70.0 * WINDOW_HEIGHT) / (vars.dist * 64.0);
 		if (pixels_to_draw > WINDOW_HEIGHT)
 			pixels_to_draw = WINDOW_HEIGHT;
-		if (pointting == 1)
-			color[0] = 0x00;
-		else
-			color[0] = 0xFF;
 		color[1] = (unsigned char)(0xFF * vars.depth);
 		color[2] = 0x00;
 		if (pixels_to_draw > 255)
