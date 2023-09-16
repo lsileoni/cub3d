@@ -59,7 +59,7 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 
 	x1 = player->position.x / BLOCK_SIZE;
 	y1 = player->position.y / BLOCK_SIZE;
-	if (angle < (((M_PI * 3) / 2.0) + 0.02) && angle > (((M_PI * 3) / 2.0) - 0.02))
+	if (angle < (((M_PI * 3) / 2.0) + 0.00001) && angle > (((M_PI * 3) / 2.0) - 0.00001))
 	{
 		y2 = 1.0;
 		x2 = x1 + 0.125;

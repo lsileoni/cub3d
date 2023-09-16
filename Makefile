@@ -14,7 +14,7 @@ CC				:= cc
 INCLUDE_MACOS	:= -I$(FT_SRC_DIR) $(MLX_FW) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LINUX	:= -I$(FT_SRC_DIR) $(MLX_NAME) $(MLX_LIB)
 CFLAGS_MACOS	:= -Wall -Werror -Wextra -g3 $(INCLUDE_MACOS)
-CFLAGS_LINUX	:= -Wall -Werror -Wextra -g3 $(INCLUDE_LINUX) #-fsanitize=address
+CFLAGS_LINUX	:= -Wall -Werror -Wextra -Ofast -march=native $(INCLUDE_LINUX) #-fsanitize=address
 
 all: $(NAME)
 
