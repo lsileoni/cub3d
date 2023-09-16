@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:29:09 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/15 13:44:51 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:42:52 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ typedef struct s_ray_vars
 	int				last_move; // if it was in x or y
 	t_point			curr_pos;
 	t_point			blockpos;
+	double			depth;
 }					t_ray_vars;
 
-static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map, double angle)
+static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map, double angle, int p_var)
 {
 	t_ray_vars	vars;
 	double		x1;
@@ -59,6 +60,8 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 
 	x1 = player->position.x / BLOCK_SIZE;
 	y1 = player->position.y / BLOCK_SIZE;
+	// if (p_var)
+	// 	printf("x1: %f\ty1: %f\n", x1, y1);
 	if (angle < (((M_PI * 3) / 2.0) + 0.00001) && angle > (((M_PI * 3) / 2.0) - 0.00001))
 	{
 		y2 = 1.0;
@@ -191,13 +194,19 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 		itercount++;
 	}
 	vars.dist = end_distance;
+
 	double current_angle = player->angle - angle;
 
+	if (vars.last_move == 2)
+		vars.depth = cos(angle) * end_distance + x1;
+	else
+		vars.depth = sin(angle) * end_distance + y1;
+	vars.depth -= floor(vars.depth);
 	if (current_angle < 0)
 	  current_angle += 2 * M_PI;
 	if (current_angle > 2 * M_PI)
 	  current_angle -= 2 * M_PI;
-	vars.dist=vars.dist*cos(current_angle);
+	vars.dist = vars.dist * cos(current_angle);
 	return (vars);
 }
 
@@ -223,33 +232,41 @@ void	ray(t_graphics *graphics)
 		{
 			if (j > WINDOW_HEIGHT / 2)
 			{
-				ceiling_floor[3] = (int)(j * depth_step) - 125;
-				unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
-				mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
+				// ceiling_floor[3] = (int)(j * depth_step) - 125;
+				// unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
+				// mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
+				mlx_put_pixel(graphics->map->img, i, j, 0x000000FF);
 			}
 			else
 			{
-				ceiling_floor[3] = 0xFF - (int)(j * depth_step) - 125;
-				unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
-				mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
+				// ceiling_floor[3] = 0xFF - (int)(j * depth_step) - 125;
+				// unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
+				// mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
+				mlx_put_pixel(graphics->map->img, i, j, 0xFFFFFFAF);
 			}
 		}
 	}
-	step_size = 0.001171875 * 1.1;
+	step_size = (0.001171875 * 1.1);
 	left_angle = graphics->player->angle - ((step_size * WINDOW_WIDTH) / 2);
 	current_angle = left_angle;
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
+		int pointting = 0;
 		if (current_angle < 0)
 		  current_angle += 2 * M_PI;
 		if (current_angle > 2 * M_PI)
 		  current_angle -= 2 * M_PI;
-		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle);
+		// if (i == WINDOW_WIDTH / 2)
+		// 	pointting = 1;
+		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle, pointting);
 		pixels_to_draw = (70.0 * WINDOW_HEIGHT) / (vars.dist * 64.0);
 		if (pixels_to_draw > WINDOW_HEIGHT)
 			pixels_to_draw = WINDOW_HEIGHT;
-		color[0] = 0xFF;
-		color[1] = 0x00;
+		if (pointting == 1)
+			color[0] = 0x00;
+		else
+			color[0] = 0xFF;
+		color[1] = (unsigned char)(0xFF * vars.depth);
 		color[2] = 0x00;
 		if (pixels_to_draw > 255)
 			color[3] = 255;

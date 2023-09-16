@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/12 22:14:12 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/16 16:43:33 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_graphics
 	t_map				*map;
 	t_player			*player;
 	mlx_win_cursor_t	*cursor;
+	mlx_texture_t		*texture;
 }					t_graphics;
 
 typedef struct s_con_pnt_vars
