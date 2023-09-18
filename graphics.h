@@ -41,8 +41,6 @@ typedef	struct	s_player
 	mlx_image_t		*img;
 	t_point			position;
 	double			angle;
-	double			cursorx;
-	double			cursory;
 }					t_player;
 
 typedef struct s_graphics
