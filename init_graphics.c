@@ -55,7 +55,7 @@ static t_player	*init_player(mlx_t *mlx, t_gameinfo *info)
 	player->img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	player->position.x = (((double)info->start_y) + 0.5) * BLOCK_SIZE;
 	player->position.y = (((double)info->start_x) + 0.5) * BLOCK_SIZE;
-	player->angle = 1;
+	player->angle = info->start_direction;
 	if (!player->img || mlx_image_to_window(mlx, player->img, 0, 0) < 0)
 	{
 		printf("Error opening the image\n");

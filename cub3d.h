@@ -14,6 +14,7 @@
 # define CUB_H
 #include "./libft/src/libft.h"
 #include <fcntl.h>
+#include <math.h>
 #define TARGET_COLOR 0
 #define REPLACEMENT_COLOR 9
 
@@ -37,17 +38,26 @@ typedef struct s_rgb
 	unsigned char	b;
 }					t_rgb;
 
+/* typedef struct s_textures
+{
+	mlx_texture_t		*north;
+	mlx_texture_t		*south;
+	mlx_texture_t		*east;
+	mlx_texture_t		*west;
+
+}				t_textures; */
+
 typedef struct s_gameinfo
 {
-	char	**textures;
-	t_rgb	ceiling_color;
-	t_rgb	floor_color;
-	int		start_x;
-	int		start_y;
-	int		start_direction;
-	int		row_size;
-	int		col_size;
-}			t_gameinfo;
+	//t_textures	textures;
+	t_rgb		ceiling_color;
+	t_rgb		floor_color;
+	int			start_x;
+	int			start_y;
+	double		start_direction;
+	int			row_size;
+	int			col_size;
+}				t_gameinfo;
 
 int		get_row_size(char	*map_name);
 int		get_col_size(char *map_name);

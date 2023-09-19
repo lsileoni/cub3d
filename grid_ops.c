@@ -23,6 +23,14 @@ static void	assign_grid_element(int **grid, char *line,
 	{
 		info->start_x = p.x;
 		info->start_y = p.y;
+		if (line[p.y] == 'S')
+			info->start_direction = M_PI_2;
+		else if (line[p.y] == 'N')
+			info->start_direction = 3 * M_PI_2;
+		else if (line[p.y] == 'W')
+			info->start_direction = M_PI;
+		else if (line[p.y] == 'E')
+			info->start_direction = 0;
 		grid[p.x][p.y] = 0;
 	}
 	else
