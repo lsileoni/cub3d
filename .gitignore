@@ -29,7 +29,7 @@
 *.dylib
 
 # MLX
-*MLX
+*MLX42
 
 # VS code
 *.vscode
