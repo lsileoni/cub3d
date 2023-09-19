@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-#include "libft/src/libft.h"
+#include "../../includes/cub3d.h"
+#include "../../libft/src/libft.h"
 
 static void	assign_grid_element(int **grid, char *line,
 								t_i_point p, t_gameinfo *info)

@@ -1,7 +1,10 @@
 NAME := cub3D
 
-SRC := main.c ray.c flood_fill.c grid_ops.c getters.c draw.c init_graphics.c main_loop.c
-OBJ := $(SRC:%.c=%.o)
+SRC :=	src/main.c \
+		src/raycasting/ray.c \
+		src/parcing/flood_fill.c src/parcing/grid_ops.c src/parcing/getters.c \
+		src/graphics/init_graphics.c src/graphics/main_loop.c src/graphics/draw.c
+OBJ	:=	$(SRC:%.c=%.o)
 
 MLX_FW			:= -framework Cocoa -framework OpenGL -framework IOKit -lm
 MLX_LIB			:= -lglfw -L ~/.brew/opt/glfw/lib -lm

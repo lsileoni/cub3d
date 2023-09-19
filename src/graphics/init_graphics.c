@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "graphics.h"
-#include "libft/src/libft.h"
+#include "../../includes/graphics.h"
+#include "../../libft/src/libft.h"
 
 static t_map	*init_map(mlx_t *mlx, int **grid, t_gameinfo *info)
 {

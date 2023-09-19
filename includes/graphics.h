@@ -10,16 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/src/libft.h"
-#include "MLX42/include/MLX42/MLX42.h"
+#include "../libft/src/libft.h"
+#include "../MLX42/include/MLX42/MLX42.h"
 #include "cub3d.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 #define WINDOW_HEIGHT 640
 #define WINDOW_WIDTH 640
 #define PLAYER_SIZE 30
-#define MOUSE_SENSITIVITY 0.01
+#define MOUSE_SENSITIVITY 0.001
 #define BLOCK_SIZE 64.0 // maybe this should be an int so we can change it depending on map size
 
 typedef struct s_map

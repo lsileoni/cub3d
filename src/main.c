@@ -1,5 +1,5 @@
-#include "cub3d.h"
-#include "graphics.h"
+#include "../includes/cub3d.h"
+#include "../includes/graphics.h"
 
 int	main(int argc, char **argv)
 {
@@ -27,7 +27,12 @@ int	main(int argc, char **argv)
 	restore_grid(grid, info);
 	print_grid(grid, info);
 	init_graphics(&graphics, grid, &info);
-	mlx_texture_t* texture = mlx_load_png("./Camel.png");
+	mlx_texture_t* texture = mlx_load_png("./textures/camel.png");
+	if(texture == NULL)
+	{
+		printf("failed to open texture\n");
+		return (5);
+	}
 	graphics.texture = texture;
 	start_loop(&graphics);
 	mlx_terminate(graphics.mlx); // put in in the exit functions (ESC, etc.)

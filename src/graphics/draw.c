@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "graphics.h"
+#include "../../includes/graphics.h"
 
 void	draw_block(t_map *map, t_point point0)
 {

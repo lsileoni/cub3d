@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/include/MLX42/MLX42.h"
-#include "graphics.h"
-#include <math.h>
+#include "../../MLX42/include/MLX42/MLX42.h"
+#include "../../includes/graphics.h"
 
 typedef struct s_ray_vars
 {

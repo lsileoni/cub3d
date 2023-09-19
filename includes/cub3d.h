@@ -12,7 +12,7 @@
 
 #ifndef CUB_H
 # define CUB_H
-#include "./libft/src/libft.h"
+#include "../libft/src/libft.h"
 #include <fcntl.h>
 #include <math.h>
 #define TARGET_COLOR 0

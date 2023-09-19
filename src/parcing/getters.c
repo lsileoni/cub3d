@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-#include "libft/src/libft.h"
+#include "../../includes/cub3d.h"
+#include "../../libft/src/libft.h"
 
 int	get_row_size(char	*map_name)
 {
