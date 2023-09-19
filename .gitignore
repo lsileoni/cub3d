@@ -28,6 +28,12 @@
 *.so.*
 *.dylib
 
+# MLX
+*MLX
+
+# VS code
+*.vscode
+
 # Executables
 *.exe
 *.out
@@ -35,7 +41,7 @@
 *.i*86
 *.x86_64
 *.hex
-cub3d
+cub3D
 
 # Debug files
 *.dSYM/
