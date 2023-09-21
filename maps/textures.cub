@@ -1,0 +1,10 @@
+NO north
+
+SO       south
+EA east
+
+
+WE west
+
+C 1, 99,01
+F -5, 100,   0

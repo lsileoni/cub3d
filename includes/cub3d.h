@@ -33,6 +33,7 @@ typedef struct s_i_point
 
 typedef struct s_rgb
 {
+	int				filled;
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
@@ -49,9 +50,13 @@ typedef struct s_rgb
 
 typedef struct s_gameinfo
 {
-	//t_textures	textures;
+	char*		north_texture;
+	char*		south_texture;
+	char*		east_texture;
+	char*		west_texture;
 	t_rgb		ceiling_color;
 	t_rgb		floor_color;
+	int			**grid;
 	int			start_x;
 	int			start_y;
 	double		start_direction;
@@ -66,5 +71,7 @@ void	restore_grid(int **grid, t_gameinfo info);
 void	print_grid(int **grid, t_gameinfo info);
 int		check_validity(int **grid, t_gameinfo info);
 void 	flood_fill(int **grid, t_gameinfo info);
+void	init_info(char *file, t_gameinfo *info);
+int		get_textures(int fd, t_gameinfo *info);
 
 #endif
