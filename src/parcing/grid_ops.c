@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   grid_ops.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:00:12 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/09/16 08:56:18 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:01:27 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@
 static void	assign_grid_element(int **grid, char *line,
 								t_i_point p, t_gameinfo *info)
 {
-	if (line[p.y] == ' ')
+	if (line[p.y] == '0' || line[p.y] == '1')
+		grid[p.x][p.y] = line[p.y] - 48;
+	else if (line[p.y] == ' ')
 		grid[p.x][p.y] = 1;
 	else if (line[p.y] == 'N' || line[p.y] == 'S' || \
 			line[p.y] == 'W' || line[p.y] == 'E')
 	{
+		if (info->player_found == 1)
+			p_free_exit(6, "Cant have multiple players!\n");
 		info->start_x = p.x;
 		info->start_y = p.y;
 		if (line[p.y] == 'S')
@@ -32,9 +36,10 @@ static void	assign_grid_element(int **grid, char *line,
 		else if (line[p.y] == 'E')
 			info->start_direction = 0;
 		grid[p.x][p.y] = 0;
+		info->player_found = 1;
 	}
 	else
-		grid[p.x][p.y] = line[p.y] - 48;
+		p_free_exit(5, "Unknown symbol in grid\n");
 }
 
 void	extract_grid(int **grid, char *map_name, t_gameinfo *info)

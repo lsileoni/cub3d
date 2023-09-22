@@ -1,27 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_info.c                                        :+:      :+:    :+:   */
+/*   get_grid.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/22 13:31:53 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/22 15:59:13 by jofoto           ###   ########.fr       */
+/*   Created: 2023/09/22 13:40:48 by jofoto            #+#    #+#             */
+/*   Updated: 2023/09/22 16:06:57 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../libft/src/libft.h"
 
-void	init_info(char *file, t_gameinfo *info)
+void	init_grid_vec(t_grid_vec *grid_vec)
 {
-	int	fd;
+	grid_vec->grid = mmu_op(MMU_ALLOC, sizeof(int *) * 10);
+	grid_vec->cols = 0;
+	grid_vec->curr_rows = 0;
+	grid_vec->row_cap = 10;
+}
 
-	ft_bzero(info, sizeof(t_gameinfo));
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		p_free_exit(3, "Error\nFile not Found\n");
-	if (get_textures(fd, info) != 0)
-		p_free_exit(4, "Error\nInsufficient information!\n");
-	//get_grid(fd, info);
+void	realloc_grid_vec(t_grid_vec	*grid_vec)
+{
+	
+}
+
+void	get_map(int fd, t_gameinfo *info)
+{
+	t_grid_vec	grid_vec;
+	char		*line;
+
+	init_grid_vec(&grid_vec);
+	line = get_next_line(fd);
+	while (line)
+	{
+		if (grid_vec.curr_rows == grid_vec.row_cap)
+			realloc_grid_vec(&grid_vec)
+	}
 }

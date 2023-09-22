@@ -2,7 +2,8 @@ NAME := cub3D
 
 SRC :=	src/main.c \
 		src/raycasting/ray.c \
-		src/parcing/flood_fill.c src/parcing/grid_ops.c src/parcing/getters.c src/parcing/init_info.c\
+		src/parcing/flood_fill.c src/parcing/grid_ops.c\
+		src/parcing/get_textures.c src/parcing/init_info.c src/parcing/utils.c\
 		src/graphics/init_graphics.c src/graphics/main_loop.c src/graphics/draw.c
 OBJ	:=	$(SRC:%.c=%.o)
 

@@ -3,42 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:01:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/31 12:43:27 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:32:58 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../libft/src/libft.h"
-
-void	p_free_exit(int err_no, char *str_to_print)
-{
-	ft_printf("%s", str_to_print);
-	mmu_op(MMU_DESTROY, 0);
-	exit (err_no);
-}
-
-char	*strdup_nl(char *str)
-{
-	char	*p;
-	int		i;
-
-	if(str == NULL)
-		return (NULL);
-	p = mmu_op(MMU_ALLOC, ft_strlen(str) + 1);
-	i = 0;
-	while (*str && *str != '\n')
-	{
-		*p = *str;
-		str++;
-		p++;
-		i++;
-	}
-	*p = '\0';
-	return ((char *)p - i);
-}
 
 static char	*extract_texture(char *line)
 {

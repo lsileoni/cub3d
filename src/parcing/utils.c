@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_info.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/22 13:31:53 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/22 15:59:13 by jofoto           ###   ########.fr       */
+/*   Created: 2023/09/22 13:32:48 by jofoto            #+#    #+#             */
+/*   Updated: 2023/09/22 13:33:10 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 #include "../../libft/src/libft.h"
 
-void	init_info(char *file, t_gameinfo *info)
+char	*strdup_nl(char *str)
 {
-	int	fd;
+	char	*p;
+	int		i;
 
-	ft_bzero(info, sizeof(t_gameinfo));
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		p_free_exit(3, "Error\nFile not Found\n");
-	if (get_textures(fd, info) != 0)
-		p_free_exit(4, "Error\nInsufficient information!\n");
-	//get_grid(fd, info);
+	if(str == NULL)
+		return (NULL);
+	p = mmu_op(MMU_ALLOC, ft_strlen(str) + 1);
+	i = 0;
+	while (*str && *str != '\n')
+	{
+		*p = *str;
+		str++;
+		p++;
+		i++;
+	}
+	*p = '\0';
+	return ((char *)p - i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:54:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/31 13:28:30 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/22 14:08:42 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 #include <math.h>
 #define TARGET_COLOR 0
 #define REPLACEMENT_COLOR 9
+
+typedef struct	s_grid_vec
+{
+	int	**grid;
+	int	row_cap;
+	int	curr_rows;
+	int	cols;
+}				t_grid_vec;
 
 typedef struct s_stack_pair
 {
@@ -57,6 +65,7 @@ typedef struct s_gameinfo
 	t_rgb		ceiling_color;
 	t_rgb		floor_color;
 	int			**grid;
+	int			player_found;
 	int			start_x;
 	int			start_y;
 	double		start_direction;
@@ -73,5 +82,7 @@ int		check_validity(int **grid, t_gameinfo info);
 void 	flood_fill(int **grid, t_gameinfo info);
 void	init_info(char *file, t_gameinfo *info);
 int		get_textures(int fd, t_gameinfo *info);
+void	p_free_exit(int err_no, char *str_to_print);
+char	*strdup_nl(char *str);
 
 #endif
