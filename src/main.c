@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/22 15:36:34 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/23 16:02:35 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@ void	print_info(t_gameinfo info)
 	ft_printf("info.west: %s\n", info.west_texture);
 	ft_printf("Ceiling rgb: r: %i, g: %i, b: %i\n", info.ceiling_color.r, info.ceiling_color.g, info.ceiling_color.b);
 	ft_printf("Floor rgb: r: %i, g: %i, b: %i\n", info.floor_color.r, info.floor_color.g, info.floor_color.b);
+	ft_printf("grid cols: %i grid rows:: %i:\n", info.col_size, info.row_size);
+	for(int i = 0; i < info.row_size; i++)
+	{
+		for(int j = 0; j < info.col_size; j++)
+			ft_printf("%i", info.grid[i][j]);
+		ft_printf("\n");
+	}
 }
 
 void	p_free_exit(int err_no, char *str_to_print)

@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:54:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/09/22 14:08:42 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/23 15:23:19 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <math.h>
 #define TARGET_COLOR 0
 #define REPLACEMENT_COLOR 9
+#define INT_ARR_NULL 420
 
 typedef struct	s_grid_vec
 {
@@ -82,6 +83,7 @@ int		check_validity(int **grid, t_gameinfo info);
 void 	flood_fill(int **grid, t_gameinfo info);
 void	init_info(char *file, t_gameinfo *info);
 int		get_textures(int fd, t_gameinfo *info);
+void	get_grid(int fd, t_gameinfo *info);
 void	p_free_exit(int err_no, char *str_to_print);
 char	*strdup_nl(char *str);
 

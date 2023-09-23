@@ -2,7 +2,7 @@ NAME := cub3D
 
 SRC :=	src/main.c \
 		src/raycasting/ray.c \
-		src/parcing/flood_fill.c src/parcing/grid_ops.c\
+		src/parcing/flood_fill.c src/parcing/grid_ops.c src/parcing/get_grid.c\
 		src/parcing/get_textures.c src/parcing/init_info.c src/parcing/utils.c\
 		src/graphics/init_graphics.c src/graphics/main_loop.c src/graphics/draw.c
 OBJ	:=	$(SRC:%.c=%.o)
@@ -17,8 +17,8 @@ LFT_FLAG		:= -L$(FT_DIR)/build/ -lft
 CC				:= cc
 INCLUDE_MACOS	:= -I$(FT_SRC_DIR) $(MLX_FW) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LINUX	:= -I$(FT_SRC_DIR) $(MLX_NAME) $(MLX_LIB)
-CFLAGS_MACOS	:= -Wall -Werror -Wextra -g3 $(INCLUDE_MACOS)
-CFLAGS_LINUX	:= -Wall -Werror -Wextra -Ofast -march=native $(INCLUDE_LINUX) #-fsanitize=address
+CFLAGS_MACOS	:= -Wall -Werror -Wextra -g3 $(INCLUDE_MACOS) -fsanitize=address
+CFLAGS_LINUX	:= -Wall -Werror -Wextra -Ofast -march=native $(INCLUDE_LINUX) -fsanitize=address
 
 all: $(NAME)
 
