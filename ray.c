@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:29:09 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/30 16:51:56 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/30 20:20:49 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 typedef struct s_ray_vars
 {
 	double			dist;
-	float			move_ratio; // how much to move in y for one step in x
+	float			move_ratio;
 	float			curr_step;
 	int				up;
 	int				left;
-	int				last_move; // if it was in x or y
+	int				last_move;
 	t_point			curr_pos;
 	t_point			blockpos;
 	double			depth;
@@ -275,25 +275,14 @@ void	ray(t_graphics *graphics)
 		for (int j = 0; j < WINDOW_HEIGHT; j++)
 		{
 			if (j > WINDOW_HEIGHT / 2)
-			{
-				// ceiling_floor[3] = (int)(j * depth_step) - 125;
-				// unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
-				// mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
 				mlx_put_pixel(graphics->map->img, i, j, 0x000000FF);
-			}
 			else
-			{
-				// ceiling_floor[3] = 0xFF - (int)(j * depth_step) - 125;
-				// unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
-				// mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
 				mlx_put_pixel(graphics->map->img, i, j, 0xFFFFFFAF);
-			}
 		}
 	}
 	step_size = (0.001171875 * 1.1);
 	left_angle = graphics->player->angle - ((step_size * WINDOW_WIDTH) / 2);
 	current_angle = left_angle;
-	// printf("bytes per pixel: %u\n", graphics->texture->bytes_per_pixel);
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
 		int over = 0;
@@ -303,11 +292,6 @@ void	ray(t_graphics *graphics)
 		  current_angle -= 2 * M_PI;
 		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle);
 		pixels_to_draw = (70.0 * WINDOW_HEIGHT) / (vars.dist * 64.0);
-		// if (pixels_to_draw > WINDOW_HEIGHT)
-		// {
-		// 	over = pixels_to_draw - WINDOW_HEIGHT;
-		// 	pixels_to_draw = WINDOW_HEIGHT;
-		// }
 		color[1] = (unsigned char)(0xFF * vars.depth);
 		color[2] = 0x00;
 		if (pixels_to_draw > 255)
@@ -334,7 +318,6 @@ void	ray(t_graphics *graphics)
 			if(j > WINDOW_HEIGHT - 1)
 				break ;
 
-			//if (!(j < 0 || j > WINDOW_HEIGHT - 1))
 			if (vars.t_sel == WEST)
 			{
 				int texture_index_y = test * ((double)graphics->texture_w->height/ (double)(pixels_to_draw + (over / 8.0)));
@@ -357,9 +340,6 @@ void	ray(t_graphics *graphics)
 			}
 			test++;
 		}
-		// printf("over: %d\n", over);
-		// printf("pixels_to_draw: %d\n", pixels_to_draw);
-		// printf("Test: %d\n", test);
 		current_angle += step_size;
 	}
 }
