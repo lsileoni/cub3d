@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/30 21:42:13 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/30 21:52:04 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ typedef struct s_graphics
 	t_map				*map;
 	t_player			*player;
 	mlx_win_cursor_t	*cursor;
-	t_rgb				ceiling_color;
-	t_rgb				floor_color;
+	int					ceiling_color;
+	int					floor_color;
 	mlx_texture_t		*texture_n;
 	mlx_texture_t		*texture_w;
 	mlx_texture_t		*texture_e;
@@ -83,3 +83,4 @@ void		init_graphics(t_graphics *graphics, t_gameinfo *info);
 //main_loop.c
 void		start_loop(t_graphics	*graphics);
 void		ray(t_graphics *graphics);
+uint32_t	rgbaToInteger(uint8_t r, uint8_t g, uint8_t b, uint8_t a);

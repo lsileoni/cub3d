@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/30 21:43:01 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/30 21:53:34 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ void	init_graphics(t_graphics *graphics, t_gameinfo *info)
 	graphics->texture_n = open_texture(info->north_texture);
 	graphics->texture_s = open_texture(info->south_texture);
 	graphics->texture_w = open_texture(info->west_texture);
-	graphics->ceiling_color = info->ceiling_color;
-	graphics->floor_color = info->floor_color;
+	graphics->ceiling_color = rgbaToInteger(info->ceiling_color.r, info->ceiling_color.g, info->ceiling_color.b, 255);
+	graphics->floor_color = rgbaToInteger(info->floor_color.r, info->floor_color.g, info->floor_color.b, 255);
 	graphics->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, \
 							"cub3 me daddy", false);
 	graphics->map = init_map(graphics->mlx, info);
