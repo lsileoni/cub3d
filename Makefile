@@ -2,8 +2,8 @@ NAME := cub3D
 
 SRC :=	src/main.c \
 		src/raycasting/ray.c \
-		src/parcing/flood_fill.c src/parcing/grid_ops.c src/parcing/get_grid.c\
-		src/parcing/get_textures.c src/parcing/init_info.c src/parcing/utils.c\
+		src/parsing/flood_fill.c src/parsing/grid_ops.c src/parsing/get_grid.c\
+		src/parsing/get_textures.c src/parsing/init_info.c src/parsing/utils.c\
 		src/graphics/init_graphics.c src/graphics/main_loop.c src/graphics/draw.c
 OBJ	:=	$(SRC:%.c=%.o)
 
@@ -35,7 +35,7 @@ $(MLX_NAME):
 	cd ./MLX42 && cmake -B build && cmake --build build -j4
 
 %.o: %.c
-	$(CC) -Ofast -march=native -c $< -o $@
+	$(CC) -g3 -c $< -o $@
 
 clean:
 	make clean -C $(FT_DIR)

@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/23 16:02:35 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/30 21:21:49 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,6 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	init_info(argv[1], &info);
-	print_info(info);
-	/* info.row_size = get_row_size(argv[1]);
-	info.col_size = get_col_size(argv[1]);
-	info.grid = mmu_op(MMU_ALLOC, (sizeof(void *) * info.col_size));
-	extract_grid(info.grid, argv[1], &info);
 	flood_fill(info.grid, info);
 	if (!check_validity(info.grid, info))
 	{
@@ -62,15 +57,8 @@ int	main(int argc, char **argv)
 	}
 	restore_grid(info.grid, info);
 	print_grid(info.grid, info);
-	init_graphics(&graphics, info.grid, &info);
-	mlx_texture_t* texture = mlx_load_png("./textures/smile.png");
-	if(texture == NULL)
-	{
-		printf("failed to open texture\n");
-		return (3);
-	}
-	graphics.texture = texture;
+	init_graphics(&graphics, &info);
 	start_loop(&graphics);
 	mlx_terminate(graphics.mlx); // put in in the exit functions (ESC, etc.)
-	return (0); */
+	return (0);
 }

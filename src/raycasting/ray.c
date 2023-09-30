@@ -3,32 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 15:29:09 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/16 21:20:36 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/09/30 20:56:56 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/09/30 21:57:06 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../MLX42/include/MLX42/MLX42.h"
 #include "../../includes/graphics.h"
+#include <math.h>
 
 typedef struct s_ray_vars
 {
 	double			dist;
-	float			move_ratio; // how much to move in y for one step in x
+	float			move_ratio;
 	float			curr_step;
 	int				up;
 	int				left;
-	int				last_move; // if it was in x or y
+	int				last_move;
 	t_point			curr_pos;
 	t_point			blockpos;
 	double			depth;
+	int				t_sel;
 }					t_ray_vars;
 
 static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map, double angle)
 {
 	t_ray_vars	vars;
+	int			north;
+	int			west;
 	double		x1;
 	double		x2;
 	double		y1;
@@ -59,8 +63,14 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 
 	x1 = player->position.x / BLOCK_SIZE;
 	y1 = player->position.y / BLOCK_SIZE;
-	// if (p_var)
-	// 	printf("x1: %f\ty1: %f\n", x1, y1);
+	if ((angle >= M_PI / 2.0) && angle <= ((3 * M_PI)/2.0))
+		west = 0;
+	else
+		west = 1;
+	if ((angle <= M_PI) && angle >= 0)
+		north = 1;
+	else
+		north = 0;
 	if (angle < (((M_PI * 3) / 2.0) + 0.00001) && angle > (((M_PI * 3) / 2.0) - 0.00001))
 	{
 		y2 = 1.0;
@@ -197,9 +207,21 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 	double current_angle = player->angle - angle;
 
 	if (vars.last_move == 2)
+	{
+		if (north)
+			vars.t_sel = NORTH;
+		else
+			vars.t_sel = SOUTH;
 		vars.depth = cos(angle) * end_distance + x1;
+	}
 	else
+	{
+		if (west)
+			vars.t_sel = WEST;
+		else
+			vars.t_sel = EAST;
 		vars.depth = sin(angle) * end_distance + y1;
+	}
 	vars.depth -= floor(vars.depth);
 	if (current_angle < 0)
 	  current_angle += 2 * M_PI;
@@ -242,36 +264,21 @@ void	ray(t_graphics *graphics)
 	int				pixels_to_draw;
 	double			depth_step;
 	unsigned char 	color[4];
-	unsigned char 	ceiling_floor[4];
 
 	depth_step = (WINDOW_HEIGHT / 6.0) / 255.0;
-	ceiling_floor[0] = 0xFF;
-	ceiling_floor[1] = 0xFF;
-	ceiling_floor[2] = 0xFF;
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
 		for (int j = 0; j < WINDOW_HEIGHT; j++)
 		{
 			if (j > WINDOW_HEIGHT / 2)
-			{
-				// ceiling_floor[3] = (int)(j * depth_step) - 125;
-				// unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
-				// mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
-				mlx_put_pixel(graphics->map->img, i, j, 0x000000FF);
-			}
+				mlx_put_pixel(graphics->map->img, i, j, graphics->ceiling_color);
 			else
-			{
-				// ceiling_floor[3] = 0xFF - (int)(j * depth_step) - 125;
-				// unsigned int rgba_integer = (ceiling_floor[0] << 24) | (ceiling_floor[1] << 16) | (ceiling_floor[2] << 8) | ceiling_floor[3];
-				// mlx_put_pixel(graphics->map->img, i, j, rgba_integer);
-				mlx_put_pixel(graphics->map->img, i, j, 0xFFFFFFAF);
-			}
+				mlx_put_pixel(graphics->map->img, i, j, graphics->floor_color);
 		}
 	}
 	step_size = (0.001171875 * 1.1);
 	left_angle = graphics->player->angle - ((step_size * WINDOW_WIDTH) / 2);
 	current_angle = left_angle;
-	// printf("bytes per pixel: %u\n", graphics->texture->bytes_per_pixel);
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
 		int over = 0;
@@ -281,18 +288,21 @@ void	ray(t_graphics *graphics)
 		  current_angle -= 2 * M_PI;
 		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle);
 		pixels_to_draw = (70.0 * WINDOW_HEIGHT) / (vars.dist * 64.0);
-		// if (pixels_to_draw > WINDOW_HEIGHT)
-		// {
-		// 	over = pixels_to_draw - WINDOW_HEIGHT;
-		// 	pixels_to_draw = WINDOW_HEIGHT;
-		// }
 		color[1] = (unsigned char)(0xFF * vars.depth);
 		color[2] = 0x00;
 		if (pixels_to_draw > 255)
 			color[3] = 255;
 		else
 			color[3] = pixels_to_draw;
-		int texture_index_x = vars.depth * graphics->texture->width;
+		int texture_index_x;
+		if (vars.t_sel == WEST)
+			texture_index_x = vars.depth * graphics->texture_w->width;
+		else if (vars.t_sel == NORTH)
+			texture_index_x = vars.depth * graphics->texture_n->width;
+		else if (vars.t_sel == SOUTH)
+			texture_index_x = vars.depth * graphics->texture_s->width;
+		else
+			texture_index_x = vars.depth * graphics->texture_e->width;
 		int test = 0;
 		for (int j = (WINDOW_HEIGHT / 2) - (pixels_to_draw / 2); j < ((WINDOW_HEIGHT / 2) - (pixels_to_draw / 2)) + pixels_to_draw; j++)
 		{
@@ -303,15 +313,29 @@ void	ray(t_graphics *graphics)
 			}
 			if(j > WINDOW_HEIGHT - 1)
 				break ;
-			int texture_index_y = test * ((double)graphics->texture->height/ (double)(pixels_to_draw + (over / 8.0)));
 
-			//if (!(j < 0 || j > WINDOW_HEIGHT - 1))
-				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture, texture_index_x, texture_index_y));
+			if (vars.t_sel == WEST)
+			{
+				int texture_index_y = test * ((double)graphics->texture_w->height/ (double)(pixels_to_draw + (over / 8.0)));
+				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture_w, texture_index_x, texture_index_y));
+			}
+			else if (vars.t_sel == NORTH)
+			{
+				int texture_index_y = test * ((double)graphics->texture_n->height/ (double)(pixels_to_draw + (over / 8.0)));
+				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture_n, texture_index_x, texture_index_y));
+			}
+			else if (vars.t_sel == SOUTH)
+			{
+				int texture_index_y = test * ((double)graphics->texture_s->height/ (double)(pixels_to_draw + (over / 8.0)));
+				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture_s, texture_index_x, texture_index_y));
+			}
+			else
+			{
+				int texture_index_y = test * ((double)graphics->texture_e->height/ (double)(pixels_to_draw + (over / 8.0)));
+				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture_e, texture_index_x, texture_index_y));
+			}
 			test++;
 		}
-		// printf("over: %d\n", over);
-		// printf("pixels_to_draw: %d\n", pixels_to_draw);
-		// printf("Test: %d\n", test);
 		current_angle += step_size;
 	}
 }

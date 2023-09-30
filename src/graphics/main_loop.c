@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:29:26 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/16 18:56:51 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:29:44 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,48 +16,63 @@
 static void	key_press(void *dt)
 {
 	t_graphics	*graphics;
-	// t_point		previous_position;
+	t_point		new_position;
 
-	// previous_position = graphics->player->position;
 	graphics = dt;
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(graphics->mlx);
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_W))
 	{
+		new_position.y = graphics->player->position.y + sin(graphics->player->angle) * 2.0;
 		graphics->player->position.y += sin(graphics->player->angle) * 2.0;
+		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
+			graphics->player->position.y -= sin(graphics->player->angle) * 2.0;
+		new_position.x = graphics->player->position.x + cos(graphics->player->angle) * 2.0;
 		graphics->player->position.x += cos(graphics->player->angle) * 2.0;
+		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
+			graphics->player->position.x -= cos(graphics->player->angle) * 2.0;
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_S))
 	{
+		new_position.y = graphics->player->position.y - sin(graphics->player->angle) * 2.0;
 		graphics->player->position.y -= sin(graphics->player->angle) * 2.0;
+		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
+			graphics->player->position.y += sin(graphics->player->angle) * 2.0;
+		new_position.x = graphics->player->position.x - cos(graphics->player->angle) * 2.0;
 		graphics->player->position.x -= cos(graphics->player->angle) * 2.0;
+		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
+			graphics->player->position.x += cos(graphics->player->angle) * 2.0;
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_A))
 	{
+		new_position.y = graphics->player->position.y - sin(graphics->player->angle + M_PI_2) * 2.0;
 		graphics->player->position.y -= sin(graphics->player->angle + M_PI_2) * 2.0;
+		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
+			graphics->player->position.y += sin(graphics->player->angle + M_PI_2) * 2.0;
+		new_position.x = graphics->player->position.x - cos(graphics->player->angle + M_PI_2) * 2.0;
 		graphics->player->position.x -= cos(graphics->player->angle + M_PI_2) * 2.0;
+		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
+			graphics->player->position.x += cos(graphics->player->angle + M_PI_2) * 2.0;
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_D))
 	{
+		new_position.y = graphics->player->position.y + sin(graphics->player->angle + M_PI_2) * 2.0;
 		graphics->player->position.y += sin(graphics->player->angle + M_PI_2) * 2.0;
+		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
+			graphics->player->position.y -= sin(graphics->player->angle + M_PI_2) * 2.0;
+		new_position.x = graphics->player->position.x + cos(graphics->player->angle + M_PI_2) * 2.0;
 		graphics->player->position.x += cos(graphics->player->angle + M_PI_2) * 2.0;
+		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
+			graphics->player->position.x -= cos(graphics->player->angle + M_PI_2) * 2.0;
 	}
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_RIGHT))
-		graphics->player->angle += 0.0125;
+		graphics->player->angle += 0.025;
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_LEFT))
-		graphics->player->angle -= 0.0125;
+		graphics->player->angle -= 0.025;
 	if (graphics->player->angle > M_PI * 2)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)
 		graphics->player->angle = M_PI * 2;
-	// if ((int)(graphics->player->position.x / BLOCK_SIZE) - 0.001 >= graphics->map->info->row_size - 2)
-	// 	graphics->player->position.x = (((double)graphics->map->info->row_size) - 1.001) * BLOCK_SIZE;
-	// if ((graphics->player->position.x / BLOCK_SIZE) + 0.001 <= 1.0)
-	// 	graphics->player->position.x = (1.001) * BLOCK_SIZE;
-	// if ((int)(graphics->player->position.y / BLOCK_SIZE) - 0.001 >= graphics->map->info->col_size - 2)
-	// 	graphics->player->position.y = (((double)graphics->map->info->col_size) - 1.001) * BLOCK_SIZE;
-	// if ((graphics->player->position.y / BLOCK_SIZE) + 0.001 <= 1.0)
-	// 	graphics->player->position.y = (1.001) * BLOCK_SIZE;
 }
 
 static void	cursor_func(double xpos, double ypos, void *dt)
@@ -65,7 +80,7 @@ static void	cursor_func(double xpos, double ypos, void *dt)
 	t_graphics	*graphics;
 
 	graphics = dt;
-	graphics->player->angle += ((xpos - WINDOW_WIDTH/2) * MOUSE_SENSITIVITY);
+	graphics->player->angle += ((xpos - WINDOW_WIDTH/2.0) * MOUSE_SENSITIVITY);
 	if (graphics->player->angle > M_PI * 2)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)

@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/30 21:53:34 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/30 21:55:35 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static t_map	*init_map(mlx_t *mlx, t_gameinfo *info)
 	map->grid = info->grid;
 	map->info = info;
 	map->block_size = 64;
-	// draw_map(map);
 	return (map);
 }
 
@@ -61,7 +60,6 @@ static t_player	*init_player(mlx_t *mlx, t_gameinfo *info)
 		printf("Error opening the image\n");
 		return (NULL);
 	}
-	// draw_player(player);
 	return (player);
 }
 
