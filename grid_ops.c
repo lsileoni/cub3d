@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:00:12 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/31 12:44:06 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/16 08:56:18 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	assign_grid_element(int **grid, char *line,
 								t_i_point p, t_gameinfo *info)
 {
 	if (line[p.y] == ' ')
-		grid[p.x][p.y] = 0;
+		grid[p.x][p.y] = 1;
 	else if (line[p.y] == 'N' || line[p.y] == 'S' || \
 			line[p.y] == 'W' || line[p.y] == 'E')
 	{

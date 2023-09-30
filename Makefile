@@ -1,6 +1,6 @@
 NAME := cub3D
 
-SRC := main.c flood_fill.c grid_ops.c getters.c draw.c init_graphics.c main_loop.c
+SRC := main.c ray.c flood_fill.c grid_ops.c getters.c draw.c init_graphics.c main_loop.c
 OBJ := $(SRC:%.c=%.o)
 
 MLX_FW			:= -framework Cocoa -framework OpenGL -framework IOKit -lm
@@ -13,8 +13,8 @@ LFT_FLAG		:= -L$(FT_DIR)/build/ -lft
 CC				:= cc
 INCLUDE_MACOS	:= -I$(FT_SRC_DIR) $(MLX_FW) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LINUX	:= -I$(FT_SRC_DIR) $(MLX_NAME) $(MLX_LIB)
-CFLAGS_MACOS	:= -Wall -Werror -Wextra -g3 $(INCLUDE_MACOS) #-fsanitize=address
-CFLAGS_LINUX	:= -Wall -Werror -Wextra -g3 $(INCLUDE_LINUX) #-fsanitize=address
+CFLAGS_MACOS	:= -Wall -Werror -Wextra -g3 $(INCLUDE_MACOS)
+CFLAGS_LINUX	:= -Wall -Werror -Wextra -Ofast -march=native $(INCLUDE_LINUX) #-fsanitize=address
 
 all: $(NAME)
 
@@ -31,7 +31,7 @@ $(MLX_NAME):
 	cd ./MLX42 && cmake -B build && cmake --build build -j4
 
 %.o: %.c
-	$(CC) -c $< -o $@
+	$(CC) -Ofast -march=native -c $< -o $@
 
 clean:
 	make clean -C $(FT_DIR)

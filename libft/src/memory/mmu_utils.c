@@ -58,6 +58,7 @@ static void	mmu_free_probe(t_mmu *mmu, void *adr, t_list *cur)
 {
 	t_list	*prev;
 
+	prev = cur;
 	while (cur)
 	{
 		if (cur->content == adr)

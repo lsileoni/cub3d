@@ -1,5 +1,3 @@
-#include "./libft/src/libft.h"
-
 #include "cub3d.h"
 #include "graphics.h"
 
@@ -7,7 +5,7 @@ int	main(int argc, char **argv)
 {
 	int			**grid;
 	t_gameinfo	info;
-	t_graphics	*graphics;
+	t_graphics	graphics;
 
 
 	mmu_op(MMU_CREATE, 0);
@@ -21,6 +19,7 @@ int	main(int argc, char **argv)
 	grid = mmu_op(MMU_ALLOC, (sizeof(void *) * info.col_size));
 	extract_grid(grid, argv[1], &info);
 	flood_fill(grid, info);
+	printf("%d, %d\n", info.row_size, info.col_size);
 	if (!check_validity(grid, info))
 	{
 		ft_printf("Invalid map!\n");
@@ -28,8 +27,16 @@ int	main(int argc, char **argv)
 	}
 	restore_grid(grid, info);
 	print_grid(grid, info);
-	graphics = init_graphics();
-	start_loop(graphics);
-	mlx_terminate(graphics->mlx); // put in in the exit functions (ESC, etc.)
+	init_graphics(&graphics, grid, &info);
+	mlx_texture_t* texture = mlx_load_png("./RedwallL.png");
+	graphics.texture_n = texture;
+	texture = mlx_load_png("./MultibrickD.png");
+	graphics.texture_w = texture;
+	texture = mlx_load_png("./Stone.png");
+	graphics.texture_e = texture;
+	texture = mlx_load_png("./WoodbrickL.png");
+	graphics.texture_s = texture;
+	start_loop(&graphics);
+	mlx_terminate(graphics.mlx); // put in in the exit functions (ESC, etc.)
 	return (0);
 }
