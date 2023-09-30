@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 06:51:00 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/29 06:51:00 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/30 20:30:46 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, 1);
+	(void)write(fd, &c, 1);
 }
