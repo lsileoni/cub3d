@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   getters.c                                          :+:      :+:    :+:   */
+/*   get_textures.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:01:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/09/22 13:32:58 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/30 13:34:44 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_rgb	extract_color(char *line)
 	return (ret);
 }
 
-static void	assess_line(char *line, t_gameinfo *info)
+static int	assess_line(char *line, t_gameinfo *info)
 {
 	if (ft_strncmp("NO ", line, 3) == 0)
 		info->north_texture = extract_texture(line);
@@ -59,6 +59,9 @@ static void	assess_line(char *line, t_gameinfo *info)
 		info->floor_color = extract_color(line);
 	else if(ft_strncmp("C ", line, 2) == 0)
 		info->ceiling_color = extract_color(line);
+	else if(*line != '\n')
+		return (1);
+	return (0);
 }
 
 static int got_textures(t_gameinfo *info)
@@ -84,7 +87,8 @@ int	get_textures(int fd, t_gameinfo *info)
 		line = get_next_line(fd);
 		if (line == NULL)
 			return (1);
-		assess_line(line, info);
+		if(assess_line(line, info) != 0)
+			return (2);
 		mmu_op(MMU_FREE, (size_t)line);
 	}
 	return (0);

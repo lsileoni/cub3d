@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:40:48 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/23 16:50:57 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/09/30 14:02:22 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,42 @@ int	**format_grid(t_grid_vec *grid_vec)
 	return (grid);
 }
 
+static char	*skip_newlines(int fd)
+{
+	char	*line;
+	line = get_next_line(fd);
+	while (line && *line == '\n')
+	{
+		mmu_op(MMU_FREE, (size_t)line);
+		line = get_next_line(fd);
+	}
+	return (line);
+}
+
+static void	check_remainder_of_fd(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line && *line == '\n')
+	{
+		mmu_op(MMU_FREE, (size_t)line);
+		line = get_next_line(fd);
+	}
+	if (line == NULL)
+		return ;
+	close(fd);
+	p_free_exit(5, "Error\nCant have anything after the map!\n");
+}
+
 void	get_grid(int fd, t_gameinfo *info)
 {
 	t_grid_vec	grid_vec;
 	char		*line;
 
 	init_grid_vec(&grid_vec);
-	line = get_next_line(fd);
-	while (line)
+	line = skip_newlines(fd);
+	while (line && *line != '\n')
 	{
 		if (grid_vec.curr_rows == grid_vec.row_cap)
 			grid_vec = realloc_grid_vec(grid_vec);
@@ -127,6 +155,11 @@ void	get_grid(int fd, t_gameinfo *info)
 		grid_vec.curr_rows++;
 		mmu_op(MMU_FREE, (size_t)line);
 		line = get_next_line(fd);
+	}
+	if (line)
+	{
+		mmu_op(MMU_FREE, (size_t)line);
+		check_remainder_of_fd(fd);
 	}
 	close(fd);
 	info->grid = format_grid(&grid_vec);
