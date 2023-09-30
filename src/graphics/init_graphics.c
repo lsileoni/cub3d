@@ -6,14 +6,14 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/16 08:52:09 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:15:45 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/graphics.h"
 #include "../../libft/src/libft.h"
 
-static t_map	*init_map(mlx_t *mlx, int **grid, t_gameinfo *info)
+static t_map	*init_map(mlx_t *mlx, t_gameinfo *info)
 {
 	t_map		*map;
 	mlx_image_t	*image;
@@ -28,7 +28,7 @@ static t_map	*init_map(mlx_t *mlx, int **grid, t_gameinfo *info)
 	}
 	ft_memset(image->pixels, 0, image->width * image->height * sizeof(int));
 	map->img = image;
-	map->grid = grid;
+	map->grid = info->grid;
 	map->info = info;
 	map->block_size = 64;
 	// draw_map(map);
@@ -65,11 +65,29 @@ static t_player	*init_player(mlx_t *mlx, t_gameinfo *info)
 	return (player);
 }
 
-void	init_graphics(t_graphics *graphics, int **grid, t_gameinfo *info)
+mlx_texture_t	*open_texture(char *path)
 {
+	mlx_texture_t* texture;
+
+	texture = mlx_load_png(path);
+	if(texture == NULL)
+	{
+		printf("Error\nFailed to open texture '%s'\n", path);
+		p_free_exit(10, "");
+	}
+	mmu_op(MMU_FREE, (size_t)path);
+	return (texture);
+}
+
+void	init_graphics(t_graphics *graphics, t_gameinfo *info)
+{
+	graphics->texture_e = open_texture(info->east_texture);
+	graphics->texture_n = open_texture(info->north_texture);
+	graphics->texture_s = open_texture(info->south_texture);
+	graphics->texture_w = open_texture(info->west_texture);
 	graphics->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, \
 							"cub3 me daddy", false);
-	graphics->map = init_map(graphics->mlx, grid, info);
+	graphics->map = init_map(graphics->mlx, info);
 	graphics->player = init_player(graphics->mlx, info);
 	graphics->cursor = init_cursor(graphics->mlx);
 }

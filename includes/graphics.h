@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/30 20:57:26 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:16:02 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ typedef struct s_con_pnt_vars
 void		draw_player(t_player *player);
 void		connect_points(mlx_image_t *img, t_point point0, t_point point1, uint32_t color);
 void		draw_map(t_map	*map);
-
-void		init_graphics(t_graphics *graphics, int **grid, t_gameinfo *info);
+void		init_graphics(t_graphics *graphics, t_gameinfo *info);
 
 //main_loop.c
 void		start_loop(t_graphics	*graphics);
