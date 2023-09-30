@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/16 16:43:33 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/30 20:57:26 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,20 @@
 #include "cub3d.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #define WINDOW_HEIGHT 640
 #define WINDOW_WIDTH 640
 #define PLAYER_SIZE 30
 #define MOUSE_SENSITIVITY 0.001
 #define BLOCK_SIZE 64.0 // maybe this should be an int so we can change it depending on map size
+
+enum e_texture_selector
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST
+};
 
 typedef struct s_map
 {
@@ -31,8 +40,8 @@ typedef struct s_map
 
 typedef struct s_point
 {
-	double				x;
-	double				y;
+	double			x;
+	double			y;
 }					t_point;
 
 typedef	struct	s_player
@@ -48,7 +57,10 @@ typedef struct s_graphics
 	t_map				*map;
 	t_player			*player;
 	mlx_win_cursor_t	*cursor;
-	mlx_texture_t		*texture;
+	mlx_texture_t		*texture_n;
+	mlx_texture_t		*texture_w;
+	mlx_texture_t		*texture_e;
+	mlx_texture_t		*texture_s;
 }					t_graphics;
 
 typedef struct s_con_pnt_vars
