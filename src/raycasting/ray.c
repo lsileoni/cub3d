@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/30 15:29:09 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/30 20:20:49 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/09/30 20:56:56 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/09/30 22:35:06 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/include/MLX42/MLX42.h"
-#include "graphics.h"
+#include "../../MLX42/include/MLX42/MLX42.h"
+#include "../../includes/graphics.h"
 #include <math.h>
 
 typedef struct s_ray_vars
@@ -64,13 +64,13 @@ static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map
 	x1 = player->position.x / BLOCK_SIZE;
 	y1 = player->position.y / BLOCK_SIZE;
 	if ((angle >= M_PI / 2.0) && angle <= ((3 * M_PI)/2.0))
-		west = 1;
-	else
 		west = 0;
-	if ((angle <= M_PI) && angle >= 0)
-		north = 0;
 	else
+		west = 1;
+	if ((angle <= M_PI) && angle >= 0)
 		north = 1;
+	else
+		north = 0;
 	if (angle < (((M_PI * 3) / 2.0) + 0.00001) && angle > (((M_PI * 3) / 2.0) - 0.00001))
 	{
 		y2 = 1.0;
@@ -264,20 +264,16 @@ void	ray(t_graphics *graphics)
 	int				pixels_to_draw;
 	double			depth_step;
 	unsigned char 	color[4];
-	unsigned char 	ceiling_floor[4];
 
 	depth_step = (WINDOW_HEIGHT / 6.0) / 255.0;
-	ceiling_floor[0] = 0xFF;
-	ceiling_floor[1] = 0xFF;
-	ceiling_floor[2] = 0xFF;
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
 		for (int j = 0; j < WINDOW_HEIGHT; j++)
 		{
 			if (j > WINDOW_HEIGHT / 2)
-				mlx_put_pixel(graphics->map->img, i, j, 0x000000FF);
+				mlx_put_pixel(graphics->map->img, i, j, graphics->ceiling_color);
 			else
-				mlx_put_pixel(graphics->map->img, i, j, 0xFFFFFFAF);
+				mlx_put_pixel(graphics->map->img, i, j, graphics->floor_color);
 		}
 	}
 	step_size = (0.001171875 * 1.1);

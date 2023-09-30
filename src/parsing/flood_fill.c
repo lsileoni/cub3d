@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../../includes/cub3d.h"
 
 static void	update_stack(int **grid, t_stack_pair *sp,
 		t_i_point p, t_gameinfo info)

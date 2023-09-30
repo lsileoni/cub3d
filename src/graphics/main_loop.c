@@ -6,12 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:29:26 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/30 14:14:29 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/30 22:37:47 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/include/MLX42/MLX42.h"
-#include "graphics.h"
+#include "../../MLX42/include/MLX42/MLX42.h"
+#include "../../includes/graphics.h"
 
 static void	key_press(void *dt)
 {

@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/29 06:51:29 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/29 06:51:30 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:26:59 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	print_number(int n)
 		return (0);
 	ft_putstr_fd(str, 1);
 	rval = ft_strlen(str);
-	free(str);
+	mmu_op(MMU_FREE, (size_t)str);
 	return (rval);
 }
 
@@ -38,7 +38,7 @@ int	print_unumber(unsigned int n)
 	rval = ft_strlen(str);
 	if (ft_strlen(str) == 0)
 		rval++;
-	free(str);
+	mmu_op(MMU_FREE, (size_t)str);
 	return (rval);
 }
 
@@ -81,7 +81,7 @@ int	print_pointer(unsigned long long pval)
 	else
 		ft_putstr_fd(temp, 1);
 	rval += ft_strlen(temp) + 2;
-	free(temp);
+	mmu_op(MMU_FREE, (size_t)temp);
 	temp = NULL;
 	return (rval);
 }
@@ -102,7 +102,7 @@ int	print_hex(unsigned int n, unsigned char uppercase)
 		case_hex = ft_to_lowercase(hex);
 	ft_putstr_fd(case_hex, 1);
 	rval += ft_strlen(case_hex);
-	free(hex);
-	free(case_hex);
+	mmu_op(MMU_FREE, (size_t)hex);
+	mmu_op(MMU_FREE, (size_t)case_hex);
 	return (rval);
 }
