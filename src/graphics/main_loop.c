@@ -6,69 +6,51 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 15:29:26 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/30 22:37:47 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/01 15:21:00 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../MLX42/include/MLX42/MLX42.h"
 #include "../../includes/graphics.h"
 
+static void change_player_pos(t_graphics *g, double y, double x)
+{
+	t_player *player;
+	int 	**grid;
+
+	grid = g->map->grid;
+	player = g->player;
+	player->position.y += y;
+	if (grid[(int)(player->position.y/BLOCK_SIZE)][(int)(player->position.x/BLOCK_SIZE)] == 1)
+		player->position.y -= y;
+	player->position.x += x;
+	if (grid[(int)(player->position.y/BLOCK_SIZE)][(int)(player->position.x/BLOCK_SIZE)] == 1)
+		player->position.x -= x;
+}
+
 static void	key_press(void *dt)
 {
 	t_graphics	*graphics;
-	t_point		new_position;
 
 	graphics = dt;
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(graphics->mlx);
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_W))
-	{
-		new_position.y = graphics->player->position.y + sin(graphics->player->angle) * 2.0;
-		graphics->player->position.y += sin(graphics->player->angle) * 2.0;
-		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
-			graphics->player->position.y -= sin(graphics->player->angle) * 2.0;
-		new_position.x = graphics->player->position.x + cos(graphics->player->angle) * 2.0;
-		graphics->player->position.x += cos(graphics->player->angle) * 2.0;
-		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
-			graphics->player->position.x -= cos(graphics->player->angle) * 2.0;
-	}
+		change_player_pos(graphics, sin(graphics->player->angle) * 2.0 * (graphics->mlx->delta_time * BLOCK_SIZE),
+					cos(graphics->player->angle) * 2.0 * (graphics->mlx->delta_time * BLOCK_SIZE));
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_S))
-	{
-		new_position.y = graphics->player->position.y - sin(graphics->player->angle) * 2.0;
-		graphics->player->position.y -= sin(graphics->player->angle) * 2.0;
-		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
-			graphics->player->position.y += sin(graphics->player->angle) * 2.0;
-		new_position.x = graphics->player->position.x - cos(graphics->player->angle) * 2.0;
-		graphics->player->position.x -= cos(graphics->player->angle) * 2.0;
-		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
-			graphics->player->position.x += cos(graphics->player->angle) * 2.0;
-	}
+		change_player_pos(graphics, -(sin(graphics->player->angle) * 2.0 * (graphics->mlx->delta_time * BLOCK_SIZE)),
+					-(cos(graphics->player->angle) * 2.0 * (graphics->mlx->delta_time * BLOCK_SIZE)));
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_A))
-	{
-		new_position.y = graphics->player->position.y - sin(graphics->player->angle + M_PI_2) * 2.0;
-		graphics->player->position.y -= sin(graphics->player->angle + M_PI_2) * 2.0;
-		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
-			graphics->player->position.y += sin(graphics->player->angle + M_PI_2) * 2.0;
-		new_position.x = graphics->player->position.x - cos(graphics->player->angle + M_PI_2) * 2.0;
-		graphics->player->position.x -= cos(graphics->player->angle + M_PI_2) * 2.0;
-		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
-			graphics->player->position.x += cos(graphics->player->angle + M_PI_2) * 2.0;
-	}
+		change_player_pos(graphics, -(sin(graphics->player->angle + M_PI_2) * 2.0 * (graphics->mlx->delta_time * BLOCK_SIZE)),
+				-(cos(graphics->player->angle + M_PI_2) * 2.0 * (graphics->mlx->delta_time * BLOCK_SIZE)));
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_D))
-	{
-		new_position.y = graphics->player->position.y + sin(graphics->player->angle + M_PI_2) * 2.0;
-		graphics->player->position.y += sin(graphics->player->angle + M_PI_2) * 2.0;
-		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
-			graphics->player->position.y -= sin(graphics->player->angle + M_PI_2) * 2.0;
-		new_position.x = graphics->player->position.x + cos(graphics->player->angle + M_PI_2) * 2.0;
-		graphics->player->position.x += cos(graphics->player->angle + M_PI_2) * 2.0;
-		if (graphics->map->grid[(int)(graphics->player->position.y/BLOCK_SIZE)][(int)(graphics->player->position.x/BLOCK_SIZE)] == 1)
-			graphics->player->position.x -= cos(graphics->player->angle + M_PI_2) * 2.0;
-	}
+		change_player_pos(graphics, sin(graphics->player->angle + M_PI_2) * 2.0 * (graphics->mlx->delta_time * BLOCK_SIZE),
+				cos(graphics->player->angle + M_PI_2) * 2.0 * (graphics->mlx->delta_time * BLOCK_SIZE));
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_RIGHT))
-		graphics->player->angle += 0.025;
+		graphics->player->angle += (0.025 * graphics->mlx->delta_time * BLOCK_SIZE);
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_LEFT))
-		graphics->player->angle -= 0.025;
+		graphics->player->angle -= (0.025 * graphics->mlx->delta_time * BLOCK_SIZE);
 	if (graphics->player->angle > M_PI * 2)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)
@@ -80,7 +62,7 @@ static void	cursor_func(double xpos, double ypos, void *dt)
 	t_graphics	*graphics;
 
 	graphics = dt;
-	graphics->player->angle += ((xpos - WINDOW_WIDTH/2.0) * MOUSE_SENSITIVITY);
+	graphics->player->angle += ((xpos - WINDOW_WIDTH/2.0) * MOUSE_SENSITIVITY) * (graphics->mlx->delta_time * BLOCK_SIZE);
 	if (graphics->player->angle > M_PI * 2)
 		graphics->player->angle = 0;
 	else if (graphics->player->angle < 0)
