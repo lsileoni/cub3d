@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/30 22:35:36 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:43:27 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#define WINDOW_HEIGHT 640
-#define WINDOW_WIDTH 640
+#define WINDOW_HEIGHT 1000
+#define WINDOW_WIDTH 100
 #define PLAYER_SIZE 30
 #define MOUSE_SENSITIVITY 0.001
-#define BLOCK_SIZE 64.0 // maybe this should be an int so we can change it depending on map size
+#define FOURTY_FIVE_DEG 0.785398163f
+#define BLOCK_SIZE 64.0
 
 enum e_texture_selector
 {
