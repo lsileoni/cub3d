@@ -1,10 +1,10 @@
-NO ./textures/camel.png
-SO ./textures/smile.png
+NO ./textures/MultibrickD.png
+SO ./textures/RedwallL.png
 WE ./textures/Stone.png
-EA ./textures/Stone.png
+EA ./textures/WoodbrickL.png
 
 F 255,255,255
-C 0,0,255
+C 0,0,0
 
 1111111111111111111111111
 1000000000110000000000001
