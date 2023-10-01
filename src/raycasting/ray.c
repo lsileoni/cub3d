@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 20:56:56 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/09/30 22:35:06 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:39:57 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,218 +17,236 @@
 typedef struct s_ray_vars
 {
 	double			dist;
-	float			move_ratio;
-	float			curr_step;
-	int				up;
-	int				left;
-	int				last_move;
-	t_point			curr_pos;
-	t_point			blockpos;
 	double			depth;
 	int				t_sel;
+	unsigned char	north;
+	unsigned char	west;
 }					t_ray_vars;
 
-static t_ray_vars	get_ray_vars(t_graphics *graphics, t_player *player, int **map, double angle)
+static void set_endpoint(t_graphics *graphics, t_point *end, t_point start, double angle)
 {
-	t_ray_vars	vars;
-	int			north;
-	int			west;
-	double		x1;
-	double		x2;
-	double		y1;
-	double		y2;
-	double		dx;
-	double		dy;
-	double		ddist_x;
-	double		ddist_y;
-	double		sidelen_x;
-	double		sidelen_y;
-	double		x;
-	double		y;
-	double		step;
-	double		x_step;
-	double		y_step;
-	double		end_distance;
-	double		angle_diff;
-	int			map_x;
-	int			map_y;
-	int			x_steps = 0;
-	int			y_steps = 0;
-	int			itercount = 0;
-	double		fourty_five_deg = 0.785398163;
-	double		x_max = graphics->map->info->row_size;
-	double		x_min = 1.0;
-	double		y_max = graphics->map->info->col_size;
-	double		y_min = 1.0;
+	double angle_diff;
 
-	x1 = player->position.x / BLOCK_SIZE;
-	y1 = player->position.y / BLOCK_SIZE;
-	if ((angle >= M_PI / 2.0) && angle <= ((3 * M_PI)/2.0))
-		west = 0;
-	else
-		west = 1;
-	if ((angle <= M_PI) && angle >= 0)
-		north = 1;
-	else
-		north = 0;
 	if (angle < (((M_PI * 3) / 2.0) + 0.00001) && angle > (((M_PI * 3) / 2.0) - 0.00001))
 	{
-		y2 = 1.0;
-		x2 = x1 + 0.125;
+		end->y = 1.0;
+		end->x = start.x + 0.125;
 	}
 	else if (angle > 0.0 && angle <= M_PI / 2.0)
 	{
 		angle_diff = angle;
-		if (angle_diff > fourty_five_deg)
+		if (angle_diff > FOURTY_FIVE_DEG)
 		{
-			y2 = y_max;
+			end->y = graphics->map->info->col_size;
 			angle_diff -= M_PI / 4.0;
 			angle_diff = (M_PI / 4.0) - angle_diff;
-			x2 = ((y2 - y1) * tan(angle_diff)) + x1;
+			end->x = ((end->y - start.y) * tan(angle_diff)) + start.x;
 		}
 		else
 		{
-			x2 = x_max;
-			y2 = ((x2 - x1) * tan(angle_diff)) + y1;
+			end->x = graphics->map->info->row_size;
+			end->y = ((end->x - start.x) * tan(angle_diff)) + start.y;
 		}
 	}
 	else if (angle > M_PI / 2.0 && angle <= M_PI)
 	{
 		angle_diff = fabs(fabs(angle - M_PI) - (M_PI / 2.0));
-		if (angle_diff > fourty_five_deg)
+		if (angle_diff > FOURTY_FIVE_DEG)
 		{
-			x2 = 1.0;
+			end->x = 1.0;
 			angle_diff -= M_PI / 4.0;
 			angle_diff = (M_PI / 4.0) - angle_diff;
-			y2 = ((x1 - x2) * tan(angle_diff)) + y1;
+			end->y = ((start.x - end->x) * tan(angle_diff)) + start.y;
 		}
 		else
 		{
-			y2 = y_max;
-			x2 = ((y1 - y2) * tan(angle_diff)) + x1;
+			end->y = graphics->map->info->col_size;
+			end->x = ((start.y - end->y) * tan(angle_diff)) + start.x;
 		}
 	}
 	else if (angle > M_PI && angle <= (3.0 * M_PI) / 2.0)
 	{
 		angle_diff = fabs(angle - M_PI);
-		if (angle_diff > fourty_five_deg)
+		if (angle_diff > FOURTY_FIVE_DEG)
 		{
-			y2 = 1.0;
+			end->y = 1.0;
 			angle_diff -= M_PI / 4.0;
 			angle_diff = (M_PI / 4.0) - angle_diff;
-			x2 = ((y2 - y1) * tan(angle_diff)) + x1;
+			end->x = ((end->y - start.y) * tan(angle_diff)) + start.x;
 		}
 		else
 		{
-			x2 = 1.0;
-			y2 = ((x2 - x1) * tan(angle_diff)) + y1;
+			end->x = 1.0;
+			end->y = ((end->x - start.x) * tan(angle_diff)) + start.y;
 		}
 	}
 	else
 	{
 		angle_diff = fabs(fabs(angle - (M_PI * 2.0)) - (M_PI / 2.0));
-		if (angle_diff > fourty_five_deg)
+		if (angle_diff > FOURTY_FIVE_DEG)
 		{
-			x2 = x_max;
+			end->x = graphics->map->info->row_size;
 			angle_diff -= M_PI / 4.0;
 			angle_diff = (M_PI / 4.0) - angle_diff;
-			y2 = ((x1 - x2) * tan(angle_diff)) + y1;
+			end->y = ((start.x - end->x) * tan(angle_diff)) + start.y;
 		}
 		else
 		{
-			y2 = 1.0;
-			x2 = ((y1 - y2) * tan(angle_diff)) + x1;
+			end->y = 1.0;
+			end->x = ((start.y - end->y) * tan(angle_diff)) + start.x;
 		}
 	}
-	dx = (x2 - x1);
-	dy = (y2 - y1);
-	if (dx == 0)
-		x_step = 1e30;
+}
+
+static void set_north_west(t_ray_vars *vars, double angle)
+{
+	if ((angle >= M_PI / 2.0) && angle <= ((3 * M_PI)/2.0))
+		vars->west = 0;
 	else
-		x_step = sqrt(1 + ((dy / dx) * (dy / dx)));
-	if (dy == 0)
-		y_step = 1e30;
+		vars->west = 1;
+	if ((angle <= M_PI) && angle >= 0)
+		vars->north = 1;
 	else
-		y_step = sqrt(1 + ((dx / dy) * (dx / dy)));
-	map_x = (int)x1;
-	map_y = (int)y1;
-	if (dx < 0)
+		vars->north = 0;
+}
+
+typedef struct s_dda_vars
+{
+	double	dx;
+	double	dy;
+	double	x_step;
+	double	y_step;
+	double	x;
+	double	y;
+	double	sidelen_x;
+	double	sidelen_y;
+	double	ray_x;
+	double	ray_y;
+	double	end_distance;
+	int		last_move;
+	int		map_y;
+	int		map_x;
+	t_point	curr_pos;
+	t_point	end;
+	t_point	start;
+}			t_dda_vars;
+
+static void dda_starting_conditions(t_dda_vars *dvars)
+{
+	if (dvars->dx < 0)
 	{
-		x = -1;
-		sidelen_x = (x1 - (double)map_x) * x_step;
+		dvars->x = -1;
+		dvars->sidelen_x = (dvars->start.x - (double)dvars->map_x) * dvars->x_step;
 	}
 	else
 	{
-		x = 1;
-		sidelen_x = (((double)(map_x + 1.0)) - x1) * x_step;
+		dvars->x = 1;
+		dvars->sidelen_x = (((double)(dvars->map_x + 1.0)) - dvars->start.x) * dvars->x_step;
 	}
-	if (dy < 0)
+	if (dvars->dy < 0)
 	{
-		y = -1;
-		sidelen_y = (y1 - (double)map_y) * y_step;
+		dvars->y = -1;
+		dvars->sidelen_y = (dvars->start.y - (double)dvars->map_y) * dvars->y_step;
 	}
 	else
 	{
-		y = 1;
-		sidelen_y = (((double)(map_y + 1.0)) - y1) * y_step;
+		dvars->y = 1;
+		dvars->sidelen_y = (((double)(dvars->map_y + 1.0)) - dvars->start.y) * dvars->y_step;
 	}
-	vars.curr_pos.x = x1;
-	vars.curr_pos.y = y1;
-	double ray_x = x1;
-	double ray_y = y1;
+}
+
+static void dda_init(t_dda_vars *dvars)
+{
+	dvars->dx = (dvars->end.x - dvars->start.x);
+	dvars->dy = (dvars->end.y - dvars->start.y);
+	if (dvars->dx == 0)
+		dvars->x_step = 1e30;
+	else
+		dvars->x_step = sqrt(1 + ((dvars->dy / dvars->dx) * (dvars->dy / dvars->dx)));
+	if (dvars->dy == 0)
+		dvars->y_step = 1e30;
+	else
+		dvars->y_step = sqrt(1 + ((dvars->dx / dvars->dy) * (dvars->dx / dvars->dy)));
+	dvars->map_x = (int)dvars->start.x;
+	dvars->map_y = (int)dvars->start.y;
+	dda_starting_conditions(dvars);
+	dvars->curr_pos.x = dvars->start.x;
+	dvars->curr_pos.y = dvars->start.y;
+	dvars->ray_x = dvars->start.x;
+	dvars->ray_y = dvars->start.y;
+}
+
+static void dda_increment(t_dda_vars *dvars)
+{
+	if (dvars->sidelen_x < dvars->sidelen_y)
+	{
+		dvars->end_distance = dvars->sidelen_x;
+		dvars->sidelen_x += dvars->x_step;
+		dvars->map_x += dvars->x;
+		dvars->ray_x += dvars->x;
+		dvars->last_move = 1;
+	}
+	else
+	{
+		dvars->end_distance = dvars->sidelen_y;
+		dvars->sidelen_y += dvars->y_step;
+		dvars->map_y += dvars->y;
+		dvars->ray_y += dvars->y;
+		dvars->last_move = 2;
+	}
+}
+
+static void perform_dda(t_ray_vars *rvars, t_dda_vars *dvars, int **grid)
+{
+	dda_init(dvars);
 	while (1)
 	{
-		if (sidelen_x < sidelen_y)
+		dda_increment(dvars);
+		if (grid[dvars->map_y][dvars->map_x] == 1)
 		{
-			end_distance = sidelen_x;
-			sidelen_x += x_step;
-			map_x += x;
-			ray_x += x;
-			vars.last_move = 1;
-		}
-		else
-		{
-			end_distance = sidelen_y;
-			sidelen_y += y_step;
-			map_y += y;
-			ray_y += y;
-			vars.last_move = 2;
-		}
-		if (map[map_y][map_x] == 1)
-		{
-			vars.curr_pos.x = map_x * BLOCK_SIZE;
-			vars.curr_pos.y = map_y * BLOCK_SIZE;
+			dvars->curr_pos.x = dvars->map_x * BLOCK_SIZE;
+			dvars->curr_pos.y = dvars->map_y * BLOCK_SIZE;
 			break ;
 		}
-		itercount++;
 	}
-	vars.dist = end_distance;
+	rvars->dist = dvars->end_distance;
+}
 
+
+static void	set_ray_vars(t_graphics *graphics, double angle, t_ray_vars *vars)
+{
+	t_dda_vars	dvars;
+	t_player	*player;
+
+	player = graphics->player;
+	dvars.start.x = player->position.x / BLOCK_SIZE;
+	dvars.start.y = player->position.y / BLOCK_SIZE;
+	set_north_west(vars, angle);
+	set_endpoint(graphics, &(dvars.end), dvars.start, angle);
+	perform_dda(vars, &dvars, graphics->map->grid);
 	double current_angle = player->angle - angle;
-
-	if (vars.last_move == 2)
+	if (dvars.last_move == 2)
 	{
-		if (north)
-			vars.t_sel = NORTH;
+		if (vars->north)
+			vars->t_sel = NORTH;
 		else
-			vars.t_sel = SOUTH;
-		vars.depth = cos(angle) * end_distance + x1;
+			vars->t_sel = SOUTH;
+		vars->depth = cos(angle) * dvars.end_distance + dvars.start.x;
 	}
 	else
 	{
-		if (west)
-			vars.t_sel = WEST;
+		if (vars->west)
+			vars->t_sel = WEST;
 		else
-			vars.t_sel = EAST;
-		vars.depth = sin(angle) * end_distance + y1;
+			vars->t_sel = EAST;
+		vars->depth = sin(angle) * dvars.end_distance + dvars.start.y;
 	}
-	vars.depth -= floor(vars.depth);
+	vars->depth -= floor(vars->depth);
 	if (current_angle < 0)
 	  current_angle += 2 * M_PI;
 	if (current_angle > 2 * M_PI)
 	  current_angle -= 2 * M_PI;
-	vars.dist = vars.dist * cos(current_angle);
-	return (vars);
+	vars->dist = vars->dist * cos(current_angle);
 }
 uint32_t rgbaToInteger(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
@@ -237,8 +255,8 @@ uint32_t rgbaToInteger(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 
 int	mlx_pixel_get(mlx_texture_t *texture, int texture_index_x, int texture_index_y)
 {
-	unsigned char rgba[4];
-	int	t;
+	unsigned char	rgba[4];
+	int				t;
 
 	if (texture_index_x >= 0 && texture_index_x < texture->width && texture_index_y >= 0 && texture_index_y < texture->height)
     {
@@ -254,6 +272,27 @@ int	mlx_pixel_get(mlx_texture_t *texture, int texture_index_x, int texture_index
     return (rgbaToInteger(rgba[0], rgba[1], rgba[2], rgba[3]));
 }
 
+void	paint_ceiling_floor(t_graphics *graphics)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < WINDOW_WIDTH)
+	{
+		j = 0;
+		while (j < WINDOW_HEIGHT)
+		{
+			if (j > WINDOW_HEIGHT / 2)
+				mlx_put_pixel(graphics->map->img, i, j, graphics->ceiling_color);
+			else
+				mlx_put_pixel(graphics->map->img, i, j, graphics->floor_color);
+			j++;
+		}
+		i++;
+	}
+}
+
 void	ray(t_graphics *graphics)
 {
 	t_ray_vars		vars;
@@ -262,31 +301,19 @@ void	ray(t_graphics *graphics)
 	double			step_size;
 	double			max_wall_size;
 	int				pixels_to_draw;
-	double			depth_step;
 	unsigned char 	color[4];
 
-	depth_step = (WINDOW_HEIGHT / 6.0) / 255.0;
-	for (int i = 0; i < WINDOW_WIDTH; i++)
-	{
-		for (int j = 0; j < WINDOW_HEIGHT; j++)
-		{
-			if (j > WINDOW_HEIGHT / 2)
-				mlx_put_pixel(graphics->map->img, i, j, graphics->ceiling_color);
-			else
-				mlx_put_pixel(graphics->map->img, i, j, graphics->floor_color);
-		}
-	}
-	step_size = (0.001171875 * 1.1);
+	paint_ceiling_floor(graphics);
+	step_size = (0.001171875 * (640.0 / WINDOW_WIDTH));
 	left_angle = graphics->player->angle - ((step_size * WINDOW_WIDTH) / 2);
 	current_angle = left_angle;
 	for (int i = 0; i < WINDOW_WIDTH; i++)
 	{
-		int over = 0;
 		if (current_angle < 0)
 		  current_angle += 2 * M_PI;
 		if (current_angle > 2 * M_PI)
 		  current_angle -= 2 * M_PI;
-		vars = get_ray_vars(graphics, graphics->player, graphics->map->grid, current_angle);
+		set_ray_vars(graphics, current_angle, &vars);
 		pixels_to_draw = (70.0 * WINDOW_HEIGHT) / (vars.dist * 64.0);
 		color[1] = (unsigned char)(0xFF * vars.depth);
 		color[2] = 0x00;
@@ -316,22 +343,22 @@ void	ray(t_graphics *graphics)
 
 			if (vars.t_sel == WEST)
 			{
-				int texture_index_y = test * ((double)graphics->texture_w->height/ (double)(pixels_to_draw + (over / 8.0)));
+				int texture_index_y = test * ((double)graphics->texture_w->height/ (double)(pixels_to_draw));
 				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture_w, texture_index_x, texture_index_y));
 			}
 			else if (vars.t_sel == NORTH)
 			{
-				int texture_index_y = test * ((double)graphics->texture_n->height/ (double)(pixels_to_draw + (over / 8.0)));
+				int texture_index_y = test * ((double)graphics->texture_n->height/ (double)(pixels_to_draw));
 				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture_n, texture_index_x, texture_index_y));
 			}
 			else if (vars.t_sel == SOUTH)
 			{
-				int texture_index_y = test * ((double)graphics->texture_s->height/ (double)(pixels_to_draw + (over / 8.0)));
+				int texture_index_y = test * ((double)graphics->texture_s->height/ (double)(pixels_to_draw));
 				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture_s, texture_index_x, texture_index_y));
 			}
 			else
 			{
-				int texture_index_y = test * ((double)graphics->texture_e->height/ (double)(pixels_to_draw + (over / 8.0)));
+				int texture_index_y = test * ((double)graphics->texture_e->height/ (double)(pixels_to_draw));
 				mlx_put_pixel(graphics->map->img, i, j, mlx_pixel_get(graphics->texture_e, texture_index_x, texture_index_y));
 			}
 			test++;
