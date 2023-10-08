@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 07:37:09 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/29 12:15:57 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/08 14:20:01 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	ft_restructure_table(t_htable *table, const char *key, void *value)
 
 int	remove_htable_elem(t_htable *table, unsigned long long key_hash)
 {
-	mmu_op(MMU_FREE, (size_t)((void *)table->memory[key_hash % table->cap]->key));
+	mmu_op(MMU_FREE,
+		(size_t)((void *)table->memory[key_hash % table->cap]->key));
 	mmu_op(MMU_FREE, (size_t)table->memory[key_hash % table->cap]->value);
 	mmu_op(MMU_FREE, (size_t)table->memory[key_hash % table->cap]);
 	table->memory[key_hash % table->cap] = NULL;
