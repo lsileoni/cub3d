@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:09:45 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/08 14:14:06 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/08 14:32:20 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	change_player_pos(t_graphics *g, double y, double x)
 		player->position.x -= x;
 }
 
-static void	check_angle_keys(t_graphics *graphics, double a, double dt)
+static void	check_angle_keys(t_graphics *graphics, double *a, double dt)
 {
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_RIGHT))
-		a += (0.025 * dt * BLOCK_SIZE);
+		*a += (0.025 * dt * BLOCK_SIZE);
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_LEFT))
-		a -= (0.025 * dt * BLOCK_SIZE);
-	reset_current_angle(&(a));
+		*a -= (0.025 * dt * BLOCK_SIZE);
+	reset_current_angle(a);
 }
 
 void	key_press(void *ptr)
@@ -63,7 +63,7 @@ void	key_press(void *ptr)
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_D))
 		change_player_pos(graphics, sin(a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE),
 			cos(a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE));
-	check_angle_keys(graphics, a, dt);
+	check_angle_keys(graphics, &a, dt);
 }
 
 void	cursor_func(double xpos, double ypos, void *dt)
