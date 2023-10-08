@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:09:45 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/08 14:32:20 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/08 14:33:47 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,28 @@ static void	check_angle_keys(t_graphics *graphics, double *a, double dt)
 void	key_press(void *ptr)
 {
 	t_graphics	*graphics;
-	double		a;
+	double		*a;
 	double		dt;
 
 	graphics = ptr;
 	dt = graphics->mlx->delta_time;
-	a = graphics->player->angle;
+	a = &(graphics->player->angle);
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(graphics->mlx);
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_W))
-		change_player_pos(graphics, sin(a) * 2.0 * (dt * BLOCK_SIZE),
-			cos(a) * 2.0 * (dt * BLOCK_SIZE));
+		change_player_pos(graphics, sin(*a) * 2.0 * (dt * BLOCK_SIZE),
+			cos(*a) * 2.0 * (dt * BLOCK_SIZE));
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_S))
-		change_player_pos(graphics, -(sin(a) * 2.0 * (dt * BLOCK_SIZE)),
-			-(cos(a) * 2.0 * (dt * BLOCK_SIZE)));
+		change_player_pos(graphics, -(sin(*a) * 2.0 * (dt * BLOCK_SIZE)),
+			-(cos(*a) * 2.0 * (dt * BLOCK_SIZE)));
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_A))
 		change_player_pos(graphics,
-			-(sin(a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE)),
-			-(cos(a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE)));
+			-(sin(*a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE)),
+			-(cos(*a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE)));
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_D))
-		change_player_pos(graphics, sin(a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE),
-			cos(a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE));
-	check_angle_keys(graphics, &a, dt);
+		change_player_pos(graphics, sin(*a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE),
+			cos(*a + M_PI_2) * 2.0 * (dt * BLOCK_SIZE));
+	check_angle_keys(graphics, a, dt);
 }
 
 void	cursor_func(double xpos, double ypos, void *dt)
