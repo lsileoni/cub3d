@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/08 13:36:14 by lsileoni         ###   ########.fr       */
+/*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
+/*   Updated: 2023/10/08 14:18:11 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_point
 	double			y;
 }					t_point;
 
-typedef	struct	s_player
+typedef struct s_player
 {
 	mlx_image_t		*img;
 	t_point			position;
@@ -117,9 +117,15 @@ typedef struct s_loop_vars
 	int		test;
 }			t_loop_vars;
 
+/// hooks.c
+void			key_press(void *ptr);
+void			cursor_func(double xpos, double ypos, void *dt);
+void			render_frame(void *dt);
+
 // draw.c
 void			draw_player(t_player *player);
-void			connect_points(mlx_image_t *img, t_point point0, t_point point1, uint32_t color);
+void			connect_points(mlx_image_t *img, t_point point0,
+					t_point point1, uint32_t color);
 void			draw_map(t_map	*map);
 void			init_graphics(t_graphics *graphics, t_gameinfo *info);
 
@@ -131,9 +137,9 @@ void			ray(t_graphics *graphics);
 
 // utils.c
 int				mlx_pixel_get(mlx_texture_t *texture,
-				int texture_index_x, int texture_index_y);
+					int texture_index_x, int texture_index_y);
 unsigned int	rgba_to_int(unsigned char r, unsigned char g,
-				unsigned char b, unsigned char a);
+					unsigned char b, unsigned char a);
 void			reset_current_angle(double *current_angle);
 void			paint_ceiling_floor(t_graphics *graphics);
 
@@ -142,12 +148,13 @@ void			perform_dda(t_ray_vars *rvars, t_dda_vars *dvars, int **grid);
 
 // endpoint.c
 void			set_endpoint(t_graphics *graphics, t_point *end,
-				t_point start, double angle);
+					t_point start, double angle);
 
 // setters.c
 void			set_north_west(t_ray_vars *vars, double angle);
 void			set_direction_depth(t_dda_vars *dvars,
-				t_ray_vars *vars, double angle);
-void			set_ray_vars(t_graphics *graphics, double angle, t_ray_vars *vars);
+					t_ray_vars *vars, double angle);
+void			set_ray_vars(t_graphics *graphics,
+					double angle, t_ray_vars *vars);
 void			set_texture_x(t_graphics *graphics,
-				t_ray_vars *vars, int *texture_index_x);
+					t_ray_vars *vars, int *texture_index_x);
