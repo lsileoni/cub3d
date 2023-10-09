@@ -6,96 +6,96 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:19:41 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/08 13:26:45 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:36:48 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../MLX42/include/MLX42/MLX42.h"
 #include "../../includes/graphics.h"
 
-static void	dda_starting_conditions(t_dda_vars *dvars)
+static void	dda_starting_conditions(t_dda_vars *d_vars)
 {
-	if (dvars->dx < 0)
+	if (d_vars->dx < 0)
 	{
-		dvars->x = -1;
-		dvars->sidelen_x = (dvars->start.x - \
-				(double)dvars->map_x) * dvars->x_step;
+		d_vars->x = -1;
+		d_vars->sidelen_x = (d_vars->start.x - \
+				(double)d_vars->map_x) * d_vars->x_step;
 	}
 	else
 	{
-		dvars->x = 1;
-		dvars->sidelen_x = (((double)(dvars->map_x + 1.0)) - \
-				dvars->start.x) * dvars->x_step;
+		d_vars->x = 1;
+		d_vars->sidelen_x = (((double)(d_vars->map_x + 1.0)) - \
+				d_vars->start.x) * d_vars->x_step;
 	}
-	if (dvars->dy < 0)
+	if (d_vars->dy < 0)
 	{
-		dvars->y = -1;
-		dvars->sidelen_y = (dvars->start.y - \
-				(double)dvars->map_y) * dvars->y_step;
+		d_vars->y = -1;
+		d_vars->sidelen_y = (d_vars->start.y - \
+				(double)d_vars->map_y) * d_vars->y_step;
 	}
 	else
 	{
-		dvars->y = 1;
-		dvars->sidelen_y = (((double)(dvars->map_y + 1.0)) - \
-				dvars->start.y) * dvars->y_step;
+		d_vars->y = 1;
+		d_vars->sidelen_y = (((double)(d_vars->map_y + 1.0)) - \
+				d_vars->start.y) * d_vars->y_step;
 	}
 }
 
-static void	dda_init(t_dda_vars *dvars)
+static void	dda_init(t_dda_vars *d_vars)
 {
-	dvars->dx = (dvars->end.x - dvars->start.x);
-	dvars->dy = (dvars->end.y - dvars->start.y);
-	if (dvars->dx == 0)
-		dvars->x_step = 1e30;
+	d_vars->dx = (d_vars->end.x - d_vars->start.x);
+	d_vars->dy = (d_vars->end.y - d_vars->start.y);
+	if (d_vars->dx == 0)
+		d_vars->x_step = 1e30;
 	else
-		dvars->x_step = sqrt(1 + ((dvars->dy / dvars->dx) * \
-					(dvars->dy / dvars->dx)));
-	if (dvars->dy == 0)
-		dvars->y_step = 1e30;
+		d_vars->x_step = sqrt(1 + ((d_vars->dy / d_vars->dx) * \
+					(d_vars->dy / d_vars->dx)));
+	if (d_vars->dy == 0)
+		d_vars->y_step = 1e30;
 	else
-		dvars->y_step = sqrt(1 + ((dvars->dx / dvars->dy) * \
-					(dvars->dx / dvars->dy)));
-	dvars->map_x = (int)dvars->start.x;
-	dvars->map_y = (int)dvars->start.y;
-	dda_starting_conditions(dvars);
-	dvars->curr_pos.x = dvars->start.x;
-	dvars->curr_pos.y = dvars->start.y;
-	dvars->ray_x = dvars->start.x;
-	dvars->ray_y = dvars->start.y;
+		d_vars->y_step = sqrt(1 + ((d_vars->dx / d_vars->dy) * \
+					(d_vars->dx / d_vars->dy)));
+	d_vars->map_x = (int)d_vars->start.x;
+	d_vars->map_y = (int)d_vars->start.y;
+	dda_starting_conditions(d_vars);
+	d_vars->curr_pos.x = d_vars->start.x;
+	d_vars->curr_pos.y = d_vars->start.y;
+	d_vars->ray_x = d_vars->start.x;
+	d_vars->ray_y = d_vars->start.y;
 }
 
-static void	dda_increment(t_dda_vars *dvars)
+static void	dda_increment(t_dda_vars *d_vars)
 {
-	if (dvars->sidelen_x < dvars->sidelen_y)
+	if (d_vars->sidelen_x < d_vars->sidelen_y)
 	{
-		dvars->end_distance = dvars->sidelen_x;
-		dvars->sidelen_x += dvars->x_step;
-		dvars->map_x += dvars->x;
-		dvars->ray_x += dvars->x;
-		dvars->last_move = 1;
+		d_vars->end_distance = d_vars->sidelen_x;
+		d_vars->sidelen_x += d_vars->x_step;
+		d_vars->map_x += d_vars->x;
+		d_vars->ray_x += d_vars->x;
+		d_vars->last_move = 1;
 	}
 	else
 	{
-		dvars->end_distance = dvars->sidelen_y;
-		dvars->sidelen_y += dvars->y_step;
-		dvars->map_y += dvars->y;
-		dvars->ray_y += dvars->y;
-		dvars->last_move = 2;
+		d_vars->end_distance = d_vars->sidelen_y;
+		d_vars->sidelen_y += d_vars->y_step;
+		d_vars->map_y += d_vars->y;
+		d_vars->ray_y += d_vars->y;
+		d_vars->last_move = 2;
 	}
 }
 
-void	perform_dda(t_ray_vars *rvars, t_dda_vars *dvars, int **grid)
+void	perform_dda(t_ray_vars *rvars, t_dda_vars *d_vars, int **grid)
 {
-	dda_init(dvars);
+	dda_init(d_vars);
 	while (1)
 	{
-		dda_increment(dvars);
-		if (grid[dvars->map_y][dvars->map_x] == 1)
+		dda_increment(d_vars);
+		if (grid[d_vars->map_y][d_vars->map_x] == 1)
 		{
-			dvars->curr_pos.x = dvars->map_x * BLOCK_SIZE;
-			dvars->curr_pos.y = dvars->map_y * BLOCK_SIZE;
+			d_vars->curr_pos.x = d_vars->map_x * BLOCK_SIZE;
+			d_vars->curr_pos.y = d_vars->map_y * BLOCK_SIZE;
 			break ;
 		}
 	}
-	rvars->dist = dvars->end_distance;
+	rvars->dist = d_vars->end_distance;
 }

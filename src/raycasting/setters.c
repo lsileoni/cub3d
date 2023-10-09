@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:33:15 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/08 13:34:52 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:34:14 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void	set_north_west(t_ray_vars *vars, double angle)
 		vars->north = 0;
 }
 
-void	set_direction_depth(t_dda_vars *dvars,
+void	set_direction_depth(t_dda_vars *d_vars,
 		t_ray_vars *vars, double angle)
 {
-	if (dvars->last_move == 2)
+	if (d_vars->last_move == 2)
 	{
 		if (vars->north)
 			vars->t_sel = NORTH;
 		else
 			vars->t_sel = SOUTH;
-		vars->depth = cos(angle) * dvars->end_distance + dvars->start.x;
+		vars->depth = cos(angle) * d_vars->end_distance + d_vars->start.x;
 	}
 	else
 	{
@@ -42,25 +42,25 @@ void	set_direction_depth(t_dda_vars *dvars,
 			vars->t_sel = WEST;
 		else
 			vars->t_sel = EAST;
-		vars->depth = sin(angle) * dvars->end_distance + dvars->start.y;
+		vars->depth = sin(angle) * d_vars->end_distance + d_vars->start.y;
 	}
 	vars->depth -= floor(vars->depth);
 }
 
 void	set_ray_vars(t_graphics *graphics, double angle, t_ray_vars *vars)
 {
-	t_dda_vars	dvars;
+	t_dda_vars	d_vars;
 	t_player	*player;
 	double		current_angle;
 
 	player = graphics->player;
-	dvars.start.x = player->position.x / BLOCK_SIZE;
-	dvars.start.y = player->position.y / BLOCK_SIZE;
+	d_vars.start.x = player->position.x / BLOCK_SIZE;
+	d_vars.start.y = player->position.y / BLOCK_SIZE;
 	set_north_west(vars, angle);
-	set_endpoint(graphics, &(dvars.end), dvars.start, angle);
-	perform_dda(vars, &dvars, graphics->map->grid);
+	set_endpoint(graphics, &(d_vars.end), d_vars.start, angle);
+	perform_dda(vars, &d_vars, graphics->map->grid);
 	current_angle = player->angle - angle;
-	set_direction_depth(&dvars, vars, angle);
+	set_direction_depth(&d_vars, vars, angle);
 	reset_current_angle(&current_angle);
 	vars->dist = vars->dist * cos(current_angle);
 }

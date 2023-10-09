@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:15:54 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/08 13:31:53 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 13:48:48 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ unsigned int	rgba_to_int(unsigned char r, unsigned char g,
 }
 
 int	mlx_pixel_get(mlx_texture_t *texture,
-		int texture_index_x, int texture_index_y)
+		int texture_index_x, int texture_index_y, t_ray_vars *r_vars)
 {
 	unsigned char	rgba[4];
 	size_t			pixel_index;
@@ -42,7 +42,7 @@ int	mlx_pixel_get(mlx_texture_t *texture,
 		rgba[0] = texture->pixels[pixel_index];
 		rgba[1] = texture->pixels[pixel_index + 1];
 		rgba[2] = texture->pixels[pixel_index + 2];
-		rgba[3] = texture->pixels[pixel_index + 3];
+		rgba[3] = texture->pixels[pixel_index + 3] / ((r_vars->dist / 2.0) + 1);
 	}
 	else
 		return (0);
@@ -62,10 +62,11 @@ void	paint_ceiling_floor(t_graphics *graphics)
 		{
 			if (j > WINDOW_HEIGHT / 2)
 				mlx_put_pixel(graphics->map->img, i, j,
-					graphics->ceiling_color);
+					graphics->ceiling_color - (int)(255 - ((((float)j - \
+									(WINDOW_HEIGHT / 2.0)) / (WINDOW_HEIGHT / 2.0)) * 255)));
 			else
 				mlx_put_pixel(graphics->map->img, i, j,
-					graphics->floor_color);
+					graphics->floor_color - (int)(((float)j / (WINDOW_HEIGHT / 2.0)) * 255));
 			j++;
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/08 14:30:19 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 14:26:17 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,17 @@
 void	p_free_exit(int err_no, char *str_to_print)
 {
 	ft_printf("%s", str_to_print);
+	system("leaks cub3D");
 	mmu_op(MMU_DESTROY, 0);
 	exit (err_no);
+}
+
+void	destroy_textures(t_graphics *graphics)
+{
+	mlx_delete_texture(graphics->texture_e);
+	mlx_delete_texture(graphics->texture_s);
+	mlx_delete_texture(graphics->texture_w);
+	mlx_delete_texture(graphics->texture_n);
 }
 
 int	main(int argc, char **argv)
@@ -42,6 +51,7 @@ int	main(int argc, char **argv)
 	print_grid(info.grid, info);
 	init_graphics(&graphics, &info);
 	start_loop(&graphics);
+	destroy_textures(&graphics);
 	mlx_terminate(graphics.mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/08 13:52:48 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 14:29:04 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_player	*init_player(mlx_t *mlx, t_gameinfo *info)
 	return (player);
 }
 
-mlx_texture_t	*open_texture(char *path)
+static mlx_texture_t	*open_texture(char *path)
 {
 	mlx_texture_t	*texture;
 
@@ -79,10 +79,6 @@ mlx_texture_t	*open_texture(char *path)
 
 void	init_graphics(t_graphics *graphics, t_gameinfo *info)
 {
-	graphics->texture_e = open_texture(info->east_texture);
-	graphics->texture_n = open_texture(info->north_texture);
-	graphics->texture_s = open_texture(info->south_texture);
-	graphics->texture_w = open_texture(info->west_texture);
 	graphics->ceiling_color = rgba_to_int(info->ceiling_color.r,
 			info->ceiling_color.g, info->ceiling_color.b, 255);
 	graphics->floor_color = rgba_to_int(info->floor_color.r,
@@ -92,4 +88,8 @@ void	init_graphics(t_graphics *graphics, t_gameinfo *info)
 	graphics->map = init_map(graphics->mlx, info);
 	graphics->player = init_player(graphics->mlx, info);
 	graphics->cursor = init_cursor(graphics->mlx);
+	graphics->texture_e = open_texture(info->east_texture);
+	graphics->texture_n = open_texture(info->north_texture);
+	graphics->texture_s = open_texture(info->south_texture);
+	graphics->texture_w = open_texture(info->west_texture);
 }

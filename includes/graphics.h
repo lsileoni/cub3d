@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/08 14:18:11 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 11:55:20 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ typedef struct s_loop_vars
 	int		texture_index_y;
 	int		j;
 	int		i;
-	int		test;
+	int		texture_bound;
 }			t_loop_vars;
 
 /// hooks.c
@@ -137,14 +137,14 @@ void			ray(t_graphics *graphics);
 
 // utils.c
 int				mlx_pixel_get(mlx_texture_t *texture,
-					int texture_index_x, int texture_index_y);
+					int texture_index_x, int texture_index_y, t_ray_vars *r_vars);
 unsigned int	rgba_to_int(unsigned char r, unsigned char g,
 					unsigned char b, unsigned char a);
 void			reset_current_angle(double *current_angle);
 void			paint_ceiling_floor(t_graphics *graphics);
 
 // dda.c
-void			perform_dda(t_ray_vars *rvars, t_dda_vars *dvars, int **grid);
+void			perform_dda(t_ray_vars *r_vars, t_dda_vars *d_vars, int **grid);
 
 // endpoint.c
 void			set_endpoint(t_graphics *graphics, t_point *end,
@@ -152,7 +152,7 @@ void			set_endpoint(t_graphics *graphics, t_point *end,
 
 // setters.c
 void			set_north_west(t_ray_vars *vars, double angle);
-void			set_direction_depth(t_dda_vars *dvars,
+void			set_direction_depth(t_dda_vars *d_vars,
 					t_ray_vars *vars, double angle);
 void			set_ray_vars(t_graphics *graphics,
 					double angle, t_ray_vars *vars);
