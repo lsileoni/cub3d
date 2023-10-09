@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:09:45 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 14:43:18 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:09:32 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,5 @@ void	cursor_func(double xpos, double ypos, void *dt)
 
 void	render_frame(void *dt)
 {
-	t_graphics	*graphics;
-
-	graphics = dt;
-	raycasting(graphics);
+	raycasting((t_graphics *)dt);
 }
