@@ -10,6 +10,7 @@ SRC :=	src/main.c \
 		src/parsing/get_textures.c src/parsing/init_info.c src/parsing/utils.c\
 		src/graphics/init_graphics.c src/graphics/main_loop.c src/graphics/draw.c src/graphics/hooks.c
 OBJ	:=	$(SRC:%.c=%.o)
+DEP := $(OBJ:%.o=%.d)
 
 MLX_FW			:= -framework Cocoa -framework OpenGL -framework IOKit -lm
 MLX_LIB			:= -lglfw -L ~/.brew/opt/glfw/lib -lm
@@ -38,8 +39,11 @@ $(LIBFT_NAME):
 $(MLX_NAME):
 	cd ./MLX42 && cmake -B build && cmake --build build -j4
 
+-include $(DEP)
+
 %.o: %.c
-	$(CC) -Ofast -march=native -c $< -o $@
+	@$(shell [ ! -d $(@D) ] && mkdir -p $(@D))
+	$(CC) -Ofast -march=native -MMD -c $< -o $@
 
 clean:
 	make clean -C $(FT_DIR)
