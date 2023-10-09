@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:54:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/08 14:37:14 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 12:56:40 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,19 @@ typedef struct s_gameinfo
 	int			col_size;
 }				t_gameinfo;
 
-int		get_row_size(char	*map_name);
-int		get_col_size(char *map_name);
-void	extract_grid(int **grid, char *map_name, t_gameinfo *info);
-void	restore_grid(int **grid, t_gameinfo info);
-void	print_grid(int **grid, t_gameinfo info);
-int		check_validity(int **grid, t_gameinfo info);
-void	flood_fill(int **grid, t_gameinfo info);
-void	init_info(char *file, t_gameinfo *info);
-int		get_textures(int fd, t_gameinfo *info);
-void	get_grid(int fd, t_gameinfo *info);
-void	p_free_exit(int err_no, char *str_to_print);
-char	*strdup_nl(char *str);
-
+int			get_row_size(char	*map_name);
+int			get_col_size(char *map_name);
+void		extract_grid(int **grid, char *map_name, t_gameinfo *info);
+void		restore_grid(int **grid, t_gameinfo info);
+void		print_grid(int **grid, t_gameinfo info);
+int			check_validity(int **grid, t_gameinfo info);
+void		flood_fill(int **grid, t_gameinfo info);
+void		init_info(char *file, t_gameinfo *info);
+int			get_textures(int fd, t_gameinfo *info);
+void		get_grid(int fd, t_gameinfo *info);
+void		p_free_exit(int err_no, char *str_to_print);
+char		*strdup_nl(char *str);
+char		*skip_newlines(int fd);
+t_grid_vec	realloc_grid_vec(t_grid_vec	grid_vec);
+void		init_grid_vec(t_grid_vec *grid_vec);
 #endif
