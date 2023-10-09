@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:15:54 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 13:48:48 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 15:03:02 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,12 @@ void	paint_ceiling_floor(t_graphics *graphics)
 			if (j > WINDOW_HEIGHT / 2)
 				mlx_put_pixel(graphics->map->img, i, j,
 					graphics->ceiling_color - (int)(255 - ((((float)j - \
-									(WINDOW_HEIGHT / 2.0)) / (WINDOW_HEIGHT / 2.0)) * 255)));
+									(WINDOW_HEIGHT / 2.0)) / \
+								(WINDOW_HEIGHT / 2.0)) * 255)));
 			else
 				mlx_put_pixel(graphics->map->img, i, j,
-					graphics->floor_color - (int)(((float)j / (WINDOW_HEIGHT / 2.0)) * 255));
+					graphics->floor_color - (int)(((float)j / \
+							(WINDOW_HEIGHT / 2.0)) * 255));
 			j++;
 		}
 		i++;

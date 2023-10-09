@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 11:55:20 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 14:43:31 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void			init_graphics(t_graphics *graphics, t_gameinfo *info);
 void			start_loop(t_graphics	*graphics);
 
 // ray.c
-void			ray(t_graphics *graphics);
+void			raycasting(t_graphics *graphics);
 
 // utils.c
 int				mlx_pixel_get(mlx_texture_t *texture,

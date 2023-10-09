@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:09:45 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 14:29:34 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 14:43:18 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ void	render_frame(void *dt)
 	t_graphics	*graphics;
 
 	graphics = dt;
-	ray(graphics);
+	raycasting(graphics);
 }

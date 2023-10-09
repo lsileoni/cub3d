@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 20:56:56 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 14:01:39 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 15:02:42 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	pixel_map(t_graphics *graphics, t_loop_vars *l_vars,
 		mlx_texture_t *texture, t_ray_vars *r_vars)
 {
 	l_vars->texture_index_y = l_vars->texture_bound * \
-							  ((double)texture->height / \
-							   (double)(l_vars->pixels_to_draw));
+							((double)texture->height / \
+							(double)(l_vars->pixels_to_draw));
 	mlx_put_pixel(graphics->map->img, l_vars->i, l_vars->j,
 		mlx_pixel_get(texture, l_vars->texture_index_x,
 			l_vars->texture_index_y, r_vars));
@@ -58,7 +58,7 @@ static void	init_raycasting(t_graphics *graphics, t_loop_vars *l_vars)
 							((l_vars->step_size * WINDOW_WIDTH) / 2.0);
 }
 
-void	ray(t_graphics *graphics)
+void	raycasting(t_graphics *graphics)
 {
 	t_ray_vars	r_vars;
 	t_loop_vars	l_vars;
