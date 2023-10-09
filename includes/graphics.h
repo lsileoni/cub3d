@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 14:43:31 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:12:00 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,6 @@ typedef struct s_loop_vars
 void			key_press(void *ptr);
 void			cursor_func(double xpos, double ypos, void *dt);
 void			render_frame(void *dt);
-
-// draw.c
-void			draw_player(t_player *player);
-void			connect_points(mlx_image_t *img, t_point point0,
-					t_point point1, uint32_t color);
-void			draw_map(t_map	*map);
-void			init_graphics(t_graphics *graphics, t_gameinfo *info);
 
 // main_loop.c
 void			start_loop(t_graphics	*graphics);

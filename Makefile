@@ -14,7 +14,6 @@ SRC :=	src/main.c \
 		src/parsing/utils.c \
 		src/graphics/init_graphics.c \
 		src/graphics/main_loop.c \
-		src/graphics/draw.c \
 		src/graphics/hooks.c \
 
 OBJ	:=	$(SRC:%.c=%.o)
