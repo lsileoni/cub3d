@@ -6,9 +6,17 @@ SRC :=	src/main.c \
 		src/raycasting/endpoint.c \
 		src/raycasting/setters.c \
 		src/raycasting/utils.c \
-		src/parsing/flood_fill.c src/parsing/grid_ops.c src/parsing/get_grid.c\
-		src/parsing/get_textures.c src/parsing/init_info.c src/parsing/utils.c\
-		src/graphics/init_graphics.c src/graphics/main_loop.c src/graphics/draw.c src/graphics/hooks.c
+		src/parsing/flood_fill.c \
+		src/parsing/grid_ops.c \
+		src/parsing/get_grid.c \
+		src/parsing/get_textures.c \
+		src/parsing/init_info.c \
+		src/parsing/utils.c \
+		src/graphics/init_graphics.c \
+		src/graphics/main_loop.c \
+		src/graphics/draw.c \
+		src/graphics/hooks.c \
+
 OBJ	:=	$(SRC:%.c=%.o)
 DEP := $(OBJ:%.o=%.d)
 
@@ -22,8 +30,8 @@ LFT_FLAG		:= -L$(FT_DIR)/build/ -lft
 CC				:= cc
 INCLUDE_MACOS	:= -I$(FT_SRC_DIR) $(MLX_FW) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LINUX	:= -I$(FT_SRC_DIR) $(MLX_NAME) $(MLX_LIB)
-CFLAGS_MACOS	:= -Wall -Werror -Wextra -Wunused -g3 $(INCLUDE_MACOS)
-CFLAGS_LINUX	:= -Wall -Werror -Wextra -Ofast -march=native $(INCLUDE_LINUX)
+CFLAGS_MACOS	:= -Wall -Werror -Wextra -g3 $(INCLUDE_MACOS)
+CFLAGS_LINUX	:= -Wall -Werror -Wextra -g3 $(INCLUDE_LINUX)
 
 all: $(NAME)
 
