@@ -6,12 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/09 14:29:04 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 20:27:28 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/graphics.h"
-#include "../../libft/src/libft.h"
+#include "graphics.h"
+#include "libft.h"
 
 static t_map	*init_map(mlx_t *mlx, t_gameinfo *info)
 {
