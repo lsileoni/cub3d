@@ -21,11 +21,7 @@ static t_map	*init_map(mlx_t *mlx, t_gameinfo *info)
 	map = mmu_op(MMU_ALLOC, sizeof(t_map));
 	image = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!image || mlx_image_to_window(mlx, image, 0, 0) < 0)
-	{
-		printf("Error opening the image\n");
-		mmu_op(MMU_DESTROY, 0);
-		exit (1);
-	}
+		p_free_exit(1, "Error opening the image\n");
 	ft_memset(image->pixels, 0, image->width * image->height * sizeof(int));
 	map->img = image;
 	map->grid = info->grid;
@@ -40,7 +36,7 @@ static mlx_win_cursor_t	*init_cursor(mlx_t *mlx)
 
 	cursor = mlx_create_std_cursor(MLX_CURSOR_ARROW);
 	if (cursor == NULL)
-		exit(1);
+		p_free_exit(1, "Error allocating the cursor\n");
 	mlx_set_cursor(mlx, cursor);
 	mlx_set_cursor_mode(mlx, MLX_MOUSE_HIDDEN);
 	return (cursor);
@@ -56,10 +52,7 @@ static t_player	*init_player(mlx_t *mlx, t_gameinfo *info)
 	player->position.y = (((double)info->start_x) + 0.5) * BLOCK_SIZE;
 	player->angle = info->start_direction;
 	if (!player->img || mlx_image_to_window(mlx, player->img, 0, 0) < 0)
-	{
-		printf("Error opening the image\n");
-		return (NULL);
-	}
+		p_free_exit(1, "Error opening the image\n");
 	return (player);
 }
 
@@ -70,7 +63,7 @@ static mlx_texture_t	*open_texture(char *path)
 	texture = mlx_load_png(path);
 	if (texture == NULL)
 	{
-		printf("Error\nFailed to open texture '%s'\n", path);
+		ft_printf("Error\nFailed to open texture '%s'\n", path);
 		p_free_exit(10, "");
 	}
 	mmu_op(MMU_FREE, (size_t)path);
