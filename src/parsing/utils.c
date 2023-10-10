@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:48 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 21:39:16 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:41:06 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*skip_newlines(int fd)
 	return (line);
 }
 
-char *seek_next_colon(char *line)
+char	*seek_next_colon(char *line)
 {
 	int	i;
 
@@ -86,6 +86,5 @@ char *seek_next_colon(char *line)
 			p_free_exit(ERR_PARSE, "Error\nColor value invalid.\n");
 		i++;
 	}
-	return &line[i];
+	return (&line[i]);
 }
-
