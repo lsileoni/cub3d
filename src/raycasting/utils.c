@@ -27,12 +27,11 @@ unsigned int	rgba_to_int(unsigned char r, unsigned char g,
 	return ((r << 24) | (g << 16) | (b << 8) | a);
 }
 
-int	mlx_pixel_get(mlx_texture_t *texture,
-		int texture_index_x, int texture_index_y, t_ray_vars *r_vars)
+int	mlx_pixel_get(mlx_texture_t *texture, unsigned int texture_index_x, \
+		unsigned int texture_index_y, t_ray_vars *r_vars)
 {
 	unsigned char	rgba[4];
 	size_t			pixel_index;
-	int				t;
 
 	if (texture_index_x >= 0 && texture_index_x < texture->width && \
 			texture_index_y >= 0 && texture_index_y < texture->height)
@@ -51,8 +50,8 @@ int	mlx_pixel_get(mlx_texture_t *texture,
 
 void	paint_ceiling_floor(t_graphics *graphics)
 {
-	int	i;
-	int	j;
+	unsigned int	i;
+	unsigned int	j;
 
 	i = 0;
 	while (i < WINDOW_WIDTH)
