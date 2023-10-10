@@ -38,7 +38,12 @@ void	init_info(char *file, t_gameinfo *info)
 	if (get_textures(fd, info) != 0)
 	{
 		close(fd);
-		p_free_exit(4, "Error\nInsufficient information or wrong format!\n");
+		p_free_exit(4, "Error\nInsufficient information or wrong format\n");
 	}
 	get_grid(fd, info);
+	if (!info->player_found)
+	{
+		close(fd);
+		p_free_exit(4, "Error\nPlayer not set\n");
+	}
 }
