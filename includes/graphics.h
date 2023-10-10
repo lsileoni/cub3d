@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 20:12:00 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:02:55 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,9 @@ typedef struct s_loop_vars
 	int		i;
 	int		texture_bound;
 }			t_loop_vars;
+
+// init_graphics.c
+void	init_graphics(t_graphics *graphics, t_gameinfo *info);
 
 /// hooks.c
 void			key_press(void *ptr);

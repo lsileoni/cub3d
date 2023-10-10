@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/09 14:26:17 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:04:07 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void	p_free_exit(int err_no, char *str_to_print)
 {
 	ft_printf("%s", str_to_print);
-	system("leaks cub3D");
 	mmu_op(MMU_DESTROY, 0);
 	exit (err_no);
 }
