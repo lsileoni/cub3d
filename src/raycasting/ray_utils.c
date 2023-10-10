@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ray_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:15:54 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 20:58:47 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 22:07:39 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ int	mlx_pixel_get(mlx_texture_t *texture, unsigned int texture_index_x, \
 	unsigned char	rgba[4];
 	size_t			pixel_index;
 
-	if (texture_index_x >= 0 && texture_index_x < texture->width && \
-			texture_index_y >= 0 && texture_index_y < texture->height)
+	if (texture_index_x < texture->width && texture_index_y < texture->height)
 	{
 		pixel_index = (texture_index_y * texture->width + texture_index_x) * \
 						texture->bytes_per_pixel;
