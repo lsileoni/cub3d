@@ -36,14 +36,16 @@ int	main(int argc, char **argv)
 	mmu_op(MMU_CREATE, 0);
 	if (argc < 2)
 	{
-		ft_printf("Too few arguments!\n");
+		ft_printf("Error\nToo few arguments\n");
+		mmu_op(MMU_DESTROY, 0);
 		return (1);
 	}
 	init_info(argv[1], &info);
 	flood_fill(info.grid, info);
 	if (!check_validity(info.grid, info))
 	{
-		ft_printf("Invalid map!\n");
+		ft_printf("Error\nInvalid map\n");
+		mmu_op(MMU_DESTROY, 0);
 		return (2);
 	}
 	restore_grid(info.grid, info);
