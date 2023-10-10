@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:09:45 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 21:18:32 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 22:23:34 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	cursor_func(double xpos, double ypos, void *dt)
 {
 	t_graphics	*graphics;
 
-	ypos = 0;
+	(void)ypos;
 	graphics = dt;
 	graphics->player->angle += ((xpos - WINDOW_WIDTH / 2.0) * \
 			MOUSE_SENSITIVITY) * (graphics->mlx->delta_time * BLOCK_SIZE);
