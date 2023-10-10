@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:54:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 12:56:40 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/10/10 21:31:35 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <math.h>
 # define TARGET_COLOR 0
 # define REPLACEMENT_COLOR 9
-# define INT_ARR_NULL 420
+# define INT_ARR_NULL 0xDEADBEEF
 
 typedef struct s_grid_vec
 {
@@ -25,7 +25,7 @@ typedef struct s_grid_vec
 	int	row_cap;
 	int	curr_rows;
 	int	cols;
-}				t_grid_vec;
+}		t_grid_vec;
 
 typedef struct s_stack_pair
 {
@@ -80,4 +80,5 @@ char		*strdup_nl(char *str);
 char		*skip_newlines(int fd);
 t_grid_vec	realloc_grid_vec(t_grid_vec	grid_vec);
 void		init_grid_vec(t_grid_vec *grid_vec);
+char		*seek_next_colon(char *line);
 #endif
