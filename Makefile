@@ -2,10 +2,22 @@ NAME := cub3D
 
 SRC :=	src/main.c \
 		src/raycasting/ray.c \
-		src/parsing/flood_fill.c src/parsing/grid_ops.c src/parsing/get_grid.c\
-		src/parsing/get_textures.c src/parsing/init_info.c src/parsing/utils.c\
-		src/graphics/init_graphics.c src/graphics/main_loop.c src/graphics/draw.c
+		src/raycasting/dda.c \
+		src/raycasting/endpoint.c \
+		src/raycasting/setters.c \
+		src/raycasting/utils.c \
+		src/parsing/flood_fill.c \
+		src/parsing/grid_ops.c \
+		src/parsing/get_grid.c \
+		src/parsing/get_textures.c \
+		src/parsing/init_info.c \
+		src/parsing/utils.c \
+		src/graphics/init_graphics.c \
+		src/graphics/main_loop.c \
+		src/graphics/hooks.c \
+
 OBJ	:=	$(SRC:%.c=%.o)
+DEP := $(OBJ:%.o=%.d)
 
 MLX_FW			:= -framework Cocoa -framework OpenGL -framework IOKit -lm
 MLX_LIB			:= -lglfw -L ~/.brew/opt/glfw/lib -lm
@@ -17,8 +29,8 @@ LFT_FLAG		:= -L$(FT_DIR)/build/ -lft
 CC				:= cc
 INCLUDE_MACOS	:= -I$(FT_SRC_DIR) $(MLX_FW) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LINUX	:= -I$(FT_SRC_DIR) $(MLX_NAME) $(MLX_LIB)
-CFLAGS_MACOS	:= -Wall -Werror -Wextra -g3 $(INCLUDE_MACOS) -fsanitize=address
-CFLAGS_LINUX	:= -Wall -Werror -Wextra -Ofast -march=native $(INCLUDE_LINUX) -fsanitize=address
+CFLAGS_MACOS	:= -Wall -Werror -Wextra -g3 $(INCLUDE_MACOS)
+CFLAGS_LINUX	:= -Wall -Werror -Wextra -g3 $(INCLUDE_LINUX)
 
 all: $(NAME)
 
@@ -34,8 +46,11 @@ $(LIBFT_NAME):
 $(MLX_NAME):
 	cd ./MLX42 && cmake -B build && cmake --build build -j4
 
+-include $(DEP)
+
 %.o: %.c
-	$(CC) -g3 -c $< -o $@
+	@$(shell [ ! -d $(@D) ] && mkdir -p $(@D))
+	$(CC) -Ofast -march=native -MMD -c $< -o $@
 
 clean:
 	make clean -C $(FT_DIR)

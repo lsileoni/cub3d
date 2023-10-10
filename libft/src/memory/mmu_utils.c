@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 19:25:34 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/29 11:59:55 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/08 14:20:23 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	*mmu_alloc(t_mmu *mmu, size_t size)
 	t_list	*nelem;
 	void	*ptr;
 
-	// ft_printf("MMU ALLOC\n");
 	ptr = malloc(size);
 	if (!ptr)
 		mmu_destroy(mmu->pointers, 1);
@@ -49,7 +48,6 @@ void	*mmu_alloc(t_mmu *mmu, size_t size)
 
 void	mmu_create(t_mmu *mmu)
 {
-	// ft_printf("MMU CREATED\n");
 	mmu->pointers = ft_lstnew(NULL);
 	mmu->count = 0;
 }

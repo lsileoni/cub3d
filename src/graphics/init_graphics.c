@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/30 21:55:35 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/09 14:29:04 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_map	*init_map(mlx_t *mlx, t_gameinfo *info)
 	{
 		printf("Error opening the image\n");
 		mmu_op(MMU_DESTROY, 0);
-		exit (1); // handle error
+		exit (1);
 	}
 	ft_memset(image->pixels, 0, image->width * image->height * sizeof(int));
 	map->img = image;
@@ -40,7 +40,7 @@ static mlx_win_cursor_t	*init_cursor(mlx_t *mlx)
 
 	cursor = mlx_create_std_cursor(MLX_CURSOR_ARROW);
 	if (cursor == NULL)
-		exit(1); //handle error
+		exit(1);
 	mlx_set_cursor(mlx, cursor);
 	mlx_set_cursor_mode(mlx, MLX_MOUSE_HIDDEN);
 	return (cursor);
@@ -63,12 +63,12 @@ static t_player	*init_player(mlx_t *mlx, t_gameinfo *info)
 	return (player);
 }
 
-mlx_texture_t	*open_texture(char *path)
+static mlx_texture_t	*open_texture(char *path)
 {
-	mlx_texture_t* texture;
+	mlx_texture_t	*texture;
 
 	texture = mlx_load_png(path);
-	if(texture == NULL)
+	if (texture == NULL)
 	{
 		printf("Error\nFailed to open texture '%s'\n", path);
 		p_free_exit(10, "");
@@ -79,15 +79,17 @@ mlx_texture_t	*open_texture(char *path)
 
 void	init_graphics(t_graphics *graphics, t_gameinfo *info)
 {
+	graphics->ceiling_color = rgba_to_int(info->ceiling_color.r,
+			info->ceiling_color.g, info->ceiling_color.b, 255);
+	graphics->floor_color = rgba_to_int(info->floor_color.r,
+			info->floor_color.g, info->floor_color.b, 255);
+	graphics->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, \
+							"cub3", false);
+	graphics->map = init_map(graphics->mlx, info);
+	graphics->player = init_player(graphics->mlx, info);
+	graphics->cursor = init_cursor(graphics->mlx);
 	graphics->texture_e = open_texture(info->east_texture);
 	graphics->texture_n = open_texture(info->north_texture);
 	graphics->texture_s = open_texture(info->south_texture);
 	graphics->texture_w = open_texture(info->west_texture);
-	graphics->ceiling_color = rgbaToInteger(info->ceiling_color.r, info->ceiling_color.g, info->ceiling_color.b, 255);
-	graphics->floor_color = rgbaToInteger(info->floor_color.r, info->floor_color.g, info->floor_color.b, 255);
-	graphics->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, \
-							"cub3 me daddy", false);
-	graphics->map = init_map(graphics->mlx, info);
-	graphics->player = init_player(graphics->mlx, info);
-	graphics->cursor = init_cursor(graphics->mlx);
 }
