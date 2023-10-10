@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 14:04:07 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:08:32 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	main(int argc, char **argv)
 		return (2);
 	}
 	restore_grid(info.grid, info);
-	print_grid(info.grid, info);
 	init_graphics(&graphics, &info);
 	start_loop(&graphics);
 	destroy_textures(&graphics);
