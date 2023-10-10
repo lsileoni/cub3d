@@ -15,8 +15,10 @@
 
 void	start_loop(t_graphics	*graphics)
 {
-	mlx_loop_hook(graphics->mlx, key_press, graphics);
+	if (!mlx_loop_hook(graphics->mlx, key_press, graphics))
+		p_free_exit(11, "Error\nFailed to initialize loop hook\n");
+	if (!mlx_loop_hook(graphics->mlx, render_frame, graphics))
+		p_free_exit(11, "Error\nFailed to initialize loop hook\n");
 	mlx_cursor_hook(graphics->mlx, cursor_func, graphics);
-	mlx_loop_hook(graphics->mlx, render_frame, graphics);
 	mlx_loop(graphics->mlx);
 }
