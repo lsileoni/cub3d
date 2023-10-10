@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:01:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 20:26:49 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:22:59 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ static t_rgb	extract_color(char *line)
 	while (*line == ' ')
 		line++;
 	ret.r = ft_atoi(line);
-	line = ft_strchr(line, ',');
+	line = seek_next_colon(line);
 	if (line == NULL)
 		p_free_exit(5, "Error\nWrong color format.\n");
 	line++;
 	ret.g = ft_atoi(line);
-	line = ft_strchr(line, ',');
+	line = seek_next_colon(line);
 	if (line == NULL)
 		p_free_exit(5, "Error\nWrong color format.\n");
 	line++;
