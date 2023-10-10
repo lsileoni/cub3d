@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:31:53 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 21:36:24 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:38:59 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	validate_file_type(char *file)
 		if (ft_strncmp(file + len - 4, ".cub", 5) == 0)
 			return ;
 	}
-	p_free_exit(6, "Error\nWrong file type, must end with .cub\n");
+	p_free_exit(ERR_PARSE, "Error\nWrong file type, must end with .cub\n");
 }
 
 void	init_info(char *file, t_gameinfo *info)
@@ -34,7 +34,7 @@ void	init_info(char *file, t_gameinfo *info)
 	ft_bzero(info, sizeof(t_gameinfo));
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		p_free_exit(3, "Error\nFile not Found\n");
+		p_free_exit(ERR_INIT, "Error\nFile not Found\n");
 	if (get_textures(fd, info) != 0)
 	{
 		close(fd);

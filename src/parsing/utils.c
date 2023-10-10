@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:48 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 21:36:36 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:39:16 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char *seek_next_colon(char *line)
 
 	i = 0;
 	if (line[i] == ',')
-		p_free_exit(6, "Error\nNo color specified.\n");
+		p_free_exit(ERR_PARSE, "Error\nNo color specified.\n");
 	while (line[i] && line[i] != ',')
 	{
 		if (!ft_isdigit(line[i]))
