@@ -5,15 +5,14 @@ SRC :=	src/main.c \
 		src/raycasting/dda.c \
 		src/raycasting/endpoint.c \
 		src/raycasting/setters.c \
-		src/raycasting/utils.c \
+		src/raycasting/ray_utils.c \
 		src/parsing/flood_fill.c \
 		src/parsing/grid_ops.c \
 		src/parsing/get_grid.c \
 		src/parsing/get_textures.c \
 		src/parsing/init_info.c \
-		src/parsing/utils.c \
+		src/parsing/parsing_utils.c \
 		src/graphics/init_graphics.c \
-		src/graphics/main_loop.c \
 		src/graphics/hooks.c \
 
 OBJDIR := ./obj
