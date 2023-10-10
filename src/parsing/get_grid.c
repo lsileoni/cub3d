@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:40:48 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 20:26:43 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:35:11 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	assign_grid_element(t_grid_vec *grid_vec, int col,
 	else if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
 		if (info->player_found == 1)
-			p_free_exit(6, "Error\nCant have multiple players\n");
+			p_free_exit(ERR_PARSE, "Error\nCant have multiple players\n");
 		info->start_y = col;
 		info->start_x = grid_vec->curr_rows;
 		if (c == 'S')
@@ -38,7 +38,7 @@ static void	assign_grid_element(t_grid_vec *grid_vec, int col,
 		info->player_found = 1;
 	}
 	else
-		p_free_exit(5, "Error\nUnknown symbol in grid\n");
+		p_free_exit(ERR_PARSE, "Error\nUnknown symbol in grid\n");
 }
 
 void	assign_line(t_grid_vec *grid_vec, char *line, t_gameinfo *info)
@@ -101,7 +101,7 @@ static void	check_remainder_of_fd(int fd)
 	if (line == NULL)
 		return ;
 	close(fd);
-	p_free_exit(5, "Error\nCant have anything after the map\n");
+	p_free_exit(ERR_PARSE, "Error\nCant have anything after the map\n");
 }
 
 void	get_grid(int fd, t_gameinfo *info)

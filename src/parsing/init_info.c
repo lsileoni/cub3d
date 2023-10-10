@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:31:53 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 20:41:41 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:36:24 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ void	init_info(char *file, t_gameinfo *info)
 	if (get_textures(fd, info) != 0)
 	{
 		close(fd);
-		p_free_exit(4, "Error\nInsufficient information or wrong format\n");
+		p_free_exit(ERR_INIT, "Error\nInsufficient information or wrong format\n");
 	}
 	get_grid(fd, info);
 	if (!info->player_found)
 	{
 		close(fd);
-		p_free_exit(4, "Error\nPlayer not set\n");
+		p_free_exit(ERR_PARSE, "Error\nPlayer not set\n");
 	}
 }

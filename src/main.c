@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 20:23:39 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:37:28 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 	{
 		ft_printf("Error\nToo few arguments\n");
 		mmu_op(MMU_DESTROY, 0);
-		return (1);
+		return (ERR_INIT);
 	}
 	init_info(argv[1], &info);
 	flood_fill(info.grid, info);
@@ -46,7 +46,7 @@ int	main(int argc, char **argv)
 	{
 		ft_printf("Error\nInvalid map\n");
 		mmu_op(MMU_DESTROY, 0);
-		return (2);
+		return (ERR_CHECK);
 	}
 	restore_grid(info.grid, info);
 	init_graphics(&graphics, &info);

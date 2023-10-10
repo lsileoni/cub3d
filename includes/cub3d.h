@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:54:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 21:31:35 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:37:38 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # define TARGET_COLOR 0
 # define REPLACEMENT_COLOR 9
 # define INT_ARR_NULL 0xDEADBEEF
+# define ERR_INIT 1
+# define ERR_PARSE 2
+# define ERR_CHECK 2
 
 typedef struct s_grid_vec
 {
