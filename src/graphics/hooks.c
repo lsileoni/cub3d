@@ -70,6 +70,7 @@ void	cursor_func(double xpos, double ypos, void *dt)
 {
 	t_graphics	*graphics;
 
+	ypos = 0;
 	graphics = dt;
 	graphics->player->angle += ((xpos - WINDOW_WIDTH / 2.0) * \
 			MOUSE_SENSITIVITY) * (graphics->mlx->delta_time * BLOCK_SIZE);
