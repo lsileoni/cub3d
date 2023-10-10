@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 21:37:28 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:49:03 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ void	destroy_textures(t_graphics *graphics)
 	mlx_delete_texture(graphics->texture_s);
 	mlx_delete_texture(graphics->texture_w);
 	mlx_delete_texture(graphics->texture_n);
+}
+
+static void	start_loop(t_graphics	*graphics)
+{
+	if (!mlx_loop_hook(graphics->mlx, key_press, graphics))
+		p_free_exit(ERR_INIT, "Error\nFailed to initialize loop hook\n");
+	if (!mlx_loop_hook(graphics->mlx, render_frame, graphics))
+		p_free_exit(ERR_INIT, "Error\nFailed to initialize loop hook\n");
+	mlx_cursor_hook(graphics->mlx, cursor_func, graphics);
+	mlx_loop(graphics->mlx);
 }
 
 int	main(int argc, char **argv)

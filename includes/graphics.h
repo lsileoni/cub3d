@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 21:30:20 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:49:20 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,6 @@ void			init_graphics(t_graphics *graphics, t_gameinfo *info);
 void			key_press(void *ptr);
 void			cursor_func(double xpos, double ypos, void *dt);
 void			render_frame(void *dt);
-
-// main_loop.c
-void			start_loop(t_graphics	*graphics);
 
 // ray.c
 void			raycasting(t_graphics *graphics);
