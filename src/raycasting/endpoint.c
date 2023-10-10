@@ -53,8 +53,7 @@ static void	north_west(t_graphics *graphics, double angle,
 	}
 }
 
-static void	south_west(t_graphics *graphics, double angle,
-		t_point *end, t_point start)
+static void	south_west(double angle, t_point *end, t_point start)
 {
 	double	angle_diff;
 
@@ -107,7 +106,7 @@ void	set_endpoint(t_graphics *graphics, t_point *end,
 	else if (angle > M_PI / 2.0 && angle <= M_PI)
 		north_west(graphics, angle, end, start);
 	else if (angle > M_PI && angle <= (3.0 * M_PI) / 2.0)
-		south_west(graphics, angle, end, start);
+		south_west(angle, end, start);
 	else
 		south_east(graphics, angle, end, start);
 }
