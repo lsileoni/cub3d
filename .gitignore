@@ -57,3 +57,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Other
+.cache/
+compile_commands.json
+libft/.cache/
+libft/compile_commands.json
