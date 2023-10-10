@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:40:48 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 21:35:11 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:45:03 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	**format_grid(t_grid_vec *grid_vec)
 	{
 		j = 0;
 		grid[i] = mmu_op(MMU_ALLOC, sizeof(int) * grid_vec->cols);
-		while (grid_vec->grid[i][j] != INT_ARR_NULL)
+		while (grid_vec->grid[i][j] != (int)INT_ARR_NULL)
 		{
 			grid[i][j] = grid_vec->grid[i][j];
 			j++;
