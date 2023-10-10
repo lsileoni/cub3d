@@ -69,8 +69,8 @@ void	raycasting(t_graphics *graphics)
 	{
 		reset_current_angle(&l_vars.current_angle);
 		set_ray_vars(graphics, l_vars.current_angle, &r_vars);
-		l_vars.pixels_to_draw = WINDOW_HEIGHT / r_vars.dist;
 		set_texture_x(graphics, &r_vars, &l_vars.texture_index_x);
+		l_vars.pixels_to_draw = WINDOW_HEIGHT / r_vars.dist;
 		l_vars.texture_bound = 0;
 		l_vars.j = (WINDOW_HEIGHT / 2) - \
 					(l_vars.pixels_to_draw / 2);
