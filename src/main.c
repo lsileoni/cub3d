@@ -6,12 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 14:08:32 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 20:23:39 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
-#include "../includes/graphics.h"
+#include "cub3d.h"
+#include "graphics.h"
 
 void	p_free_exit(int err_no, char *str_to_print)
 {
