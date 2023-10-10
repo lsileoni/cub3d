@@ -6,12 +6,12 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:15:54 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 15:03:02 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 20:58:47 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../MLX42/include/MLX42/MLX42.h"
-#include "../../includes/graphics.h"
+#include "MLX42.h"
+#include "graphics.h"
 
 void	reset_current_angle(double *current_angle)
 {

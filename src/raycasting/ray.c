@@ -6,12 +6,12 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 20:56:56 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 15:02:42 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 20:26:03 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../MLX42/include/MLX42/MLX42.h"
-#include "../../includes/graphics.h"
+#include "MLX42.h"
+#include "graphics.h"
 #include <math.h>
 
 static void	pixel_map(t_graphics *graphics, t_loop_vars *l_vars,
