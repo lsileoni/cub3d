@@ -6,11 +6,11 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 10:06:50 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/08/28 11:31:55 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 20:26:36 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "cub3d.h"
 
 static void	update_stack(int **grid, t_stack_pair *sp,
 		t_i_point p, t_gameinfo info)

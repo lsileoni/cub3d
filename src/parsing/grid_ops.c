@@ -6,12 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:00:12 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/09/22 14:01:27 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/10/10 20:26:56 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
-#include "../../libft/src/libft.h"
+#include "cub3d.h"
+#include "libft.h"
 
 static void	assign_grid_element(int **grid, char *line,
 								t_i_point p, t_gameinfo *info)

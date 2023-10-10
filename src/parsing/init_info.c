@@ -6,16 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:31:53 by jofoto            #+#    #+#             */
-/*   Updated: 2023/09/30 14:29:19 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/10/10 20:41:41 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
-#include "../../libft/src/libft.h"
-
-/**
- * check if it ends with .cub
-**/
+#include "cub3d.h"
+#include "libft.h"
 
 static void	validate_file_type(char *file)
 {

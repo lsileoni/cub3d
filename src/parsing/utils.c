@@ -6,12 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:48 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/08 14:47:56 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/10/10 20:27:11 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
-#include "../../libft/src/libft.h"
+#include "cub3d.h"
+#include "libft.h"
 
 char	*strdup_nl(char *str)
 {
