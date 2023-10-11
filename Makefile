@@ -21,7 +21,6 @@ SRCDIR := ./src
 OBJ := $(addprefix $(OBJDIR)/,$(SRC:.c=.o))
 DEP := $(OBJ:%.o=%.d)
 
-MLX_FW			:= -framework Cocoa -framework OpenGL -framework IOKit -lm
 MLX_LIB			:= -lglfw -L ~/.brew/opt/glfw/lib -lm
 MLX_NAME		:= ./MLX42/build/libmlx42.a
 FT_DIR			:= ./libft
@@ -30,22 +29,18 @@ LIBFT_NAME		:= $(FT_DIR)/build/libft.a
 LFT_FLAG		:= -L$(FT_DIR)/build/ -lft
 CC				:= cc
 SHARED			:= -Wall -Wextra -Werror -Ofast -march=native
-INCLUDE_MACOS	:= -I$(FT_SRC_DIR) $(MLX_FW) $(MLX_NAME) $(MLX_LIB)
+INCLUDE_MACOS	:= -I$(FT_SRC_DIR) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LINUX	:= -I$(FT_SRC_DIR) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LIBFT	:= -I./libft/src/
 INCLUDE_MLX		:= -I./MLX42/include/MLX42/
 INCLUDE_LOCAL	:= -I./includes/
-HEADERS			:=  $(INCLUDE_LIBFT) $(INCLUDE_MLX) $(INCLUDE_LOCAL)
-CFLAGS_MACOS	:= $(SHARED) $(INCLUDE_MACOS) $(HEADERS)
-CFLAGS_LINUX	:= $(SHARED) $(INCLUDE_LINUX) $(HEADERS)
+HEADERS			:= $(INCLUDE_LIBFT) $(INCLUDE_MLX) $(INCLUDE_LOCAL)
+CFLAGS 			:= $(SHARED) $(INCLUDE_MACOS) $(HEADERS)
 
 all: $(NAME)
 
-linux: $(LIBFT_NAME) $(MLX_NAME) $(OBJ)
-	$(CC) $(OBJ) $(CFLAGS_LINUX) $(LFT_FLAG) -o $(NAME)
-
 $(NAME): $(LIBFT_NAME) $(MLX_NAME) $(OBJ)
-	$(CC) $(OBJ) $(CFLAGS_MACOS) $(LFT_FLAG) -o $(NAME)
+	$(CC) $(OBJ) $(CFLAGS) $(LFT_FLAG) -o $(NAME)
 
 $(LIBFT_NAME):
 	make -C ./libft
@@ -69,4 +64,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re linux
+.PHONY: all clean fclean re
