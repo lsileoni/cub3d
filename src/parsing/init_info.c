@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:31:53 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 21:40:20 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:27:29 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,5 @@ void	init_info(char *file, t_gameinfo *info)
 	}
 	get_grid(fd, info);
 	if (!info->player_found)
-	{
-		close(fd);
 		p_free_exit(ERR_PARSE, "Error\nPlayer not set\n");
-	}
 }
