@@ -83,5 +83,5 @@ char		*strdup_nl(char *str);
 char		*skip_newlines(int fd);
 t_grid_vec	realloc_grid_vec(t_grid_vec	grid_vec);
 void		init_grid_vec(t_grid_vec *grid_vec);
-char		*seek_next_colon(char *line);
+char		*seek_after_colon(char *line);
 #endif

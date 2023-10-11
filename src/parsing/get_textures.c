@@ -17,7 +17,9 @@ static char	*extract_texture(char *line)
 {
 	line += 2;
 	while (*line == ' ')
+	{
 		line++;
+	}
 	return (strdup_nl(line));
 }
 
@@ -26,21 +28,19 @@ static t_rgb	extract_color(char *line)
 	t_rgb	ret;
 
 	line++;
+	if (*line == 0 || *line == '\n')
+		p_free_exit(ERR_PARSE, "Error\nWrong color format.\n");
 	while (*line == ' ')
 		line++;
 	ret.r = ft_atoi(line);
-	line = seek_next_colon(line);
-	if (line == NULL)
-		p_free_exit(ERR_PARSE, "Error\nWrong color format.\n");
-	line++;
-	ret.g = ft_atoi(line);
-	line = seek_next_colon(line);
-	if (line == NULL)
-		p_free_exit(ERR_PARSE, "Error\nWrong color format.\n");
-	line++;
-	ret.b = ft_atoi(line);
+	line = seek_after_colon(line);
 	if (*line == 0 || *line == '\n')
 		p_free_exit(ERR_PARSE, "Error\nWrong color format.\n");
+	ret.g = ft_atoi(line);
+	line = seek_after_colon(line);
+	if (*line == 0 || *line == '\n')
+		p_free_exit(ERR_PARSE, "Error\nWrong color format.\n");
+	ret.b = ft_atoi(line);
 	ret.filled = 1;
 	return (ret);
 }
@@ -86,9 +86,13 @@ int	get_textures(int fd, t_gameinfo *info)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
+		{
 			return (1);
+		}
 		if (assess_line(line, info) != 0)
+		{
 			return (2);
+		}
 		mmu_op(MMU_FREE, (size_t)line);
 	}
 	return (0);

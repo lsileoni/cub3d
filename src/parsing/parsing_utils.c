@@ -73,18 +73,20 @@ char	*skip_newlines(int fd)
 	return (line);
 }
 
-char	*seek_next_colon(char *line)
+char	*seek_after_colon(char *line)
 {
 	int	i;
 
 	i = 0;
 	if (line[i] == ',')
 		p_free_exit(ERR_PARSE, "Error\nNo color specified.\n");
-	while (line[i] && line[i] != ',')
+	while (line[i] != ',')
 	{
+		if (!line[i])
+			p_free_exit(ERR_PARSE, "Error\nNo color specified.\n");
 		if (!ft_isdigit(line[i]))
 			p_free_exit(ERR_PARSE, "Error\nColor value invalid.\n");
 		i++;
 	}
-	return (&line[i]);
+	return (&line[i + 1]);
 }
