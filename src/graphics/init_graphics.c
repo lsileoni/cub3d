@@ -6,10 +6,11 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 21:34:03 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:38:22 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "MLX42.h"
 #include "graphics.h"
 #include "libft.h"
 
@@ -22,6 +23,7 @@ static t_map	*init_map(mlx_t *mlx, t_gameinfo *info)
 	image = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!image || mlx_image_to_window(mlx, image, 0, 0) < 0)
 	{
+		mlx_terminate(mlx);
 		p_free_exit(ERR_INIT, "Error opening the image\n");
 		return (NULL);
 	}
@@ -40,6 +42,7 @@ static mlx_win_cursor_t	*init_cursor(mlx_t *mlx)
 	cursor = mlx_create_std_cursor(MLX_CURSOR_ARROW);
 	if (cursor == NULL)
 	{
+		mlx_terminate(mlx);
 		p_free_exit(ERR_INIT, "Error allocating the cursor\n");
 		return (NULL);
 	}
@@ -56,6 +59,7 @@ static t_player	*init_player(mlx_t *mlx, t_gameinfo *info)
 	player->img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	if (!player->img || mlx_image_to_window(mlx, player->img, 0, 0) < 0)
 	{
+		mlx_terminate(mlx);
 		p_free_exit(ERR_INIT, "Error opening the image\n");
 		return (NULL);
 	}
@@ -65,13 +69,14 @@ static t_player	*init_player(mlx_t *mlx, t_gameinfo *info)
 	return (player);
 }
 
-static mlx_texture_t	*open_texture(char *path)
+static mlx_texture_t	*open_texture(char *path, mlx_t *mlx)
 {
 	mlx_texture_t	*texture;
 
 	texture = mlx_load_png(path);
 	if (texture == NULL)
 	{
+		mlx_terminate(mlx);
 		ft_printf("Error\nFailed to open texture '%s'\n", path);
 		p_free_exit(ERR_INIT, "");
 		return (NULL);
@@ -87,12 +92,12 @@ void	init_graphics(t_graphics *graphics, t_gameinfo *info)
 	graphics->floor_color = rgba_to_int(info->floor_color.r,
 			info->floor_color.g, info->floor_color.b, 255);
 	graphics->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, \
-							"cub3", false);
+							"cub3D", false);
 	graphics->map = init_map(graphics->mlx, info);
 	graphics->player = init_player(graphics->mlx, info);
 	graphics->cursor = init_cursor(graphics->mlx);
-	graphics->texture_e = open_texture(info->east_texture);
-	graphics->texture_n = open_texture(info->north_texture);
-	graphics->texture_s = open_texture(info->south_texture);
-	graphics->texture_w = open_texture(info->west_texture);
+	graphics->texture_e = open_texture(info->east_texture, graphics->mlx);
+	graphics->texture_n = open_texture(info->north_texture, graphics->mlx);
+	graphics->texture_s = open_texture(info->south_texture, graphics->mlx);
+	graphics->texture_w = open_texture(info->west_texture, graphics->mlx);
 }
