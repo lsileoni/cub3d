@@ -28,15 +28,15 @@ FT_SRC_DIR		:= $(FT_DIR)/src
 LIBFT_NAME		:= $(FT_DIR)/build/libft.a
 LFT_FLAG		:= -L$(FT_DIR)/build/ -lft
 CC				:= cc
-WWW				:= -Wall -Wextra -Werror
+SHARED			:= -Wall -Wextra -Werror -Ofast -march=native
 INCLUDE_MACOS	:= -I$(FT_SRC_DIR) $(MLX_FW) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LINUX	:= -I$(FT_SRC_DIR) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LIBFT	:= -I./libft/src/
 INCLUDE_MLX		:= -I./MLX42/include/MLX42/
 INCLUDE_LOCAL	:= -I./includes/
 HEADERS			:=  $(INCLUDE_LIBFT) $(INCLUDE_MLX) $(INCLUDE_LOCAL)
-CFLAGS_MACOS	:= $(WWW) $(INCLUDE_MACOS) $(HEADERS)
-CFLAGS_LINUX	:= $(WWW) $(INCLUDE_LINUX) $(HEADERS)
+CFLAGS_MACOS	:= $(SHARED) $(INCLUDE_MACOS) $(HEADERS)
+CFLAGS_LINUX	:= $(SHARED) $(INCLUDE_LINUX) $(HEADERS)
 
 all: $(NAME)
 
@@ -56,7 +56,7 @@ $(MLX_NAME):
 
 $(OBJDIR)/%.o: %.c
 	@$(shell [ ! -d $(@D) ] && mkdir -p $(@D))
-	$(CC) -Ofast -march=native $(WWW) $(HEADERS) -MMD -c $< -o $@
+	$(CC) $(SHARED) $(HEADERS) -MMD -c $< -o $@
 
 clean:
 	make clean -C $(FT_DIR)
