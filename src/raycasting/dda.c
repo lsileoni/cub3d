@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:19:41 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 20:25:42 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:27:20 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,21 @@ static void	dda_increment(t_dda_vars *d_vars)
 	}
 }
 
-void	perform_dda(t_ray_vars *rvars, t_dda_vars *d_vars, int **grid)
+void	perform_dda(t_graphics *graphics, t_ray_vars *rvars,
+		t_dda_vars *d_vars)
 {
+	int				**grid;
+	const t_point	bounds = {graphics->map->info->row_size, 
+		graphics->map->info->col_size};
+
+	grid = graphics->map->grid;
 	dda_init(d_vars);
 	while (1)
 	{
 		dda_increment(d_vars);
-		if (grid[d_vars->map_y][d_vars->map_x] == 1)
+		if ((int)d_vars->map_x < 0 || d_vars->map_x >= bounds.x || \
+				d_vars->map_y < 0 || d_vars->map_y >= bounds.y || \
+		grid[d_vars->map_y][d_vars->map_x] == 1)
 		{
 			d_vars->curr_pos.x = d_vars->map_x * BLOCK_SIZE;
 			d_vars->curr_pos.y = d_vars->map_y * BLOCK_SIZE;

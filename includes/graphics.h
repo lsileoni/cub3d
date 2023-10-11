@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 21:49:20 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:32:33 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,8 @@ void			reset_current_angle(double *current_angle);
 void			paint_ceiling_floor(t_graphics *graphics);
 
 // dda.c
-void			perform_dda(t_ray_vars *r_vars, t_dda_vars *d_vars, int **grid);
+void			perform_dda(t_graphics *graphics, t_ray_vars *rvars, \
+		t_dda_vars *d_vars);
 
 // endpoint.c
 void			set_endpoint(t_graphics *graphics, t_point *end,

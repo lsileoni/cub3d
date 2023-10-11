@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:09:45 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 22:23:34 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:28:01 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,23 @@
 
 static void	change_player_pos(t_graphics *g, double y, double x)
 {
-	t_player	*player;
-	int			**grid;
+	const t_point	bounds = {g->map->info->row_size, 
+		g->map->info->col_size};
+	t_player		*player;
+	int				**grid;
 
 	grid = g->map->grid;
 	player = g->player;
 	player->position.y += y;
-	if (grid[(int)(player->position.y / BLOCK_SIZE)]
+	if ((player->position.y) >= (float)bounds.y * BLOCK_SIZE || \
+		(player->position.y) < 0.0 || \
+			grid[(int)(player->position.y / BLOCK_SIZE)]
 			[(int)(player->position.x / BLOCK_SIZE)] == 1)
 		player->position.y -= y;
 	player->position.x += x;
-	if (grid[(int)(player->position.y / BLOCK_SIZE)]
+	if ((player->position.x) >= (float)bounds.x * BLOCK_SIZE || \
+		(player->position.x) < 0.0 || \
+			grid[(int)(player->position.y / BLOCK_SIZE)]
 			[(int)(player->position.x / BLOCK_SIZE)] == 1)
 		player->position.x -= x;
 }

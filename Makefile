@@ -12,6 +12,7 @@ SRC :=	src/main.c \
 		src/parsing/get_textures.c \
 		src/parsing/init_info.c \
 		src/parsing/parsing_utils.c \
+		src/parsing/vec_utils.c \
 		src/graphics/init_graphics.c \
 		src/graphics/hooks.c \
 

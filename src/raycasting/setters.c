@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:33:15 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 20:26:12 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:32:15 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	set_ray_vars(t_graphics *graphics, double angle, t_ray_vars *vars)
 	d_vars.start.y = player->position.y / BLOCK_SIZE;
 	set_north_west(vars, angle);
 	set_endpoint(graphics, &(d_vars.end), d_vars.start, angle);
-	perform_dda(vars, &d_vars, graphics->map->grid);
+	perform_dda(graphics, vars, &d_vars);
 	current_angle = player->angle - angle;
 	set_direction_depth(&d_vars, vars, angle);
 	reset_current_angle(&current_angle);

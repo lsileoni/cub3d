@@ -1,0 +1,11 @@
+NO ./textures/MultibrickD.png
+SO ./textures/RedwallL.png
+WE ./textures/Stone.png
+EA ./textures/WoodbrickL.png
+
+F 255,0,0
+C 255,0,0
+
+1111111111111111
+1N000000000000  
+1111111111111111

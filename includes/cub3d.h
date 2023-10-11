@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:54:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 21:37:38 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:14:49 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,5 @@ char		*skip_newlines(int fd);
 t_grid_vec	realloc_grid_vec(t_grid_vec	grid_vec);
 void		init_grid_vec(t_grid_vec *grid_vec);
 char		*seek_after_colon(char *line);
+int			validate_digit(char *line);
 #endif

@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:01:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 22:14:16 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:06:25 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ static char	*extract_texture(char *line)
 {
 	line += 2;
 	while (*line == ' ')
-	{
 		line++;
-	}
 	return (strdup_nl(line));
 }
 
@@ -40,6 +38,7 @@ static t_rgb	extract_color(char *line)
 	line = seek_after_colon(line);
 	if (*line == 0 || *line == '\n')
 		p_free_exit(ERR_PARSE, "Error\nWrong color format.\n");
+	validate_digit(line);
 	ret.b = ft_atoi(line);
 	ret.filled = 1;
 	return (ret);
@@ -86,13 +85,9 @@ int	get_textures(int fd, t_gameinfo *info)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-		{
 			return (1);
-		}
 		if (assess_line(line, info) != 0)
-		{
 			return (2);
-		}
 		mmu_op(MMU_FREE, (size_t)line);
 	}
 	return (0);
