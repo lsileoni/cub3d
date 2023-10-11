@@ -6,12 +6,12 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:26:00 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/08 13:31:17 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 20:53:01 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../MLX42/include/MLX42/MLX42.h"
-#include "../../includes/graphics.h"
+#include "MLX42.h"
+#include "graphics.h"
 
 static void	north_east(t_graphics *graphics, double angle,
 		t_point *end, t_point start)
@@ -53,8 +53,7 @@ static void	north_west(t_graphics *graphics, double angle,
 	}
 }
 
-static void	south_west(t_graphics *graphics, double angle,
-		t_point *end, t_point start)
+static void	south_west(double angle, t_point *end, t_point start)
 {
 	double	angle_diff;
 
@@ -107,7 +106,7 @@ void	set_endpoint(t_graphics *graphics, t_point *end,
 	else if (angle > M_PI / 2.0 && angle <= M_PI)
 		north_west(graphics, angle, end, start);
 	else if (angle > M_PI && angle <= (3.0 * M_PI) / 2.0)
-		south_west(graphics, angle, end, start);
+		south_west(angle, end, start);
 	else
 		south_east(graphics, angle, end, start);
 }

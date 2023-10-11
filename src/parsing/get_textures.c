@@ -6,12 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:01:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/08 14:43:34 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/10/10 22:14:16 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
-#include "../../libft/src/libft.h"
+#include "cub3d.h"
+#include "libft.h"
 
 static char	*extract_texture(char *line)
 {
@@ -29,18 +29,18 @@ static t_rgb	extract_color(char *line)
 	while (*line == ' ')
 		line++;
 	ret.r = ft_atoi(line);
-	line = ft_strchr(line, ',');
+	line = seek_next_colon(line);
 	if (line == NULL)
-		p_free_exit(5, "Error\nWrong color format.\n");
+		p_free_exit(ERR_PARSE, "Error\nWrong color format.\n");
 	line++;
 	ret.g = ft_atoi(line);
-	line = ft_strchr(line, ',');
+	line = seek_next_colon(line);
 	if (line == NULL)
-		p_free_exit(5, "Error\nWrong color format.\n");
+		p_free_exit(ERR_PARSE, "Error\nWrong color format.\n");
 	line++;
 	ret.b = ft_atoi(line);
-	if (ret.b > 255 || ret.b < 0 || *line == 0 || *line == '\n')
-		p_free_exit(5, "Error\nWrong color format.\n");
+	if (*line == 0 || *line == '\n')
+		p_free_exit(ERR_PARSE, "Error\nWrong color format.\n");
 	ret.filled = 1;
 	return (ret);
 }

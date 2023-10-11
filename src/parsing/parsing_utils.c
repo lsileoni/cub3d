@@ -6,12 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:48 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/08 14:47:56 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/10/10 21:41:06 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
-#include "../../libft/src/libft.h"
+#include "cub3d.h"
+#include "libft.h"
 
 char	*strdup_nl(char *str)
 {
@@ -71,4 +71,20 @@ char	*skip_newlines(int fd)
 		line = get_next_line(fd);
 	}
 	return (line);
+}
+
+char	*seek_next_colon(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line[i] == ',')
+		p_free_exit(ERR_PARSE, "Error\nNo color specified.\n");
+	while (line[i] && line[i] != ',')
+	{
+		if (!ft_isdigit(line[i]))
+			p_free_exit(ERR_PARSE, "Error\nColor value invalid.\n");
+		i++;
+	}
+	return (&line[i]);
 }

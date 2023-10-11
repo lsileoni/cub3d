@@ -6,12 +6,12 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:19:41 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 11:36:48 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 20:25:42 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../MLX42/include/MLX42/MLX42.h"
-#include "../../includes/graphics.h"
+#include "MLX42.h"
+#include "graphics.h"
 
 static void	dda_starting_conditions(t_dda_vars *d_vars)
 {

@@ -6,7 +6,7 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 14:02:55 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:49:20 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#define WINDOW_HEIGHT 1000
-#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 720
 #define PLAYER_SIZE 30
 #define MOUSE_SENSITIVITY 0.001
 #define FOURTY_FIVE_DEG 0.785398163f
@@ -118,22 +118,20 @@ typedef struct s_loop_vars
 }			t_loop_vars;
 
 // init_graphics.c
-void	init_graphics(t_graphics *graphics, t_gameinfo *info);
+void			init_graphics(t_graphics *graphics, t_gameinfo *info);
 
 /// hooks.c
 void			key_press(void *ptr);
 void			cursor_func(double xpos, double ypos, void *dt);
 void			render_frame(void *dt);
 
-// main_loop.c
-void			start_loop(t_graphics	*graphics);
-
 // ray.c
 void			raycasting(t_graphics *graphics);
 
 // utils.c
-int				mlx_pixel_get(mlx_texture_t *texture,
-					int texture_index_x, int texture_index_y, t_ray_vars *r_vars);
+int				mlx_pixel_get(mlx_texture_t *texture, \
+		unsigned int texture_index_x, \
+		unsigned int texture_index_y, t_ray_vars *r_vars);
 unsigned int	rgba_to_int(unsigned char r, unsigned char g,
 					unsigned char b, unsigned char a);
 void			reset_current_angle(double *current_angle);

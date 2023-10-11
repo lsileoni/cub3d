@@ -6,12 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:00:12 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/09/22 14:01:27 by jofoto           ###   ########.fr       */
+/*   Updated: 2023/10/10 21:35:54 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
-#include "../../libft/src/libft.h"
+#include "cub3d.h"
+#include "libft.h"
 
 static void	assign_grid_element(int **grid, char *line,
 								t_i_point p, t_gameinfo *info)
@@ -24,7 +24,7 @@ static void	assign_grid_element(int **grid, char *line,
 			line[p.y] == 'W' || line[p.y] == 'E')
 	{
 		if (info->player_found == 1)
-			p_free_exit(6, "Cant have multiple players!\n");
+			p_free_exit(ERR_PARSE, "Cant have multiple players!\n");
 		info->start_x = p.x;
 		info->start_y = p.y;
 		if (line[p.y] == 'S')
@@ -39,7 +39,7 @@ static void	assign_grid_element(int **grid, char *line,
 		info->player_found = 1;
 	}
 	else
-		p_free_exit(5, "Unknown symbol in grid\n");
+		p_free_exit(ERR_PARSE, "Unknown symbol in grid\n");
 }
 
 void	extract_grid(int **grid, char *map_name, t_gameinfo *info)

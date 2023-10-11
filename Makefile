@@ -5,18 +5,19 @@ SRC :=	src/main.c \
 		src/raycasting/dda.c \
 		src/raycasting/endpoint.c \
 		src/raycasting/setters.c \
-		src/raycasting/utils.c \
+		src/raycasting/ray_utils.c \
 		src/parsing/flood_fill.c \
 		src/parsing/grid_ops.c \
 		src/parsing/get_grid.c \
 		src/parsing/get_textures.c \
 		src/parsing/init_info.c \
-		src/parsing/utils.c \
+		src/parsing/parsing_utils.c \
 		src/graphics/init_graphics.c \
-		src/graphics/main_loop.c \
 		src/graphics/hooks.c \
 
-OBJ	:=	$(SRC:%.c=%.o)
+OBJDIR := ./obj
+SRCDIR := ./src
+OBJ := $(addprefix $(OBJDIR)/,$(SRC:.c=.o))
 DEP := $(OBJ:%.o=%.d)
 
 MLX_FW			:= -framework Cocoa -framework OpenGL -framework IOKit -lm
@@ -27,10 +28,15 @@ FT_SRC_DIR		:= $(FT_DIR)/src
 LIBFT_NAME		:= $(FT_DIR)/build/libft.a
 LFT_FLAG		:= -L$(FT_DIR)/build/ -lft
 CC				:= cc
+WWW				:= -Wall -Wextra -Werror
 INCLUDE_MACOS	:= -I$(FT_SRC_DIR) $(MLX_FW) $(MLX_NAME) $(MLX_LIB)
 INCLUDE_LINUX	:= -I$(FT_SRC_DIR) $(MLX_NAME) $(MLX_LIB)
-CFLAGS_MACOS	:= -Wall -Werror -Wextra -g3 $(INCLUDE_MACOS)
-CFLAGS_LINUX	:= -Wall -Werror -Wextra -g3 $(INCLUDE_LINUX)
+INCLUDE_LIBFT	:= -I./libft/src/
+INCLUDE_MLX		:= -I./MLX42/include/MLX42/
+INCLUDE_LOCAL	:= -I./includes/
+HEADERS			:=  $(INCLUDE_LIBFT) $(INCLUDE_MLX) $(INCLUDE_LOCAL)
+CFLAGS_MACOS	:= $(WWW) $(INCLUDE_MACOS) $(HEADERS)
+CFLAGS_LINUX	:= $(WWW) $(INCLUDE_LINUX) $(HEADERS)
 
 all: $(NAME)
 
@@ -48,13 +54,13 @@ $(MLX_NAME):
 
 -include $(DEP)
 
-%.o: %.c
+$(OBJDIR)/%.o: %.c
 	@$(shell [ ! -d $(@D) ] && mkdir -p $(@D))
-	$(CC) -Ofast -march=native -MMD -c $< -o $@
+	$(CC) -Ofast -march=native $(WWW) $(HEADERS) -MMD -c $< -o $@
 
 clean:
 	make clean -C $(FT_DIR)
-	/bin/rm -f $(OBJ)
+	/bin/rm -rf $(OBJDIR)
 
 fclean: clean
 	make fclean -C $(FT_DIR)
@@ -62,4 +68,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re linux

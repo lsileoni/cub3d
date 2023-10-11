@@ -6,12 +6,12 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:33:15 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/09 11:34:14 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 20:26:12 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../MLX42/include/MLX42/MLX42.h"
-#include "../../includes/graphics.h"
+#include "MLX42.h"
+#include "graphics.h"
 
 void	set_north_west(t_ray_vars *vars, double angle)
 {

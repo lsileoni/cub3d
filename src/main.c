@@ -6,12 +6,12 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 14:08:32 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/10 21:49:03 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
-#include "../includes/graphics.h"
+#include "cub3d.h"
+#include "graphics.h"
 
 void	p_free_exit(int err_no, char *str_to_print)
 {
@@ -28,6 +28,16 @@ void	destroy_textures(t_graphics *graphics)
 	mlx_delete_texture(graphics->texture_n);
 }
 
+static void	start_loop(t_graphics	*graphics)
+{
+	if (!mlx_loop_hook(graphics->mlx, key_press, graphics))
+		p_free_exit(ERR_INIT, "Error\nFailed to initialize loop hook\n");
+	if (!mlx_loop_hook(graphics->mlx, render_frame, graphics))
+		p_free_exit(ERR_INIT, "Error\nFailed to initialize loop hook\n");
+	mlx_cursor_hook(graphics->mlx, cursor_func, graphics);
+	mlx_loop(graphics->mlx);
+}
+
 int	main(int argc, char **argv)
 {
 	t_gameinfo	info;
@@ -36,15 +46,17 @@ int	main(int argc, char **argv)
 	mmu_op(MMU_CREATE, 0);
 	if (argc < 2)
 	{
-		ft_printf("Too few arguments!\n");
-		return (1);
+		ft_printf("Error\nToo few arguments\n");
+		mmu_op(MMU_DESTROY, 0);
+		return (ERR_INIT);
 	}
 	init_info(argv[1], &info);
 	flood_fill(info.grid, info);
 	if (!check_validity(info.grid, info))
 	{
-		ft_printf("Invalid map!\n");
-		return (2);
+		ft_printf("Error\nInvalid map\n");
+		mmu_op(MMU_DESTROY, 0);
+		return (ERR_CHECK);
 	}
 	restore_grid(info.grid, info);
 	init_graphics(&graphics, &info);
