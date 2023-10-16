@@ -6,14 +6,13 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:33:15 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/11 14:32:15 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:51:26 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
 #include "graphics.h"
 
-void	set_north_west(t_ray_vars *vars, double angle)
+void	set_north_west(t_ray *vars, double angle)
 {
 	if ((angle >= M_PI / 2.0) && angle <= ((3 * M_PI) / 2.0))
 		vars->west = 0;
@@ -25,8 +24,8 @@ void	set_north_west(t_ray_vars *vars, double angle)
 		vars->north = 0;
 }
 
-void	set_direction_depth(t_dda_vars *d_vars,
-		t_ray_vars *vars, double angle)
+void	set_direction_depth(t_dda *d_vars,
+		t_ray *vars, double angle)
 {
 	if (d_vars->last_move == 2)
 	{
@@ -47,9 +46,9 @@ void	set_direction_depth(t_dda_vars *d_vars,
 	vars->depth -= floor(vars->depth);
 }
 
-void	set_ray_vars(t_graphics *graphics, double angle, t_ray_vars *vars)
+void	set_ray(t_graphics *graphics, double angle, t_ray *vars)
 {
-	t_dda_vars	d_vars;
+	t_dda		d_vars;
 	t_player	*player;
 	double		current_angle;
 
@@ -66,7 +65,7 @@ void	set_ray_vars(t_graphics *graphics, double angle, t_ray_vars *vars)
 }
 
 void	set_texture_x(t_graphics *graphics,
-		t_ray_vars *vars, int *texture_index_x)
+		t_ray *vars, int *texture_index_x)
 {
 	if (vars->t_sel == WEST)
 		*texture_index_x = vars->depth * graphics->texture_w->width;

@@ -6,11 +6,10 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:32:08 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/11 15:23:33 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:56:41 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
 #include "graphics.h"
 
 void	p_free_exit(int err_no, char *str_to_print)
@@ -31,9 +30,15 @@ void	destroy_textures(t_graphics *graphics)
 static void	start_loop(t_graphics	*graphics)
 {
 	if (!mlx_loop_hook(graphics->mlx, key_press, graphics))
+	{
+		mlx_terminate(graphics->mlx);
 		p_free_exit(ERR_INIT, "Error\nFailed to initialize loop hook\n");
+	}
 	if (!mlx_loop_hook(graphics->mlx, render_frame, graphics))
+	{
+		mlx_terminate(graphics->mlx);
 		p_free_exit(ERR_INIT, "Error\nFailed to initialize loop hook\n");
+	}
 	mlx_cursor_hook(graphics->mlx, cursor_func, graphics);
 	mlx_loop(graphics->mlx);
 }

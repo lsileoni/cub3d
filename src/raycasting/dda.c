@@ -6,14 +6,13 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:19:41 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/11 15:27:20 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:51:17 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
 #include "graphics.h"
 
-static void	dda_starting_conditions(t_dda_vars *d_vars)
+static void	dda_starting_conditions(t_dda *d_vars)
 {
 	if (d_vars->dx < 0)
 	{
@@ -41,7 +40,7 @@ static void	dda_starting_conditions(t_dda_vars *d_vars)
 	}
 }
 
-static void	dda_init(t_dda_vars *d_vars)
+static void	dda_init(t_dda *d_vars)
 {
 	d_vars->dx = (d_vars->end.x - d_vars->start.x);
 	d_vars->dy = (d_vars->end.y - d_vars->start.y);
@@ -64,7 +63,7 @@ static void	dda_init(t_dda_vars *d_vars)
 	d_vars->ray_y = d_vars->start.y;
 }
 
-static void	dda_increment(t_dda_vars *d_vars)
+static void	dda_increment(t_dda *d_vars)
 {
 	if (d_vars->sidelen_x < d_vars->sidelen_y)
 	{
@@ -84,8 +83,8 @@ static void	dda_increment(t_dda_vars *d_vars)
 	}
 }
 
-void	perform_dda(t_graphics *graphics, t_ray_vars *rvars,
-		t_dda_vars *d_vars)
+void	perform_dda(t_graphics *graphics, t_ray *rvars,
+		t_dda *d_vars)
 {
 	int				**grid;
 	const t_point	bounds = {graphics->map->info->row_size, 
@@ -96,7 +95,7 @@ void	perform_dda(t_graphics *graphics, t_ray_vars *rvars,
 	while (1)
 	{
 		dda_increment(d_vars);
-		if ((int)d_vars->map_x < 0 || d_vars->map_x >= bounds.x || \
+		if (d_vars->map_x < 0 || d_vars->map_x >= bounds.x || \
 				d_vars->map_y < 0 || d_vars->map_y >= bounds.y || \
 		grid[d_vars->map_y][d_vars->map_x] == 1)
 		{

@@ -6,11 +6,10 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:15:54 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 22:07:39 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:51:24 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
 #include "graphics.h"
 
 void	reset_current_angle(double *current_angle)
@@ -28,7 +27,7 @@ unsigned int	rgba_to_int(unsigned char r, unsigned char g,
 }
 
 int	mlx_pixel_get(mlx_texture_t *texture, unsigned int texture_index_x, \
-		unsigned int texture_index_y, t_ray_vars *r_vars)
+		unsigned int texture_index_y, t_ray *r_vars)
 {
 	unsigned char	rgba[4];
 	size_t			pixel_index;

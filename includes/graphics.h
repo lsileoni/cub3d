@@ -6,22 +6,24 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/11 14:32:33 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:57:52 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/src/libft.h"
-#include "../MLX42/include/MLX42/MLX42.h"
-#include "cub3d.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#define WINDOW_HEIGHT 720
-#define WINDOW_WIDTH 720
-#define PLAYER_SIZE 30
-#define MOUSE_SENSITIVITY 0.001
-#define FOURTY_FIVE_DEG 0.785398163f
-#define BLOCK_SIZE 64.0
+#ifndef GRAPHICS_H
+# define GRAPHICS_H
+# include "libft.h"
+# include "MLX42.h"
+# include "cub3d.h"
+# include <stdlib.h>
+# include <stdio.h>
+# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 720
+# define PLAYER_SIZE 30
+# define MOUSE_SENSITIVITY 0.001
+# define ROTATION_MULTIPLIER 0.025
+# define FOURTY_FIVE_DEG 0.785398163f
+# define BLOCK_SIZE 64.0
 
 enum e_texture_selector
 {
@@ -47,7 +49,6 @@ typedef struct s_point
 
 typedef struct s_player
 {
-	mlx_image_t		*img;
 	t_point			position;
 	double			angle;
 }					t_player;
@@ -66,16 +67,7 @@ typedef struct s_graphics
 	mlx_texture_t		*texture_s;
 }					t_graphics;
 
-typedef struct s_con_pnt_vars
-{
-	double			move_ratio;
-	double			curr_step;
-	int				up;
-	int				left;
-	int				total_steps;
-}					t_conn_pnts_vars;
-
-typedef struct s_dda_vars
+typedef struct s_dda
 {
 	double	dx;
 	double	dy;
@@ -94,18 +86,18 @@ typedef struct s_dda_vars
 	t_point	curr_pos;
 	t_point	end;
 	t_point	start;
-}			t_dda_vars;
+}			t_dda;
 
-typedef struct s_ray_vars
+typedef struct s_ray
 {
 	double			dist;
 	double			depth;
 	int				t_sel;
 	unsigned char	north;
 	unsigned char	west;
-}					t_ray_vars;
+}					t_ray;
 
-typedef struct s_loop_vars
+typedef struct s_loop
 {
 	double	current_angle;
 	double	step_size;
@@ -115,41 +107,29 @@ typedef struct s_loop_vars
 	int		j;
 	int		i;
 	int		texture_bound;
-}			t_loop_vars;
+}			t_loop;
 
-// init_graphics.c
 void			init_graphics(t_graphics *graphics, t_gameinfo *info);
-
-/// hooks.c
 void			key_press(void *ptr);
 void			cursor_func(double xpos, double ypos, void *dt);
 void			render_frame(void *dt);
-
-// ray.c
 void			raycasting(t_graphics *graphics);
-
-// utils.c
 int				mlx_pixel_get(mlx_texture_t *texture, \
 		unsigned int texture_index_x, \
-		unsigned int texture_index_y, t_ray_vars *r_vars);
+		unsigned int texture_index_y, t_ray *r_vars);
 unsigned int	rgba_to_int(unsigned char r, unsigned char g,
 					unsigned char b, unsigned char a);
 void			reset_current_angle(double *current_angle);
 void			paint_ceiling_floor(t_graphics *graphics);
-
-// dda.c
-void			perform_dda(t_graphics *graphics, t_ray_vars *rvars, \
-		t_dda_vars *d_vars);
-
-// endpoint.c
+void			perform_dda(t_graphics *graphics, t_ray *rvars, \
+		t_dda *d_vars);
 void			set_endpoint(t_graphics *graphics, t_point *end,
 					t_point start, double angle);
-
-// setters.c
-void			set_north_west(t_ray_vars *vars, double angle);
-void			set_direction_depth(t_dda_vars *d_vars,
-					t_ray_vars *vars, double angle);
-void			set_ray_vars(t_graphics *graphics,
-					double angle, t_ray_vars *vars);
+void			set_north_west(t_ray *vars, double angle);
+void			set_direction_depth(t_dda *d_vars,
+					t_ray *vars, double angle);
+void			set_ray(t_graphics *graphics,
+					double angle, t_ray *vars);
 void			set_texture_x(t_graphics *graphics,
-					t_ray_vars *vars, int *texture_index_x);
+					t_ray *vars, int *texture_index_x);
+#endif

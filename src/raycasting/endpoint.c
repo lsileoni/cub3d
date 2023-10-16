@@ -6,11 +6,10 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:26:00 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/10 20:53:01 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:51:16 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
 #include "graphics.h"
 
 static void	north_east(t_graphics *graphics, double angle,

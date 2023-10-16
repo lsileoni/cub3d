@@ -6,13 +6,11 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 14:48:25 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/11 16:38:22 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:58:26 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
 #include "graphics.h"
-#include "libft.h"
 
 static t_map	*init_map(mlx_t *mlx, t_gameinfo *info)
 {
@@ -24,7 +22,7 @@ static t_map	*init_map(mlx_t *mlx, t_gameinfo *info)
 	if (!image || mlx_image_to_window(mlx, image, 0, 0) < 0)
 	{
 		mlx_terminate(mlx);
-		p_free_exit(ERR_INIT, "Error opening the image\n");
+		p_free_exit(ERR_INIT, "Error\nopening the image\n");
 		return (NULL);
 	}
 	ft_memset(image->pixels, 0, image->width * image->height * sizeof(int));
@@ -43,7 +41,7 @@ static mlx_win_cursor_t	*init_cursor(mlx_t *mlx)
 	if (cursor == NULL)
 	{
 		mlx_terminate(mlx);
-		p_free_exit(ERR_INIT, "Error allocating the cursor\n");
+		p_free_exit(ERR_INIT, "Error\nallocating the cursor\n");
 		return (NULL);
 	}
 	mlx_set_cursor(mlx, cursor);
@@ -51,18 +49,11 @@ static mlx_win_cursor_t	*init_cursor(mlx_t *mlx)
 	return (cursor);
 }
 
-static t_player	*init_player(mlx_t *mlx, t_gameinfo *info)
+static t_player	*init_player(t_gameinfo *info)
 {
 	t_player	*player;
 
 	player = mmu_op(MMU_ALLOC, sizeof(t_player));
-	player->img = mlx_new_image(mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (!player->img || mlx_image_to_window(mlx, player->img, 0, 0) < 0)
-	{
-		mlx_terminate(mlx);
-		p_free_exit(ERR_INIT, "Error opening the image\n");
-		return (NULL);
-	}
 	player->position.x = (((double)info->start_y) + 0.5) * BLOCK_SIZE;
 	player->position.y = (((double)info->start_x) + 0.5) * BLOCK_SIZE;
 	player->angle = info->start_direction;
@@ -93,8 +84,10 @@ void	init_graphics(t_graphics *graphics, t_gameinfo *info)
 			info->floor_color.g, info->floor_color.b, 255);
 	graphics->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, \
 							"cub3D", false);
+	if (!graphics->mlx)
+		p_free_exit(ERR_INIT, "Error\nFailed to init mlx\n");
 	graphics->map = init_map(graphics->mlx, info);
-	graphics->player = init_player(graphics->mlx, info);
+	graphics->player = init_player(info);
 	graphics->cursor = init_cursor(graphics->mlx);
 	graphics->texture_e = open_texture(info->east_texture, graphics->mlx);
 	graphics->texture_n = open_texture(info->north_texture, graphics->mlx);

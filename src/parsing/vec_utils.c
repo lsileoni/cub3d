@@ -6,12 +6,11 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:01:44 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/11 14:02:16 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:54:46 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "libft.h"
 
 void	init_grid_vec(t_grid_vec *grid_vec)
 {

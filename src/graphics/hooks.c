@@ -6,11 +6,10 @@
 /*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:09:45 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/11 15:28:01 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:55:01 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42.h"
 #include "graphics.h"
 
 static void	change_player_pos(t_graphics *g, double y, double x)
@@ -39,9 +38,9 @@ static void	change_player_pos(t_graphics *g, double y, double x)
 static void	check_angle_keys(t_graphics *graphics, double *a, double dt)
 {
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_RIGHT))
-		*a += (0.025 * dt * BLOCK_SIZE);
+		*a += (ROTATION_MULTIPLIER * dt * BLOCK_SIZE);
 	if (mlx_is_key_down(graphics->mlx, MLX_KEY_LEFT))
-		*a -= (0.025 * dt * BLOCK_SIZE);
+		*a -= (ROTATION_MULTIPLIER * dt * BLOCK_SIZE);
 	reset_current_angle(a);
 }
 

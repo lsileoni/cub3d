@@ -6,12 +6,11 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 13:40:48 by jofoto            #+#    #+#             */
-/*   Updated: 2023/10/10 21:45:03 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:54:54 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "libft.h"
 
 static void	assign_grid_element(t_grid_vec *grid_vec, int col,
 								char c, t_gameinfo *info)
@@ -73,7 +72,7 @@ int	**format_grid(t_grid_vec *grid_vec)
 	{
 		j = 0;
 		grid[i] = mmu_op(MMU_ALLOC, sizeof(int) * grid_vec->cols);
-		while (grid_vec->grid[i][j] != (int)INT_ARR_NULL)
+		while (grid_vec->grid[i][j] != INT_ARR_NULL)
 		{
 			grid[i][j] = grid_vec->grid[i][j];
 			j++;
@@ -83,7 +82,7 @@ int	**format_grid(t_grid_vec *grid_vec)
 		i++;
 	}
 	while (i >= 0)
-		mmu_op(MMU_FREE, (size_t)grid_vec->grid[i--]);
+		mmu_op(MMU_FREE, (size_t)grid_vec->grid[--i]);
 	mmu_op(MMU_FREE, (size_t)grid_vec->grid);
 	return (grid);
 }

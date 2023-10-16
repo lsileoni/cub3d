@@ -6,18 +6,18 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 08:54:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/11 14:14:49 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/16 08:51:43 by lsileoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-# include "../libft/src/libft.h"
+# include "libft.h"
 # include <fcntl.h>
 # include <math.h>
 # define TARGET_COLOR 0
 # define REPLACEMENT_COLOR 9
-# define INT_ARR_NULL 0xDEADBEEF
+# define INT_ARR_NULL 420
 # define ERR_INIT 1
 # define ERR_PARSE 2
 # define ERR_CHECK 2
