@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsileoni <lsileoni@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 14:16:51 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/16 08:57:52 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:28:53 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "MLX42.h"
 # include "cub3d.h"
 # include <stdlib.h>
-# include <stdio.h>
 # define WINDOW_HEIGHT 720
 # define WINDOW_WIDTH 720
 # define PLAYER_SIZE 30
