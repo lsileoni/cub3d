@@ -1,25 +1,30 @@
 NAME := cub3D
 
-SRC :=	src/main.c \
-		src/raycasting/ray.c \
-		src/raycasting/dda.c \
-		src/raycasting/endpoint.c \
-		src/raycasting/setters.c \
-		src/raycasting/ray_utils.c \
-		src/parsing/flood_fill.c \
-		src/parsing/grid_ops.c \
-		src/parsing/get_grid.c \
-		src/parsing/get_textures.c \
-		src/parsing/init_info.c \
-		src/parsing/parsing_utils.c \
-		src/parsing/vec_utils.c \
-		src/graphics/init_graphics.c \
-		src/graphics/hooks.c \
+FILES :=	src/main \
+		src/raycasting/ray \
+		src/raycasting/dda \
+		src/raycasting/endpoint \
+		src/raycasting/setters \
+		src/raycasting/ray_utils \
+		src/parsing/flood_fill \
+		src/parsing/grid_ops \
+		src/parsing/get_grid \
+		src/parsing/get_textures \
+		src/parsing/init_info \
+		src/parsing/parsing_utils \
+		src/parsing/vec_utils \
+		src/graphics/init_graphics \
+		src/graphics/hooks \
+
+SRC := $(addsuffix .c,$(FILES))
+BSRC := $(addsuffix _bonus.c,$(FILES))
 
 OBJDIR := ./obj
 SRCDIR := ./src
 OBJ := $(addprefix $(OBJDIR)/,$(SRC:.c=.o))
+BOBJ := $(addprefix $(OBJDIR)/,$(BSRC:.c=.o))
 DEP := $(OBJ:%.o=%.d)
+BDEP := $(BOBJ:%.o=%.d)
 
 MLX_LIB			:= -lglfw -L ~/.brew/opt/glfw/lib -lm
 MLX_NAME		:= ./MLX42/build/libmlx42.a
@@ -38,6 +43,9 @@ HEADERS			:= $(INCLUDE_LIBFT) $(INCLUDE_MLX) $(INCLUDE_LOCAL)
 CFLAGS 			:= $(SHARED) $(INCLUDE_MACOS) $(HEADERS)
 
 all: $(NAME)
+
+bonus: fclean $(LIBFT_NAME) $(MLX_NAME) $(BOBJ)
+	$(CC) $(BOBJ) $(CFLAGS) $(LFT_FLAG) -o $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(MLX_NAME) $(OBJ)
 	$(CC) $(OBJ) $(CFLAGS) $(LFT_FLAG) -o $(NAME)
@@ -64,4 +72,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
