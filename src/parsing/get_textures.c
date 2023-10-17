@@ -6,7 +6,7 @@
 /*   By: jofoto <jofoto@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 09:01:59 by lsileoni          #+#    #+#             */
-/*   Updated: 2023/10/16 08:54:53 by lsileoni         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:30:16 by jofoto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ static t_rgb	extract_color(char *line)
 
 static int	assess_line(char *line, t_gameinfo *info)
 {
-	if (ft_strncmp("NO ", line, 3) == 0)
+	if (ft_strncmp("NO ", line, 3) == 0 && !info->north_texture)
 		info->north_texture = extract_texture(line);
-	else if (ft_strncmp("SO ", line, 3) == 0)
+	else if (ft_strncmp("SO ", line, 3) == 0 && !info->south_texture)
 		info->south_texture = extract_texture(line);
-	else if (ft_strncmp("WE ", line, 3) == 0)
+	else if (ft_strncmp("WE ", line, 3) == 0 && !info->west_texture)
 		info->west_texture = extract_texture(line);
-	else if (ft_strncmp("EA ", line, 3) == 0)
+	else if (ft_strncmp("EA ", line, 3) == 0 && !info->east_texture)
 		info->east_texture = extract_texture(line);
 	else if (ft_strncmp("F ", line, 2) == 0)
 		info->floor_color = extract_color(line);
