@@ -13,7 +13,8 @@ This raycasting engine is designed to work on MacOS and Linux platforms.
 
 1. Clone the repository and initialize submodules:
 ```
-git clone https://github.com/lsileoni/cub3d.git
+git clone https://github.com/lsileoni/cub3d.git && \
+cd cub3d && \
 git submodule update --init --recursive
 ```
 
