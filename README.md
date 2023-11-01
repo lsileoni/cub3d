@@ -1,3 +1,5 @@
+[![Build status](https://github.com/lsileoni/cub3d/actions/workflows/blank.yml/badge.svg?branch=main&event=push)](https://github.com/lsileoni/cub3d/actions/workflows/blank.yml)
+
 # cub3D
 
 	A simple raycasting engine in C
