@@ -1,33 +1,49 @@
 # cub3D
 
-	A simple raycasting engine in C.
+	A simple raycasting engine in C
 
-## More details
+## Introduction
 
-This project is inspired by the world-famous [Wolfenstein 3D](https://en.wikipedia.org/wiki/Wolfenstein_3D) game. The first ever FPS game, developed in the early 90's.
+"Cub3D" is a project inspired by the iconic game [Wolfenstein 3D](https://en.wikipedia.org/wiki/Wolfenstein_3D), one of the pioneers of first-person shooter (FPS) games developed in the early 90s. The project's primary goal is to create a pseudo 3D view using the [raycasting](https://en.wikipedia.org/wiki/Ray_casting#:~:text=Ray%20casting%20is%20the%20most,scenes%20to%20two%2Ddimensional%20images.) method to render a 2D map loaded from a file. It serves as a foundational framework for future game development projects.
 
-The goal was to make a dynamic view inside a *map* parsed from a file, using the [raycasting](https://en.wikipedia.org/wiki/Ray_casting#:~:text=Ray%20casting%20is%20the%20most,scenes%20to%20two%2Ddimensional%20images.) method.
+This raycasting engine is designed to work on MacOS and Linux platforms.
 
 ## Building and running the project
+
+1. Clone the repository and initialize submodules:
 ```
+git clone https://github.com/lsileoni/cub3d.git
 git submodule update --init --recursive
-make && ./cub3D maps/subject_example.cub
 ```
+
+2. Build the project:
+```
+make
+```
+
+3. Run the program with a map file (e.g., "subject_example.cub"):
+```
+./cub3D maps/subject_example.cub
+```
+
+## User Interaction
+
+Once the program is running, users can interact with it as follows:
+
+- Use `W`, `S`, `A`, and `D` keys to move forward, backward, left, and right, respectively.
+- Utilize the arrow keys or the mouse to rotate the view left or right.
+- Press `ESC` to exit and quit the program.
 
 ## Showcase
 
-The program accepts the following input on run-time:
+Here's a glimpse of what the program looks like in action:
 
-* `W,S,A,D` to move forward, backward, left and right, respectively.
-* `Arrows` or `Mouse` to rotate left or right.
-* `ESC` to quit the program.
+![Cub3D Showcase](./.showfile/show3.gif)
 
+## Dependencies
 
-![](./.showfile/show3.gif)
+This project was implemented entirely in the C programming language and relies on the following libraries:
 
+- **MLX42**: A minimalist graphics library that interfaces with the X-window system and leverages GLFW and OpenGL under the hood for graphics rendering. You can find MLX42 [here](https://github.com/codam-coding-college/MLX42).
 
-## How?
-
-This project was entirely written in C, using [MLX42](https://github.com/codam-coding-college/MLX42) and our LibFT library.
-
-MLX42 is a minimalist graphics library, which interfaces with the X-window system and implements glfw under the hood for graphics.
+- **LibFT**: Our custom standard library that provides various utility functions used in the project.
