@@ -10,8 +10,8 @@ The goal was to make a dynamic view inside a *map* parsed from a file, using the
 
 ## Building and running the project
 ```
-git submodule update --recursive
-make && ./cub#D
+git submodule update --init --recursive
+make && ./cub3D maps/subject_example.cub
 ```
 
 ## Showcase
